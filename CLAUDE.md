@@ -55,7 +55,8 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 - Geen vaste vertrekdata, geen "Boek nu". CTA's in de richting van "Ontdek Tirana", "Bekijk de wijnroute", "Start jouw wijnreis", "Vraag jouw wijnreis aan".
 - Het aanvraagformulier is het **bestaande Google Form** (Google Forms → Google Sheets → n8n blijft leidend). Geen eigen formulier bouwen, geen vragen wijzigen.
   - Schone link (zonder `utm_source=chatgpt.com` / `ouid`): `https://docs.google.com/forms/d/e/1FAIpQLScY1gTmNCSi786n6iRpODb1UhbMeaeZk7QUMHH05STc2PkpSA/viewform`
-  - Voorkeur: een eigen aankondigingspagina op de site (bijv. `/aanvragen/`) als bestemming van alle aanvraag-CTA's; embedden of linken wordt later bepaald.
+  - **Geen aparte `/aanvragen/`-pagina.** De aanvraag is geen hoofdonderdeel van de site; de wijnroutes zijn het hart. CTA's op homepage, routepagina's en waar relevant inspiratieartikelen linken direct naar het Google Form.
+  - De aanvraag wordt op de site zelf mooi aangekondigd via een terugkerend aanvraagblok (persoonlijke noot van Stijn + "wat gebeurt er na je aanvraag" + knop).
 
 ## Nog open
 
