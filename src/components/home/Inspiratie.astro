@@ -1,0 +1,196 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+// Vult zich automatisch vanuit content/inspiratie/. Concepten worden overgeslagen.
+const artikelen = (await getCollection('inspiratie', ({ data }) => !data.concept))
+  .sort((a, b) => b.data.datum.getTime() - a.data.datum.getTime())
+  .slice(0, 3);
+
+const datum = new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+const [uitgelicht, ...overige] = artikelen;
+---
+
+<section class="inspiratie" aria-labelledby="inspiratie-kop">
+  <div class="wrap">
+    <div class="rubriek reveal">
+      <p class="label">Inspiratie</p>
+      <p class="label">Verhalen van onderweg</p>
+    </div>
+
+    <div class="inspiratie-grid">
+      <div class="inspiratie-intro">
+        <h2 id="inspiratie-kop" class="kop kop--l reveal">Wat ik onderweg <em>tegenkom.</em></h2>
+        <p class="tekst reveal">
+          Achter elke route zitten verhalen: over een druif die buiten Albanië niemand kent, een wijnbar die je
+          alleen vindt als je de weg weet, een keuken die je wilt leren kennen.
+        </p>
+      </div>
+
+      {
+        uitgelicht ? (
+          <div class="artikelen">
+            <article class="artikel artikel--uitgelicht reveal">
+              <a href={`/inspiratie/${uitgelicht.id}/`}>
+                {uitgelicht.data.hoofdfoto && (
+                  <div class="foto artikel-foto">
+                    <Image src={uitgelicht.data.hoofdfoto} alt={uitgelicht.data.hoofdfotoAlt ?? ''} widths={[480, 800]} sizes="(min-width: 60rem) 40vw, 100vw" />
+                  </div>
+                )}
+                <p class="label artikel-meta">
+                  <time datetime={uitgelicht.data.datum.toISOString()}>{datum.format(uitgelicht.data.datum)}</time>
+                  {uitgelicht.data.leestijd && <span>{uitgelicht.data.leestijd} min lezen</span>}
+                </p>
+                <h3 class="kop kop--m">{uitgelicht.data.titel}</h3>
+                <p class="artikel-samenvatting">{uitgelicht.data.samenvatting}</p>
+              </a>
+            </article>
+
+            {overige.length > 0 && (
+              <ul class="artikel-lijst" role="list">
+                {overige.map((artikel) => (
+                  <li class="artikel reveal">
+                    <a href={`/inspiratie/${artikel.id}/`}>
+                      <p class="label artikel-meta">
+                        <time datetime={artikel.data.datum.toISOString()}>{datum.format(artikel.data.datum)}</time>
+                      </p>
+                      <h3 class="artikel-titel">{artikel.data.titel}</h3>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ) : (
+          <div class="inspiratie-leeg reveal">
+            <p class="label label--rood">In voorbereiding</p>
+            <p class="inspiratie-leeg-tekst">
+              De eerste verhalen staan in de steigers. Hier verschijnen straks artikelen over de plekken, wijnen en
+              tafels die ik onderweg tegenkom.
+            </p>
+          </div>
+        )
+      }
+    </div>
+
+    <p class="inspiratie-door reveal">
+      <a class="doorlink" href="/inspiratie/">Bekijk alle inspiratie <span class="pijl" aria-hidden="true">→</span></a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .inspiratie {
+    padding-top: var(--sectie);
+  }
+
+  .inspiratie-grid {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .inspiratie-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .artikelen {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .artikel a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+
+  .artikel-foto {
+    aspect-ratio: 3 / 2;
+    margin-bottom: 0.5rem;
+  }
+
+  .artikel-meta {
+    display: flex;
+    gap: 1.25rem;
+    color: var(--potlood);
+  }
+
+  .artikel-samenvatting {
+    color: var(--inkt-zacht);
+    max-width: 32rem;
+  }
+
+  .artikel a:hover .kop,
+  .artikel a:hover .artikel-titel {
+    color: var(--rood);
+    font-style: italic;
+  }
+
+  .artikel-lijst {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .artikel-lijst .artikel {
+    padding-block: 1.1rem;
+    border-top: 1px solid var(--lijn);
+  }
+
+  .artikel-titel {
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  .inspiratie-leeg {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.75rem 0 1.75rem 1.5rem;
+    border-left: 1px solid var(--rood);
+    max-width: 30rem;
+  }
+
+  .inspiratie-leeg-tekst {
+    font-size: 1.25rem;
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--inkt-zacht);
+  }
+
+  .inspiratie-door {
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 60rem) {
+    .inspiratie-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      margin-top: 3.5rem;
+    }
+
+    .inspiratie-intro {
+      grid-column: 1 / span 5;
+    }
+
+    .artikelen,
+    .inspiratie-leeg {
+      grid-column: 7 / span 6;
+    }
+
+    .artikelen {
+      grid-template-columns: 3fr 2fr;
+      column-gap: var(--gutter);
+      align-items: start;
+    }
+
+    .inspiratie-leeg {
+      align-self: end;
+    }
+  }
+</style>

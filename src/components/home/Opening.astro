@@ -1,0 +1,110 @@
+---
+import { Picture } from 'astro:assets';
+import proeflokaal from '../../assets/fotografie/proeflokaal-corten.jpg';
+---
+
+<section class="opening" aria-labelledby="opening-kop">
+  <div class="wrap opening-grid">
+    <div class="opening-tekst">
+      <p class="label label--rood reveal">Persoonlijke wijnroutes · Albanië, Griekenland, Kroatië</p>
+
+      <h1 id="opening-kop" class="kop kop--xl reveal" style="--vertraging: 0.08s">
+        Ik ken een paar plekken die je <em>niet zomaar</em> tegenkomt.
+      </h1>
+
+      <div class="opening-intro reveal" style="--vertraging: 0.16s">
+        <p class="lead">
+          Kleine wijnhuizen zonder bordje aan de weg. Tafels waar de eigenaar zelf kookt. Wijnen die in
+          Nederland bijna niemand kent. Ik ben er geweest — en ik help je er een reis van te maken die bij
+          jullie past.
+        </p>
+        <a class="doorlink" href="#wijnroutes">Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <figure class="opening-foto reveal" style="--vertraging: 0.1s">
+      <div class="foto reveal-foto">
+        <Picture
+          src={proeflokaal}
+          formats={['avif', 'webp']}
+          widths={[480, 720, 960, 1200]}
+          sizes="(min-width: 60rem) 40vw, 100vw"
+          alt="Een ronde bank van roestig cortenstaal in een proeflokaal, met daarachter een wand vol wijnflessen en een rode deur"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+      <figcaption class="bijschrift">
+        <b>Fig. 1</b>
+        <span>Proeflokaal van een klein wijnhuis in Albanië. Je loopt er zo voorbij — en dat is precies het punt.</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <svg class="opening-lijn tekenlijn" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 70 C 140 70, 180 22, 320 30 S 520 104, 660 88 S 860 18, 990 40 S 1140 92, 1200 80" fill="none" stroke="var(--rood)" stroke-width="1.3" vector-effect="non-scaling-stroke" />
+  </svg>
+</section>
+
+<style>
+  .opening {
+    position: relative;
+    padding-top: clamp(2.5rem, 6vw, 5.5rem);
+  }
+
+  .opening-grid {
+    display: grid;
+    gap: 2.75rem;
+  }
+
+  .opening-tekst {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .opening-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.75rem;
+    max-width: 31rem;
+  }
+
+  .opening-foto .foto {
+    aspect-ratio: 4 / 5;
+  }
+
+  .opening-foto img {
+    object-position: 50% 62%;
+  }
+
+  .opening-lijn {
+    width: 100%;
+    height: 4.5rem;
+    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  @media (min-width: 60rem) {
+    .opening-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: end;
+    }
+
+    .opening-tekst {
+      grid-column: 1 / span 7;
+      padding-bottom: 3.5rem;
+      gap: 2.25rem;
+    }
+
+    .opening-foto {
+      grid-column: 9 / span 4;
+      margin-right: calc(var(--gutter) * -1);
+    }
+
+    .opening-intro {
+      margin-left: 18%;
+    }
+  }
+</style>

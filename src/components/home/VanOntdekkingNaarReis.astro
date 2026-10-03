@@ -1,0 +1,187 @@
+---
+import { Image } from 'astro:assets';
+import opening from '../../assets/reisconcept/voorbeeld-opening.png';
+import route from '../../assets/reisconcept/voorbeeld-route.png';
+import wijnmoment from '../../assets/reisconcept/voorbeeld-wijnmoment.png';
+
+const stappen = [
+  { kop: 'Je ontdekt een route.', tekst: 'Je leest over een streek, een wijn of een tafel en denkt: daar wil ik heen.' },
+  { kop: 'Je vertelt mij wat je zoekt.', tekst: 'Via een kort formulier: met wie je reist, wat je graag drinkt, waar je zin in hebt.' },
+  { kop: 'Ik maak een persoonlijk reisconcept.', tekst: 'Een eigen pagina met de route en plekken die ik voor jullie zou kiezen.' },
+];
+
+const voorbeelden = [
+  { src: opening, alt: 'Openingsscherm van een voorbeeld-reisconcept: “Een persoonlijke wijnreis voor Sophie & Thomas”, Albanië' },
+  { src: route, alt: 'Routekaart uit een voorbeeld-reisconcept: zeven dagen door Albanië, met Tirana, Durrës en de Albanese kust' },
+  { src: wijnmoment, alt: 'Wijnmoment uit een voorbeeld-reisconcept over de Albanese druif Shesh i Bardhë' },
+];
+---
+
+<section class="traject" aria-labelledby="traject-kop">
+  <div class="wrap">
+    <div class="rubriek reveal">
+      <p class="label">Van ontdekking naar jouw reis</p>
+    </div>
+
+    <h2 id="traject-kop" class="kop kop--l traject-kop reveal">Van een route op deze site <em>naar jullie eigen reis.</em></h2>
+
+    <ol class="stappen" role="list">
+      {
+        stappen.map((stap, i) => (
+          <li class="stap reveal" style={`--vertraging: ${i * 0.1}s`}>
+            <span class="stap-nummer" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="stap-kop">{stap.kop}</h3>
+            <p class="stap-tekst">{stap.tekst}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="voorbeeld">
+      <div class="voorbeeld-tekst reveal">
+        <p class="label label--rood">Voorbeeld</p>
+        <p class="lead">
+          Geen standaardprogramma. Na je aanvraag stel ik op basis van jullie wensen een persoonlijk reisconcept
+          samen.
+        </p>
+      </div>
+
+      <figure class="voorbeeld-schermen reveal">
+        <div class="schermen">
+          {
+            voorbeelden.map((scherm, i) => (
+              <div class={`scherm scherm--${i + 1}`}>
+                <Image src={scherm.src} alt={scherm.alt} widths={[260, 390, 520]} sizes="(min-width: 60rem) 16vw, 42vw" />
+              </div>
+            ))
+          }
+        </div>
+        <figcaption class="bijschrift">
+          <b>Fig. 6</b>
+          <span>Fragmenten uit een voorbeeld-reisconcept voor een fictief stel. Elke reis krijgt een eigen pagina.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .traject {
+    padding-top: var(--sectie);
+  }
+
+  .traject-kop {
+    margin-top: 2rem;
+    max-width: 48rem;
+  }
+
+  .stappen {
+    display: grid;
+    gap: 0;
+    list-style: none;
+    padding: 0;
+    margin: 2.75rem 0 0;
+  }
+
+  .stap {
+    display: grid;
+    grid-template-columns: 3.25rem 1fr;
+    column-gap: 1rem;
+    padding-block: 1.4rem 1.6rem;
+    border-top: 1px solid var(--inkt);
+  }
+
+  .stap-nummer {
+    grid-row: 1 / span 2;
+    font-family: var(--mono);
+    font-size: 1.6rem;
+    line-height: 1.1;
+    color: var(--rood);
+  }
+
+  .stap-kop {
+    font-size: clamp(1.35rem, 2vw, 1.6rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .stap-tekst {
+    margin-top: 0.4rem;
+    font-size: 1rem;
+    color: var(--inkt-zacht);
+  }
+
+  .voorbeeld {
+    display: grid;
+    gap: 2rem;
+    margin-top: clamp(3rem, 7vw, 5rem);
+  }
+
+  .voorbeeld-tekst {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 26rem;
+  }
+
+  .schermen {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    align-items: start;
+  }
+
+  .scherm {
+    overflow: hidden;
+    border: 1px solid var(--inkt);
+    box-shadow: 0 1px 0 var(--inkt);
+    background: #f5f0e8;
+  }
+
+  .scherm img {
+    width: 100%;
+  }
+
+  .scherm--2 {
+    margin-top: 2.5rem;
+  }
+
+  .scherm--3 {
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: 60rem) {
+    .stappen {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: var(--gutter);
+    }
+
+    .stap {
+      grid-template-columns: 1fr;
+      row-gap: 0.75rem;
+      padding-right: 1.5rem;
+    }
+
+    .stap-nummer {
+      grid-row: auto;
+    }
+
+    .voorbeeld {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: center;
+    }
+
+    .voorbeeld-tekst {
+      grid-column: 1 / span 4;
+    }
+
+    .voorbeeld-schermen {
+      grid-column: 6 / span 7;
+    }
+
+    .schermen {
+      gap: 1.25rem;
+    }
+  }
+</style>

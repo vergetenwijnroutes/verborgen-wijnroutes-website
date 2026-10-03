@@ -13,7 +13,11 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 - Hoofdmerk: **Verborgen Wijnroutes**. Stijn is het gezicht en de stem, maar de site is geen persoonlijke portfolio.
 - Toon: persoonlijk, veel vanuit "ik". Kernverhaal: Stijn is die ene vriend die er al is geweest, de wijn heeft geproefd, de mensen kent en je helpt er een mooie reis van te maken.
 - Gevoel: premium, warm, authentiek, avontuurlijk, persoonlijk. Niet elitair, geen cliché-luxe, geen standaard wijnwebsite.
-- Ontwerprichting: redactioneel — boutique travel × wijn & gastronomie × reis-/wijnmagazine × persoonlijke reisnotities × mediterrane/Balkan-sfeer. Exacte kleuren, typografie, fotografie en animaties worden nog samen bepaald.
+- Ontwerprichting (gekozen): **"Het Reisblad"** — redactioneel, als een onafhankelijk reis- en wijnblad. Spaarzaam aangevuld met elementen uit "De Kronkelweg": de kronkelende rode lijn uit het logo, getekende kaarten, een handgeschreven accent voor Stijns notities, eventueel kleine routelabels. Nooit scrapbook of journal-template.
+  - Kleuren: krantenpapier `#F4F0E8`, drukinkt `#1E1C19`, Kallmet-rood `#8E2B22` (enige accent), potloodgrijs `#8A857C`, olijfgrijs `#5C5F48`. Tokens staan in `src/styles/global.css`.
+  - Typografie: Newsreader (koppen en lopende tekst), IBM Plex Mono (labels, datelines, bijschriften), Caveat als tijdelijke vervanger voor Stijns eigen handschrift. Zelf gehost via Fontsource (geen Google Fonts-verzoeken).
+  - Foto's altijd met bijschrift (Fig. n), nooit tekst over een foto, geen afgeronde hoeken.
+  - Animatie subtiel: fade-in, rode lijn die zich tekent, hover op routes; alles uit bij `prefers-reduced-motion`.
 - Het design-concept van het reisconcept-project (`docs/design-concept.md` in `verborgen-wijnroutes-reisconcept`) is inspiratie voor de merkwereld, **niet** één-op-één overnemen.
 - Logo: bestaat (lijntekening in cirkel: wijngaardheuvels, kronkelende weg, cipres, druivenblad; groen op crème). Origineel bestand in hoge resolutie/vector nog aan te leveren.
 - Beeld: eigen fotografie heeft voorkeur boven stock. AI-visuals zijn toegestaan voor illustraties (bijv. kaarten), niet als nep-"echte" foto's van plekken. Alleen beeld gebruiken waarvan de licentie/toestemming duidelijk is.
@@ -76,12 +80,12 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 
 ## Nog open
 
-- Visuele richting (kleuren, typografie, fotografie, animatie) — volgende stap, vóór er code wordt geschreven.
 - Juridisch: pakketreizen / SGR of vergelijkbare garantieregeling.
 - Welke bestaande teksten hergebruikt worden.
 - Entry-ID van de bestemmingsvraag in het Google Form (voor prefill-links); controleren dat Tirana, Lefkas en Split exact als antwoordopties bestaan.
 - Bron voor het voorbeeld-reisconcept (fictieve demo-klant in het reisconcept-systeem, bijv. op basis van `data/voorbeeld.json`).
-- E-mailadres en Instagram-account voor de footer.
+- Instagram-account voor de footer (invullen in `src/config/site.ts`; e-mail staat op info@verborgenwijnroutes.nl).
+- Homepage-routelijst staat tijdelijk in `src/components/home/WijnRoutes.astro`; verhuizen naar een `wijnroutes`-collectie zodra de routepagina's gebouwd worden.
 
 ## Beeldmateriaal (inventaris)
 

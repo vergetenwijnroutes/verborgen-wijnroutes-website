@@ -1,0 +1,101 @@
+---
+// Schematische kaart van de Adriatische en Ionische kust.
+// Coördinaten zijn afgeleid van echte lengte- en breedtegraden (equirectangulair, 41° NB),
+// maar bewust vereenvoudigd: de kaart toont richting en samenhang, geen adressen.
+interface Props {
+  class?: string;
+}
+const { class: klasse } = Astro.props;
+---
+
+<svg class:list={['kaart', klasse]} viewBox="-20 0 480 560" role="img" aria-labelledby="kaart-titel kaart-omschrijving">
+  <title id="kaart-titel">Kaart van de wijnroutes</title>
+  <desc id="kaart-omschrijving">
+    Schematische kaart van de Adriatische en Ionische kust met drie routes: Split in Kroatië, Tirana in Albanië en
+    het eiland Lefkas in Griekenland.
+  </desc>
+
+  <g class="kust" fill="none" stroke="var(--olijf)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M47.7 9.3 L53.8 21.7 L46.8 27.9 L47.7 40.3 L53.8 58.9 L61.8 68.2 L67.8 52.7 L84.2 35.3 L95.9 46.5 L107.6 57.0 L117.9 83.7 L126.3 102.3 L123.5 110.4 L135.7 122.8 L153.5 134.5 L163.8 145.7 L179.7 148.2 L191.8 150.7 L206.8 161.2 L226.0 176.7 L238.6 189.1 L256.9 201.5 L276.1 213.9 L285.4 217.0 L292.4 224.4 L303.7 236.2 L311.2 248.0 L325.2 254.2 L325.2 265.4 L321.9 275.9 L320.1 284.0 L320.5 297.6 L321.9 306.9 L317.2 321.2 L322.4 336.7 L313.5 339.1 L325.2 350.3 L334.1 359.6 L346.3 373.9 L353.3 387.5 L358.4 396.8 L367.3 412.3 L379.0 424.7 L381.4 430.3 L390.7 437.1 L396.8 456.9 L413.2 466.9 L430.5 470.0 L421.1 478.6 L400.1 493.5 L409.4 511.5 L423.5 530.1 L421.1 548.7" />
+    <path d="M47.7 9.3 L28.1 12.4 L9.4 17.4 L-12.6 29.1 L-14.0 49.6 L-16.4 68.2 L-16.4 91.8 L-1.4 114.1 L18.7 130.2 L43.0 141.4 L53.8 161.2 L60.8 186.0 L75.3 213.3 L98.3 229.4 L112.3 241.8 L140.4 246.8 L161.4 248.0 L166.1 257.3 L168.5 275.9 L199.8 296.4 L219.9 313.1 L249.9 326.1 L266.7 341.0 L275.6 356.5 L269.5 378.2 L252.7 362.7 L234.0 347.2 L217.1 336.7 L201.2 347.2 L187.2 362.7 L183.4 384.4 L203.5 403.0 L212.9 421.6 L210.6 434.0" />
+    <!-- Brač, Hvar, Corfu, Lefkas -->
+    <path d="M178 159 C 186 156, 196 158, 199 161 C 194 164, 184 164, 178 159 Z" />
+    <path d="M184 171 C 194 168, 206 169, 211 171 C 204 175, 191 175, 184 171 Z" />
+    <path d="M334 378 C 340 376, 344 384, 342 392 C 340 399, 334 402, 333 396 C 332 389, 330 381, 334 378 Z" />
+    <path d="M369 434 C 375 431, 380 437, 379 444 C 378 452, 372 457, 369 452 C 366 447, 365 438, 369 434 Z" />
+  </g>
+
+  <g class="namen" font-family="var(--mono)" font-size="9" letter-spacing="2" fill="var(--potlood)">
+    <text x="62" y="316">ITALIË</text>
+    <text x="176" y="104">KROATIË</text>
+    <text x="350" y="338">ALBANIË</text>
+    <text x="452" y="404" text-anchor="end">GRIEKENLAND</text>
+  </g>
+  <g class="zeeen" font-family="var(--serif)" font-style="italic" font-size="14" fill="var(--potlood)">
+    <text transform="translate(176 226) rotate(37)">Adriatische Zee</text>
+    <text x="262" y="492">Ionische Zee</text>
+  </g>
+
+  <path class="verbinding" d="M179.7 148.2 C 240 190, 300 230, 337.8 283.3 S 350 400, 376.7 445.8" fill="none" stroke="var(--potlood)" stroke-width="0.9" stroke-dasharray="2 5" />
+
+  <g class="punt" data-route="split">
+    <circle cx="179.7" cy="148.2" r="4.5" />
+    <text x="190" y="140">Split</text>
+  </g>
+  <g class="punt punt--actief" data-route="tirana">
+    <circle class="punt-ring" cx="337.8" cy="283.3" r="10" />
+    <circle cx="337.8" cy="283.3" r="4.5" />
+    <text x="352" y="280">Tirana</text>
+  </g>
+  <g class="punt" data-route="lefkas">
+    <circle cx="373" cy="443" r="4.5" />
+    <text x="358" y="448" text-anchor="end">Lefkas</text>
+  </g>
+
+  <g font-family="var(--mono)" font-size="8" fill="var(--potlood)" letter-spacing="1.5">
+    <text x="430" y="24">N</text>
+    <path d="M433 30 L433 46" stroke="var(--potlood)" stroke-width="0.8" />
+  </g>
+</svg>
+
+<style>
+  .kaart {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .punt circle {
+    fill: var(--papier);
+    stroke: var(--inkt);
+    stroke-width: 1.1;
+    transition: fill 0.3s ease, stroke 0.3s ease;
+  }
+
+  .punt text {
+    font-family: var(--serif);
+    font-size: 17px;
+    fill: var(--inkt);
+    transition: fill 0.3s ease;
+  }
+
+  .punt--actief circle:not(.punt-ring) {
+    fill: var(--rood);
+    stroke: var(--rood);
+  }
+
+  .punt--actief .punt-ring {
+    fill: none;
+    stroke: var(--rood);
+    stroke-width: 0.8;
+    opacity: 0.5;
+  }
+
+  .punt.is-uitgelicht circle:not(.punt-ring) {
+    fill: var(--rood);
+    stroke: var(--rood);
+  }
+
+  .punt.is-uitgelicht text {
+    fill: var(--rood);
+  }
+</style>

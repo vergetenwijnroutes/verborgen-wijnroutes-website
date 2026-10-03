@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Opening from '../components/home/Opening.astro';
+import WieZitErAchter from '../components/home/WieZitErAchter.astro';
+import WijnRoutes from '../components/home/WijnRoutes.astro';
+import Werkwijze from '../components/home/Werkwijze.astro';
+import Reisgevoel from '../components/home/Reisgevoel.astro';
+import Inspiratie from '../components/home/Inspiratie.astro';
+import VanOntdekkingNaarReis from '../components/home/VanOntdekkingNaarReis.astro';
+import Aanvraag from '../components/home/Aanvraag.astro';
+import { site } from '../config/site';
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'TravelAgency',
+    name: site.naam,
+    url: site.url,
+    email: site.email,
+    description: site.omschrijving,
+    logo: new URL('/apple-touch-icon.png', site.url).href,
+    founder: { '@type': 'Person', name: site.oprichter },
+    areaServed: { '@type': 'Country', name: 'Nederland' },
+    knowsLanguage: 'nl',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: site.naam,
+    url: site.url,
+    inLanguage: 'nl-NL',
+  },
+];
+---
+
+<BaseLayout
+  titel="Verborgen Wijnroutes · Persoonlijke wijnreizen door de Balkan en langs de Adriatische kust"
+  omschrijving="Wijnroutes langs kleine wijnhuizen en goede tafels in Albanië, Griekenland en Kroatië. Zelf ontdekt door Stijn, persoonlijk samengesteld voor jullie."
+  jsonLd={jsonLd}
+>
+  <Opening />
+  <WieZitErAchter />
+  <WijnRoutes />
+  <Werkwijze />
+  <Reisgevoel />
+  <Inspiratie />
+  <VanOntdekkingNaarReis />
+  <Aanvraag />
+</BaseLayout>

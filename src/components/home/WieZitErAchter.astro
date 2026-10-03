@@ -1,0 +1,110 @@
+---
+import { Picture } from 'astro:assets';
+import stijn from '../../assets/fotografie/stijn-tirana.jpg';
+---
+
+<section class="wie" aria-labelledby="wie-kop">
+  <div class="wrap wie-grid">
+    <figure class="wie-foto reveal">
+      <div class="foto reveal-foto">
+        <Picture
+          src={stijn}
+          formats={['avif', 'webp']}
+          widths={[400, 640, 900]}
+          sizes="(min-width: 60rem) 30vw, 90vw"
+          alt="Stijn loopt in een rood T-shirt door een lommerrijke straat in Tirana, onder blauwe en groene linten die boven de straat hangen"
+        />
+      </div>
+      <p class="notitie wie-notitie" aria-hidden="true">Tirana, eind van de middag —<br />op weg naar een wijnbar</p>
+      <figcaption class="bijschrift">
+        <b>Fig. 2</b>
+        <span>Stijn, ergens in Tirana.</span>
+      </figcaption>
+    </figure>
+
+    <div class="wie-tekst">
+      <div class="rubriek reveal">
+        <p class="label">Wie zit hierachter</p>
+      </div>
+      <h2 id="wie-kop" class="kop kop--l reveal">Ik ben Stijn. <em>Ik ga eerst zelf.</em></h2>
+      <div class="tekst reveal">
+        <p>
+          Ik loop rond in de steden, rijd de heuvels in, proef bij wijnmakers en schuif aan tafel waar het
+          lokaal goed is. Onderweg leer ik mensen kennen die je via een gewone reisorganisatie niet tegenkomt.
+        </p>
+        <p>
+          Wat de moeite waard is, komt in een route. Wat niet klopt, laat ik weg. Daarom is Verborgen
+          Wijnroutes klein. En dat blijft het ook.
+        </p>
+      </div>
+      <a class="doorlink reveal" href="/mijn-verhaal/">Mijn verhaal <span class="pijl" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .wie {
+    padding-top: var(--sectie);
+  }
+
+  .wie-grid {
+    display: grid;
+    gap: 3rem;
+  }
+
+  .wie-foto {
+    position: relative;
+    max-width: 22rem;
+  }
+
+  .wie-foto .foto {
+    aspect-ratio: 4 / 5;
+  }
+
+  .wie-foto img {
+    object-position: 46% 60%;
+  }
+
+  .wie-notitie {
+    position: absolute;
+    right: -0.5rem;
+    top: 58%;
+    max-width: 12rem;
+    padding: 0.4rem 0.7rem 0.5rem;
+    background: var(--papier);
+    transform: rotate(-3deg);
+  }
+
+  .wie-tekst {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.75rem;
+  }
+
+  .wie-tekst .rubriek {
+    align-self: stretch;
+  }
+
+  @media (min-width: 60rem) {
+    .wie-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: center;
+    }
+
+    .wie-foto {
+      grid-column: 2 / span 4;
+      max-width: none;
+    }
+
+    .wie-notitie {
+      right: -6.5rem;
+      top: 64%;
+    }
+
+    .wie-tekst {
+      grid-column: 7 / span 5;
+    }
+  }
+</style>

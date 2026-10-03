@@ -1,0 +1,132 @@
+---
+import { Picture } from 'astro:assets';
+import pasta from '../../assets/fotografie/pasta-rode-wijn.jpg';
+import tafel from '../../assets/fotografie/albanese-tafel-arberi.jpg';
+---
+
+<section class="reisgevoel" aria-labelledby="reisgevoel-kop">
+  <div class="wrap reisgevoel-grid">
+    <div class="rubriek reisgevoel-rubriek reveal">
+      <p class="label">Aan tafel</p>
+      <p class="label">Uit het notitieboek</p>
+    </div>
+
+    <figure class="reisgevoel-foto reisgevoel-foto--groot reveal">
+      <div class="foto reveal-foto">
+        <Picture
+          src={pasta}
+          formats={['avif', 'webp']}
+          widths={[480, 720, 1000]}
+          sizes="(min-width: 60rem) 42vw, 100vw"
+          alt="Een bord paccheri met ragù en geschaafde kaas, met daarnaast een glas rode wijn op een donkere tafel"
+        />
+      </div>
+      <figcaption class="bijschrift">
+        <b>Fig. 4</b>
+        <span>Avondeten na de laatste proeverij van de dag.</span>
+      </figcaption>
+    </figure>
+
+    <div class="reisgevoel-citaat reveal">
+      <h2 id="reisgevoel-kop" class="kop kop--l">
+        “Een goede wijnreis gaat voor mij <em>nooit alleen over de fles.</em>”
+      </h2>
+    </div>
+
+    <div class="reisgevoel-tekst tekst reveal">
+      <p>
+        Het gaat om de tafel waar die fles op staat. Om wie hem opentrekt, wat er uit de keuken komt en het
+        gesprek dat daarna begint. Daarom zitten er in mijn routes net zoveel tafels als wijnhuizen.
+      </p>
+    </div>
+
+    <figure class="reisgevoel-foto reisgevoel-foto--klein reveal">
+      <div class="foto reveal-foto">
+        <Picture
+          src={tafel}
+          formats={['avif', 'webp']}
+          widths={[400, 640, 900]}
+          sizes="(min-width: 60rem) 28vw, 90vw"
+          alt="Een gedekte tafel met Albanese gerechten, witte wijn en een kurk met de naam Arbëri"
+        />
+      </div>
+      <figcaption class="bijschrift">
+        <b>Fig. 5</b>
+        <span>Een kurk van Arbëri tussen de schalen. Albanese wijn bij Albanees eten.</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .reisgevoel {
+    margin-top: var(--sectie);
+    padding-block: clamp(3rem, 7vw, 6rem);
+    background: var(--papier-diep);
+  }
+
+  .reisgevoel-grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  .reisgevoel-foto--groot .foto {
+    aspect-ratio: 4 / 5;
+  }
+
+  .reisgevoel-foto--groot img {
+    object-position: 50% 60%;
+  }
+
+  .reisgevoel-foto--klein {
+    max-width: 22rem;
+    justify-self: end;
+  }
+
+  .reisgevoel-foto--klein .foto {
+    aspect-ratio: 4 / 5;
+  }
+
+  /* Iets warmer: de foto is aan de koele kant, zo past hij bij de rest van de reeks */
+  .reisgevoel-foto--klein img {
+    object-position: 60% 30%;
+    filter: sepia(0.14) saturate(0.95);
+  }
+
+  @media (min-width: 60rem) {
+    .reisgevoel-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      row-gap: 2.5rem;
+    }
+
+    .reisgevoel-rubriek {
+      grid-column: 1 / -1;
+    }
+
+    .reisgevoel-foto--groot {
+      grid-column: 1 / span 5;
+      grid-row: 2 / span 3;
+    }
+
+    .reisgevoel-citaat {
+      grid-column: 7 / span 6;
+      grid-row: 2;
+      align-self: end;
+      padding-top: 3rem;
+    }
+
+    .reisgevoel-tekst {
+      grid-column: 7 / span 4;
+      grid-row: 3;
+    }
+
+    .reisgevoel-foto--klein {
+      grid-column: 9 / span 4;
+      grid-row: 4 / span 2;
+      justify-self: stretch;
+      max-width: none;
+      margin-top: 1rem;
+    }
+  }
+</style>

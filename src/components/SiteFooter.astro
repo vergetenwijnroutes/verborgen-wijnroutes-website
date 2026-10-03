@@ -1,0 +1,125 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/merk/logo.png';
+import { navigatie, site } from '../config/site';
+
+const jaar = new Date().getFullYear();
+---
+
+<footer class="voet">
+  <div class="wrap">
+    <div class="colofon">
+      <div class="colofon-merk">
+        <Image src={logo} alt="" width={64} height={58} densities={[1, 2]} />
+        <p>
+          <span class="colofon-naam">Verborgen Wijnroutes</span>
+          <span class="colofon-regel">Kleine wijnroutes door de Balkan en langs de Adriatische kust. Zelf ontdekt door {site.oprichter}.</span>
+        </p>
+      </div>
+
+      <nav class="colofon-kolom" aria-label="Footer">
+        <p class="label">Lezen</p>
+        <ul>
+          {navigatie.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <div class="colofon-kolom">
+        <p class="label">Contact</p>
+        <ul>
+          <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          {site.instagram && <li><a href={site.instagram} rel="me noopener" target="_blank">Instagram</a></li>}
+        </ul>
+      </div>
+    </div>
+
+    <p class="onderregel label">
+      <span>© {jaar} Verborgen Wijnroutes</span>
+      <a href="/privacy/">Privacy</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .voet {
+    margin-top: var(--sectie);
+  }
+
+  .colofon {
+    display: grid;
+    gap: 2.5rem;
+    padding-block: 2.5rem 3rem;
+    border-top: 1px solid var(--inkt);
+  }
+
+  .colofon-merk {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    max-width: 24rem;
+  }
+
+  .colofon-merk img {
+    flex: none;
+    width: 3.2rem;
+  }
+
+  .colofon-naam {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .colofon-regel {
+    display: block;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--inkt-zacht);
+  }
+
+  .colofon-kolom ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.7rem 0 0;
+  }
+
+  .colofon-kolom li + li {
+    margin-top: 0.3rem;
+  }
+
+  .colofon-kolom a {
+    font-size: 1.05rem;
+    text-decoration: none;
+  }
+
+  .colofon-kolom a:hover {
+    color: var(--rood);
+  }
+
+  .onderregel {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1rem 2rem;
+    border-top: 1px solid var(--lijn);
+    color: var(--potlood);
+  }
+
+  .onderregel a {
+    text-decoration: none;
+  }
+
+  .onderregel a:hover {
+    color: var(--rood);
+  }
+
+  @media (min-width: 48rem) {
+    .colofon {
+      grid-template-columns: 2fr 1fr 1fr;
+    }
+  }
+</style>

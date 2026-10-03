@@ -1,0 +1,111 @@
+---
+import { aanvraagFormulier } from '../../config/site';
+---
+
+<section class="aanvraag" aria-labelledby="aanvraag-kop">
+  <div class="wrap">
+    <div class="aanvraag-grid">
+      <div class="aanvraag-kop">
+        <p class="label label--rood reveal">Een uitnodiging</p>
+        <h2 id="aanvraag-kop" class="kop kop--xl reveal">Zullen we kijken welke route <em>bij jullie past?</em></h2>
+      </div>
+
+      <div class="aanvraag-brief reveal">
+        <p class="lead">
+          Vertel me met wie je reist, wat je graag drinkt en waar je zin in hebt. Ik kijk er persoonlijk naar en
+          neem contact met je op. Daarna maak ik een eerste reisconcept, en dat stemmen we samen af.
+        </p>
+        <p class="aanvraag-handtekening notitie" aria-hidden="true">— Stijn</p>
+
+        <a class="aanvraag-knop" href={aanvraagFormulier} target="_blank" rel="noopener">
+          <span>Vraag jouw wijnreis aan</span>
+          <span class="pijl" aria-hidden="true">→</span>
+          <span class="sr-only">(opent een formulier in een nieuw tabblad)</span>
+        </a>
+        <p class="aanvraag-noot label">Het formulier opent bij Google Forms · een paar minuten werk · vrijblijvend</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .aanvraag {
+    padding-top: var(--sectie);
+  }
+
+  .aanvraag-grid {
+    display: grid;
+    gap: 2.5rem;
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--inkt);
+  }
+
+  .aanvraag-kop {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .aanvraag-brief {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    max-width: 30rem;
+  }
+
+  .aanvraag-handtekening {
+    font-size: 1.9rem;
+    margin-top: -0.25rem;
+  }
+
+  .aanvraag-knop {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.75rem;
+    padding: 1.05rem 1.5rem 1.05rem 1.6rem;
+    background: var(--rood);
+    color: var(--papier);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .aanvraag-knop .pijl {
+    transition: transform 0.3s ease;
+  }
+
+  .aanvraag-knop:hover {
+    background: var(--inkt);
+  }
+
+  .aanvraag-knop:hover .pijl {
+    transform: translateX(0.3em);
+  }
+
+  .aanvraag-noot {
+    font-size: 0.66rem;
+    color: var(--potlood);
+  }
+
+  @media (min-width: 60rem) {
+    .aanvraag-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: end;
+    }
+
+    .aanvraag-kop {
+      grid-column: 1 / span 7;
+    }
+
+    .aanvraag-brief {
+      grid-column: 9 / span 4;
+    }
+  }
+</style>

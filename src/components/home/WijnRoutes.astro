@@ -1,0 +1,276 @@
+---
+import RouteKaart from '../RouteKaart.astro';
+
+// Voorlopige routelijst voor de homepage.
+// Zodra de routepagina's gebouwd worden, komt deze lijst uit content/wijnroutes/
+// en verdwijnt dit blok.
+const routes = [
+  {
+    slug: 'tirana',
+    naam: 'Tirana',
+    land: 'Albanië',
+    status: 'actief',
+    regel: 'Familiewijnhuizen in de heuvels rond de hoofdstad, inheemse druiven en de beste tafels van de stad.',
+  },
+  {
+    slug: 'lefkas',
+    naam: 'Lefkas',
+    land: 'Griekenland',
+    status: 'binnenkort',
+    regel: 'Eilandwijn uit de Ionische Zee, ver van de bekende routes.',
+  },
+  {
+    slug: 'split',
+    naam: 'Split',
+    land: 'Kroatië',
+    status: 'binnenkort',
+    regel: 'De Dalmatische kust en het stille achterland erachter.',
+  },
+];
+---
+
+<section id="wijnroutes" class="routes" aria-labelledby="routes-kop">
+  <div class="wrap">
+    <div class="rubriek reveal">
+      <p class="label">De wijnroutes</p>
+      <p class="label">{routes.length} routes · {routes.filter((r) => r.status === 'actief').length} te reizen</p>
+    </div>
+
+    <div class="routes-grid">
+      <div class="routes-intro">
+        <h2 id="routes-kop" class="kop kop--l reveal">Niet veel routes. <em>Wel goede.</em></h2>
+        <p class="tekst reveal">
+          Elke route heb ik zelf gereden en geproefd. Er komt pas een nieuwe bij als ik er echt iets over te
+          vertellen heb.
+        </p>
+      </div>
+
+      <ol class="inhoud" role="list">
+        {
+          routes.map((route, i) => (
+            <li class:list={['route', `route--${route.status}`, 'reveal']} data-route={route.slug} style={`--vertraging: ${i * 0.08}s`}>
+              <a href={`/wijnroutes/${route.slug}/`} class="route-link">
+                <span class="route-nummer label" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <h3 class="route-naam">{route.naam}</h3>
+                <span class="route-meta label">
+                  {route.land}
+                  <span class:list={['route-status', route.status === 'actief' && 'label--rood']}>
+                    {route.status === 'actief' ? 'Nu te ontdekken' : 'Binnenkort'}
+                  </span>
+                </span>
+                <span class="route-regel">{route.regel}</span>
+                {route.status === 'actief' && (
+                  <span class="route-actie doorlink" aria-hidden="true">
+                    Ontdek {route.naam} <span class="pijl">→</span>
+                  </span>
+                )}
+                <svg class="route-streep" viewBox="0 0 400 12" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M0 6 C 60 1, 110 11, 170 6 S 290 1, 400 6" fill="none" stroke="var(--rood)" stroke-width="1.2" vector-effect="non-scaling-stroke" />
+                </svg>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+
+      <figure class="routes-kaart reveal">
+        <RouteKaart />
+        <figcaption class="bijschrift">
+          <b>Kaart</b>
+          <span>De routes, schematisch. Geen adressen — wel richting.</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="routes-door reveal">
+      <a class="doorlink" href="/wijnroutes/">Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span></a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .routes {
+    padding-top: var(--sectie);
+    scroll-margin-top: 1rem;
+  }
+
+  .routes-grid {
+    display: grid;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .routes-intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .inhoud {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--lijn);
+  }
+
+  .route {
+    border-bottom: 1px solid var(--lijn);
+  }
+
+  .route-link {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    column-gap: 1rem;
+    row-gap: 0.45rem;
+    padding-block: 1.6rem 1.8rem;
+    text-decoration: none;
+  }
+
+  .route-nummer {
+    grid-row: 1 / span 3;
+    padding-top: 0.9rem;
+    color: var(--potlood);
+  }
+
+  .route-naam {
+    margin: 0;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    font-weight: 360;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    transition: color 0.3s ease;
+  }
+
+  .route-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    color: var(--inkt);
+  }
+
+  .route-status {
+    color: var(--potlood);
+  }
+
+  .route-regel {
+    grid-column: 2;
+    max-width: 30rem;
+    color: var(--inkt-zacht);
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+
+  .route-actie {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 0.6rem;
+  }
+
+  /* Binnenkort: zichtbaar, maar een stap terug */
+  .route--binnenkort .route-naam {
+    font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+    color: var(--inkt-zacht);
+  }
+
+  .route--binnenkort .route-regel {
+    font-size: 0.98rem;
+    color: var(--potlood);
+  }
+
+  .route--binnenkort .route-link {
+    padding-block: 1.25rem 1.35rem;
+  }
+
+  /* Hover: naam wordt cursief, er tekent zich een rode kronkel onder */
+  .route-streep {
+    position: absolute;
+    left: 3.75rem;
+    right: 0;
+    bottom: -6px;
+    width: calc(100% - 3.75rem);
+    height: 12px;
+    pointer-events: none;
+  }
+
+  .route-streep {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.9s cubic-bezier(0.45, 0.05, 0.25, 1);
+  }
+
+  .route-link:hover .route-naam,
+  .route-link:focus-visible .route-naam {
+    font-style: italic;
+  }
+
+  .route--actief .route-link:hover .route-naam {
+    color: var(--rood);
+  }
+
+  .route-link:hover .route-streep,
+  .route-link:focus-visible .route-streep {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .route-link:hover .route-actie {
+    color: var(--rood);
+  }
+
+  .routes-kaart {
+    max-width: 26rem;
+  }
+
+  /* Kaart reageert op de route waar je overheen beweegt */
+  .routes:has(.route[data-route='lefkas'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='lefkas'] circle),
+  .routes:has(.route[data-route='split'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='split'] circle) {
+    fill: var(--rood);
+    stroke: var(--rood);
+  }
+
+  .routes:has(.route[data-route='tirana'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='tirana'] text),
+  .routes:has(.route[data-route='lefkas'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='lefkas'] text),
+  .routes:has(.route[data-route='split'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='split'] text) {
+    fill: var(--rood);
+    font-style: italic;
+  }
+
+  .routes-door {
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 60rem) {
+    .routes-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      row-gap: 3rem;
+      margin-top: 3.5rem;
+    }
+
+    .routes-intro {
+      grid-column: 1 / span 5;
+    }
+
+    .inhoud {
+      grid-column: 1 / span 7;
+      grid-row: 2;
+    }
+
+    .routes-kaart {
+      grid-column: 9 / span 4;
+      grid-row: 1 / span 2;
+      align-self: start;
+      position: sticky;
+      top: 2rem;
+      max-width: none;
+      margin-top: 1rem;
+    }
+
+    .route-link {
+      grid-template-columns: 3.75rem 1fr;
+    }
+
+    .routes-door {
+      margin-top: 3rem;
+    }
+  }
+</style>
