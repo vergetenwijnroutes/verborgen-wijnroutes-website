@@ -28,11 +28,22 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 
 - Framework: **Astro** (statisch, SEO-vriendelijk, content collections met schema-validatie). Hosting: **Vercel**.
 - URL's altijd met trailing slash.
-- Publieke pagina's:
-  - `/`
-  - `/wijnroutes/` en `/wijnroutes/[slug]/` (nu: `tirana` actief, `lefkas` binnenkort, `split` binnenkort)
-  - `/inspiratie/` en `/inspiratie/[slug]/`
-  - `/mijn-verhaal/`
+- Sitemap (vastgesteld):
+  ```
+  /
+  ├── /wijnroutes/            overzicht — het hart van de site
+  │   ├── /tirana/            actief
+  │   ├── /lefkas/            binnenkort
+  │   └── /split/             binnenkort
+  ├── /inspiratie/
+  │   └── /[artikel]/
+  └── /mijn-verhaal/
+  Footer-only: /privacy/ (verwerking Google Form-gegevens; inhoud later), 404-pagina.
+  ```
+- Navigatie: logo · Wijnroutes · Inspiratie · Mijn verhaal · knop "Vraag jouw wijnreis aan" (→ Google Form).
+- Footer: routes, Inspiratie, Mijn verhaal, contact (e-mail + Instagram, geen WhatsApp), Privacy.
+- Paginaopbouw per pagina is besproken en vastgesteld (zie gespreksverslag); kern: elke pagina stuurt naar een wijnroute, de routepagina is de plek van de aanvraag.
+- Routepagina toont de *smaak* van een route, niet het *plan*: geen volledige dagplanning, geen klantprijzen.
 - Content als bestanden in de repo, **geen CMS**. Eén template voor routes, één voor inspiratieartikelen; nieuwe content verschijnt automatisch in overzichten, sitemap en koppelingen.
 - Route-status: `actief` | `binnenkort` | `gearchiveerd`. Status bepaalt CTA en zichtbaarheid; gearchiveerde routes blijven bereikbaar of krijgen een redirect (nooit zomaar 404). Maximaal ~5 routes tegelijk.
 
@@ -52,7 +63,12 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 ## Aanvragen
 
 - Klantreis: interesse in bestemming → routepagina → aanvraag → persoonlijk reisconcept op `/reis/[klant-slug]/`.
-- Geen vaste vertrekdata, geen "Boek nu". CTA's in de richting van "Ontdek Tirana", "Bekijk de wijnroute", "Start jouw wijnreis", "Vraag jouw wijnreis aan".
+- Geen vaste vertrekdata, geen "Boek nu".
+- CTA per route-status (alle naar hetzelfde Google Form, bestemming vooraf ingevuld via een Google Forms prefill-link `entry.<id>=<bestemming>`):
+  - actief (Tirana): "Vraag jouw wijnreis aan"
+  - binnenkort (Lefkas, Split): "Laat me weten dat je interesse hebt"
+- Overige CTA's: homepage/overzicht "Ontdek de wijnroutes" / "Ontdek [route]"; artikelen "Bekijk de wijnroute"; Mijn verhaal eindigt bij de routes.
+- Voorbeeld-reisconcept op routepagina's: klein blok met 2–3 screenshots + uitleg ("Geen standaardprogramma. Na je aanvraag stel ik op basis van jullie wensen een persoonlijk reisconcept samen.") + link "Bekijk een voorbeeld van een persoonlijk reisconcept". Gebruik een fictief/geanonimiseerd voorbeeld, nooit een echte klant (geen namen, prijzen of herkenbare gasten).
 - Het aanvraagformulier is het **bestaande Google Form** (Google Forms → Google Sheets → n8n blijft leidend). Geen eigen formulier bouwen, geen vragen wijzigen.
   - Schone link (zonder `utm_source=chatgpt.com` / `ouid`): `https://docs.google.com/forms/d/e/1FAIpQLScY1gTmNCSi786n6iRpODb1UhbMeaeZk7QUMHH05STc2PkpSA/viewform`
   - **Geen aparte `/aanvragen/`-pagina.** De aanvraag is geen hoofdonderdeel van de site; de wijnroutes zijn het hart. CTA's op homepage, routepagina's en waar relevant inspiratieartikelen linken direct naar het Google Form.
@@ -60,7 +76,16 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 
 ## Nog open
 
-- Contactopties naast het formulier (WhatsApp, e-mail, kennismakingsgesprek).
-- Interesselijst/nieuwsbrief voor binnenkort-routes.
+- Visuele richting (kleuren, typografie, fotografie, animatie) — volgende stap, vóór er code wordt geschreven.
 - Juridisch: pakketreizen / SGR of vergelijkbare garantieregeling.
 - Welke bestaande teksten hergebruikt worden.
+- Entry-ID van de bestemmingsvraag in het Google Form (voor prefill-links); controleren dat Tirana, Lefkas en Split exact als antwoordopties bestaan.
+- Bron voor het voorbeeld-reisconcept (fictieve demo-klant in het reisconcept-systeem, bijv. op basis van `data/voorbeeld.json`).
+- E-mailadres en Instagram-account voor de footer.
+
+## Beeldmateriaal (inventaris)
+
+- Eigen foto's (staand, telefoon, documentair): proeflokaal met cortenstalen bank (hero-kandidaat home/Tirana), wijntanks, flessenkast, pasta met rode wijn, Albanese tafel met ARBËRI-kurk, wijnbar Vena (interieur + straatkant), hapjes, en Stijn op straat in Tirana onder de linten (hero Mijn verhaal; origineel in hoge resolutie nodig).
+- Niet gebruiken: champagnekast (Franse luxe, merklogo's), mortadella (supermarktlogo's).
+- Ontbreekt: landschap/wijngaarden, liggende foto's, video. Lefkas en Split: geen beeld → illustratie en tekst. Opvullen via partnerfoto's (met toestemming) en AI-illustratie in één consistente stijl.
+- Toestemming nodig voor herkenbare personen.
