@@ -94,5 +94,5 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 - Ontbreekt: landschap/wijngaarden, liggende foto's, video. Lefkas en Split: geen beeld → illustratie en tekst. Opvullen via partnerfoto's (met toestemming) en AI-illustratie in één consistente stijl.
 - Toestemming nodig voor herkenbare personen.
 - Homepage-opening: carrousel (scroll-snap, geen library) met proeflokaal, wijnbar Vena (straatkant-foto; de mooiere interieurfoto van Vena is nog niet als bestand aangeleverd) en de Albanese tafel.
-- Voorbeeld-reisconcept op de homepage: screenshots van het bestaande reisconcept met de fictieve klant uit `data/voorbeeld.json` ("Sophie & Thomas"), het derde scherm met Stijns telefoonfoto van Kantina Enol (`images/albanie/kantina-enol.jpg`). Het reisconcept-project zelf is daarvoor niet aangepast.
+- Voorbeeld-reisconcept op de homepage: op verzoek van Stijn drie screenshots uit een echt reisconcept (route Ohrid & Albanië, Çobo Winery, prijsindicatie), zonder klantnaam. Bewust gekozen: de prijsindicaties van partners zijn daarmee publiek zichtbaar.
 - Mobile-first: Stijn wil alles primair voor mobiele bezoekers ingericht hebben.
