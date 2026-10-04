@@ -17,6 +17,7 @@ const jsonLd = [
     name: site.naam,
     url: site.url,
     email: site.email,
+    sameAs: [site.instagram],
     description: site.omschrijving,
     logo: new URL('/apple-touch-icon.png', site.url).href,
     founder: { '@type': 'Person', name: site.oprichter },

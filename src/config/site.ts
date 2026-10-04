@@ -7,8 +7,7 @@ export const site = {
     'Persoonlijke wijnroutes langs kleine wijnhuizen en goede tafels in de Balkan en langs de Adriatische kust. Zelf ontdekt door Stijn, samengesteld voor jou.',
   oprichter: 'Stijn',
   email: 'info@verborgenwijnroutes.nl',
-  // Nog aan te leveren door Stijn. Zolang dit leeg is, toont de footer geen Instagram-link.
-  instagram: '',
+  instagram: 'https://www.instagram.com/verborgenwijnroutes/',
 };
 
 // Het bestaande Google Form (Google Forms → Sheets → n8n). Inhoud nooit aanpassen.

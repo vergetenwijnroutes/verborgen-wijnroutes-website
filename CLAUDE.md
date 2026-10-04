@@ -87,7 +87,6 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 - Juridisch: pakketreizen / SGR of vergelijkbare garantieregeling.
 - Welke bestaande teksten hergebruikt worden.
 - Entry-ID van de bestemmingsvraag in het Google Form (voor prefill-links); controleren dat Tirana, Lefkas en Split exact als antwoordopties bestaan.
-- Instagram-account voor de footer (invullen in `src/config/site.ts`; e-mail staat op info@verborgenwijnroutes.nl).
 - Homepage-routelijst staat tijdelijk in `src/components/home/WijnRoutes.astro`; verhuizen naar een `wijnroutes`-collectie zodra de routepagina's gebouwd worden.
 
 ## Beeldmateriaal (inventaris)
