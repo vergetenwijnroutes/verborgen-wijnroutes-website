@@ -86,7 +86,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 
 - Juridisch: Stijn verkoopt een reisconcept; optioneel boekt hij voor €50 extra namens de klant, maar de klant betaalt de aanbieders altijd zelf. Waarschijnlijk geen pakketreisorganisator, maar de boekservice is het grijze gebied: kort laten checken (SGR/ANVR/jurist). Tot die tijd op de site nooit 'boek bij ons', 'pakket' of totaalprijzen; wel 'reisconcept' en 'aanvragen'.
 - Welke bestaande teksten hergebruikt worden.
-- Entry-ID van de bestemmingsvraag in het Google Form (voor prefill-links); controleren dat Tirana, Lefkas en Split exact als antwoordopties bestaan.
+- Prefill bestemmingsvraag: veld `entry.1648549759`, Tirana = `Tirana, Albanië (live)` (staat in `src/config/site.ts`, helper `aanvraagLink(route)`). Exacte antwoordteksten voor Lefkas en Split nog aan te leveren.
 - Homepage-routelijst staat tijdelijk in `src/components/home/WijnRoutes.astro`; verhuizen naar een `wijnroutes`-collectie zodra de routepagina's gebouwd worden.
 
 ## Beeldmateriaal (inventaris)

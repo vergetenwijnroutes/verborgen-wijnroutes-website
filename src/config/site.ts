@@ -14,6 +14,23 @@ export const site = {
 export const aanvraagFormulier =
   'https://docs.google.com/forms/d/e/1FAIpQLScY1gTmNCSi786n6iRpODb1UhbMeaeZk7QUMHH05STc2PkpSA/viewform';
 
+// Vooraf invullen van de bestemmingsvraag in het Google Form.
+// De waarde moet exact gelijk zijn aan de antwoordoptie in het formulier.
+export const bestemmingVeld = 'entry.1648549759';
+export const bestemmingOpties = {
+  tirana: 'Tirana, Albanië (live)',
+  // lefkas: nog aan te leveren (exacte tekst van de antwoordoptie)
+  // split: nog aan te leveren (exacte tekst van de antwoordoptie)
+} as Record<string, string>;
+
+/** Link naar het aanvraagformulier, met de bestemming al ingevuld als die bekend is. */
+export function aanvraagLink(route?: string): string {
+  const optie = route ? bestemmingOpties[route] : undefined;
+  if (!optie) return aanvraagFormulier;
+  const params = new URLSearchParams({ usp: 'pp_url', [bestemmingVeld]: optie });
+  return `${aanvraagFormulier}?${params.toString()}`;
+}
+
 export const navigatie = [
   { label: 'Wijnroutes', href: '/wijnroutes/' },
   { label: 'Inspiratie', href: '/inspiratie/' },
