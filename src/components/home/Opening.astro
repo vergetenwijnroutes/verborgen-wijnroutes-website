@@ -30,6 +30,27 @@ const fotos = [
 
 <section class="opening" aria-labelledby="opening-kop">
   <div class="wrap opening-grid">
+    <div class="opening-tekst">
+      <p class="label label--rood reveal">Persoonlijke wijnroutes · Albanië, Griekenland, Kroatië</p>
+
+      <h1 id="opening-kop" class="kop opening-kop reveal" style="--vertraging: 0.08s">
+        Stel jouw <em>persoonlijke</em> wijnreis samen
+      </h1>
+
+      <p class="opening-intro reveal" style="--vertraging: 0.12s">
+        Ik ken een paar plekken die je niet zomaar tegenkomt.
+      </p>
+
+      <p class="lead reveal" style="--vertraging: 0.16s">
+        Kleine wijnhuizen zonder bordje aan de weg. Tafels waar de eigenaar zelf kookt. Wijnen die in Nederland
+        bijna niemand kent. Ik ben er geweest — en ik help je er een reis van te maken die bij jullie past.
+      </p>
+
+      <a class="doorlink reveal" href="#wijnroutes" style="--vertraging: 0.22s">
+        Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span>
+      </a>
+    </div>
+
     <div class="carrousel reveal" data-carrousel>
       <ul class="carrousel-spoor" role="list" tabindex="0" aria-label="Foto's van onderweg, veeg of scroll om te bladeren">
         {
@@ -68,27 +89,6 @@ const fotos = [
           <button type="button" data-volgende aria-label="Volgende foto">→</button>
         </div>
       </div>
-    </div>
-
-    <div class="opening-tekst">
-      <p class="label label--rood reveal">Persoonlijke wijnroutes · Albanië, Griekenland, Kroatië</p>
-
-      <h1 id="opening-kop" class="kop opening-kop reveal" style="--vertraging: 0.08s">
-        Stel jouw <em>persoonlijke</em> wijnreis samen
-      </h1>
-
-      <p class="opening-intro reveal" style="--vertraging: 0.12s">
-        Ik ken een paar plekken die je niet zomaar tegenkomt.
-      </p>
-
-      <p class="lead reveal" style="--vertraging: 0.16s">
-        Kleine wijnhuizen zonder bordje aan de weg. Tafels waar de eigenaar zelf kookt. Wijnen die in Nederland
-        bijna niemand kent. Ik ben er geweest — en ik help je er een reis van te maken die bij jullie past.
-      </p>
-
-      <a class="doorlink reveal" href="#wijnroutes" style="--vertraging: 0.22s">
-        Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span>
-      </a>
     </div>
   </div>
 
@@ -148,7 +148,7 @@ const fotos = [
 <style>
   .opening {
     position: relative;
-    padding-top: 1.25rem;
+    padding-top: 2rem;
   }
 
   .opening-grid {
@@ -276,6 +276,10 @@ const fotos = [
     margin-top: 0.5rem;
   }
 
+  .carrousel {
+    margin-top: 0.5rem;
+  }
+
   .opening-lijn {
     width: 100%;
     height: 3.5rem;
@@ -302,6 +306,7 @@ const fotos = [
     .carrousel {
       grid-column: 7 / span 6;
       grid-row: 1;
+      margin-top: 0;
       margin-inline: 0 calc(var(--gutter) * -1);
     }
 
