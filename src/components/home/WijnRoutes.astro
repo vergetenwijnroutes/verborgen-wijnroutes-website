@@ -1,32 +1,11 @@
 ---
+import { getCollection } from 'astro:content';
 import RouteKaart from '../RouteKaart.astro';
 
-// Voorlopige routelijst voor de homepage.
-// Zodra de routepagina's gebouwd worden, komt deze lijst uit content/wijnroutes/
-// en verdwijnt dit blok.
-const routes = [
-  {
-    slug: 'tirana',
-    naam: 'Tirana',
-    land: 'Albanië',
-    status: 'actief',
-    regel: 'Familiewijnhuizen in de heuvels rond de hoofdstad, inheemse druiven en de beste tafels van de stad.',
-  },
-  {
-    slug: 'lefkas',
-    naam: 'Lefkas',
-    land: 'Griekenland',
-    status: 'binnenkort',
-    regel: 'Eilandwijn uit de Ionische Zee, ver van de bekende routes.',
-  },
-  {
-    slug: 'split',
-    naam: 'Split',
-    land: 'Kroatië',
-    status: 'binnenkort',
-    regel: 'De Dalmatische kust en het stille achterland erachter.',
-  },
-];
+// Routes komen uit content/wijnroutes/. Gearchiveerde routes staan niet op de homepage.
+const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 'gearchiveerd'))
+  .sort((a, b) => a.data.volgorde - b.data.volgorde)
+  .map((r) => ({ slug: r.id, ...r.data }));
 ---
 
 <section id="wijnroutes" class="routes" aria-labelledby="routes-kop">

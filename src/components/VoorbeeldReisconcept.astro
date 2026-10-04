@@ -1,0 +1,174 @@
+---
+import { Image } from 'astro:assets';
+import route from '../assets/reisconcept/reisconcept-route.jpg';
+import wijnhuis from '../assets/reisconcept/reisconcept-wijnhuis.jpg';
+import prijzen from '../assets/reisconcept/reisconcept-prijzen.jpg';
+
+// Drie schermen uit een echt reisconcept (zonder klantnaam), met uitleg.
+// Gebruikt op de homepage en op de routepagina's.
+interface Props {
+  fig: number;
+}
+const { fig } = Astro.props;
+
+const voorbeelden = [
+  { src: route, alt: 'Routekaart uit een persoonlijk reisconcept: de route door Ohrid en Albanië in zeven dagen, met alle wijnhuizen en adressen op de kaart' },
+  { src: wijnhuis, alt: 'Wijnhuis Çobo Winery uit een persoonlijk reisconcept, met beschrijving, links naar website en sociale media en een foto van de wijnkelder' },
+  { src: prijzen, alt: 'Prijsindicatie uit een persoonlijk reisconcept, met per wijnhuis, activiteit en overnachting een indicatieve prijs' },
+];
+---
+
+<div class="voorbeeld">
+  <div class="voorbeeld-tekst reveal">
+    <p class="label label--rood">Voorbeeld</p>
+    <p class="lead">
+      Geen standaardprogramma. Na je aanvraag stel ik op basis van jullie wensen een persoonlijk reisconcept
+      samen.
+    </p>
+  </div>
+
+  <figure class="voorbeeld-schermen reveal" data-carrousel>
+    <div class="schermen" data-spoor tabindex="0" aria-label="Schermen uit een voorbeeld-reisconcept, veeg om te bladeren">
+      {
+        voorbeelden.map((scherm, i) => (
+          <div class={`scherm scherm--${i + 1}`} data-dia>
+            <Image src={scherm.src} alt={scherm.alt} widths={[260, 390, 520]} sizes="(min-width: 60rem) 16vw, 64vw" />
+          </div>
+        ))
+      }
+    </div>
+    <div class="carrousel-bediening voorbeeld-bediening">
+      <p class="carrousel-teller label" aria-live="polite">
+        <span data-huidig>01</span> / {String(voorbeelden.length).padStart(2, '0')}
+        <span class="veeg-hint" aria-hidden="true">· veeg →</span>
+      </p>
+      <div class="carrousel-knoppen">
+        <button type="button" data-vorige aria-label="Vorig scherm">←</button>
+        <button type="button" data-volgende aria-label="Volgend scherm">→</button>
+      </div>
+    </div>
+    <figcaption class="bijschrift">
+      <b>Fig. {fig}</b>
+      <span>
+        Dit kun je verwachten van jouw persoonlijke reisconcept. Elke reis krijgt een eigen pagina, zodat de
+        voorpret al begint voordat je vertrekt. En natuurlijk passen we het concept aan op basis van jouw
+        feedback.
+      </span>
+    </figcaption>
+  </figure>
+</div>
+
+<style>
+  .voorbeeld {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    margin-top: clamp(3rem, 7vw, 5rem);
+  }
+
+  .voorbeeld-tekst {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 26rem;
+  }
+
+  /* Mobiel: de schermen naast elkaar om doorheen te vegen, groot genoeg om te lezen */
+  .voorbeeld-schermen {
+    min-width: 0;
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
+  .schermen {
+    display: flex;
+    gap: 0.75rem;
+    align-items: start;
+    padding: 0 var(--gutter) 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .schermen::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scherm {
+    flex: 0 0 64%;
+    scroll-snap-align: start;
+  }
+
+  .voorbeeld-schermen .bijschrift {
+    padding-inline: var(--gutter);
+  }
+
+  .scherm {
+    overflow: hidden;
+    margin: 0;
+    border: 1px solid var(--inkt);
+    box-shadow: 0 1px 0 var(--inkt);
+    background: #f5f0e8;
+  }
+
+  .scherm img {
+    width: 100%;
+  }
+
+  .scherm--2 {
+    margin-top: 2.5rem;
+  }
+
+  .scherm--3 {
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: 60rem) {
+    .voorbeeld {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: center;
+    }
+
+    .voorbeeld-tekst {
+      grid-column: 1 / span 4;
+    }
+
+    .voorbeeld-schermen {
+      grid-column: 6 / span 7;
+      margin-inline: 0;
+    }
+
+    .voorbeeld-schermen .bijschrift {
+      padding-inline: 0;
+    }
+
+    .schermen {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      padding: 0;
+      overflow: visible;
+    }
+  }
+
+  .voorbeeld-bediening {
+    padding-inline: var(--gutter);
+    margin-top: 0.75rem;
+  }
+
+  .veeg-hint {
+    margin-left: 0.5rem;
+    color: var(--potlood);
+  }
+
+  /* Op desktop staan de drie schermen naast elkaar: geen bediening nodig */
+  @media (min-width: 60rem) {
+    .voorbeeld-bediening {
+      display: none;
+    }
+  }
+</style>
+<script>
+  import '../scripts/carrousel';
+</script>

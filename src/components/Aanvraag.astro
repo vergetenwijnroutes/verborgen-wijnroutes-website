@@ -1,5 +1,21 @@
 ---
-import { aanvraagFormulier } from '../../config/site';
+import { aanvraagLink } from '../config/site';
+
+// Terugkerend aanvraagblok. Met `route` wordt de bestemming in het Google Form al ingevuld.
+interface Props {
+  route?: string;
+  kop?: string;
+  nadruk?: string;
+  tekst?: string;
+  knop?: string;
+}
+const {
+  route,
+  kop = 'Zullen we kijken welke route',
+  nadruk = 'bij jullie past?',
+  tekst = 'Vertel me met wie je reist, wat je graag drinkt en waar je zin in hebt. Ik kijk er persoonlijk naar en neem contact met je op. Daarna maak ik een eerste reisconcept, en dat stemmen we samen af.',
+  knop = 'Vraag jouw wijnreis aan',
+} = Astro.props;
 ---
 
 <section class="aanvraag" aria-labelledby="aanvraag-kop">
@@ -7,18 +23,15 @@ import { aanvraagFormulier } from '../../config/site';
     <div class="aanvraag-grid">
       <div class="aanvraag-kop">
         <p class="label label--rood reveal">Een uitnodiging</p>
-        <h2 id="aanvraag-kop" class="kop kop--xl reveal">Zullen we kijken welke route <em>bij jullie past?</em></h2>
+        <h2 id="aanvraag-kop" class="kop kop--xl reveal">{kop} <em>{nadruk}</em></h2>
       </div>
 
       <div class="aanvraag-brief reveal">
-        <p class="lead">
-          Vertel me met wie je reist, wat je graag drinkt en waar je zin in hebt. Ik kijk er persoonlijk naar en
-          neem contact met je op. Daarna maak ik een eerste reisconcept, en dat stemmen we samen af.
-        </p>
+        <p class="lead">{tekst}</p>
         <p class="aanvraag-handtekening notitie" aria-hidden="true">— Stijn</p>
 
-        <a class="aanvraag-knop" href={aanvraagFormulier} target="_blank" rel="noopener">
-          <span>Vraag jouw wijnreis aan</span>
+        <a class="aanvraag-knop" href={aanvraagLink(route)} target="_blank" rel="noopener">
+          <span>{knop}</span>
           <span class="pijl" aria-hidden="true">→</span>
           <span class="sr-only">(opent een formulier in een nieuw tabblad)</span>
         </a>

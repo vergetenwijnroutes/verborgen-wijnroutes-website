@@ -81,13 +81,16 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 ## Status
 
 - Homepage (`/`) is af en goedgekeurd door Stijn. Volgende pagina's worden pas gebouwd als hij daarom vraagt.
+- Routes staan in `content/wijnroutes/*.md` (schema in `src/content.config.ts`); homepage en routepagina lezen daaruit.
+- `/wijnroutes/tirana/` gebouwd (template `src/pages/wijnroutes/[slug].astro`, genereert nu alleen `actief`-routes). Wacht op feedback van Stijn.
+- Nog te bouwen: `/wijnroutes/` (overzicht) en de binnenkort-variant voor Lefkas en Split.
+- Tirana-content: Stijn wil niet alles weggeven. Alleen Tufa Winery en wijnbar Vena bij naam; overige plekken vaag omschrijven ("namen en adressen in je reisconcept"). Geen vaste route: Tirana + ± 1 uur rijden. Niet pushen op september; het hele jaar kan (zomer 35–40 °C).
 
 ## Nog open
 
 - Juridisch: Stijn verkoopt een reisconcept; optioneel boekt hij voor €50 extra namens de klant, maar de klant betaalt de aanbieders altijd zelf. Waarschijnlijk geen pakketreisorganisator, maar de boekservice is het grijze gebied: kort laten checken (SGR/ANVR/jurist). Tot die tijd op de site nooit 'boek bij ons', 'pakket' of totaalprijzen; wel 'reisconcept' en 'aanvragen'.
 - Welke bestaande teksten hergebruikt worden.
 - Prefill bestemmingsvraag: veld `entry.1648549759`, Tirana = `Tirana, Albanië (live)`, Lefkas = `Lefkas, Griekenland (komt eraan)`, Split = `Split, Kroatië (komt eraan)` (in `src/config/site.ts`, helper `aanvraagLink(route)`). Wijzigt Stijn een antwoordoptie in het formulier, dan hier ook aanpassen.
-- Homepage-routelijst staat tijdelijk in `src/components/home/WijnRoutes.astro`; verhuizen naar een `wijnroutes`-collectie zodra de routepagina's gebouwd worden.
 
 ## Beeldmateriaal (inventaris)
 

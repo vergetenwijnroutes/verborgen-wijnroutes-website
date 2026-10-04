@@ -1,0 +1,902 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Aanvraag from '../../components/Aanvraag.astro';
+import VoorbeeldReisconcept from '../../components/VoorbeeldReisconcept.astro';
+import TiranaKaart from '../../components/kaarten/TiranaKaart.astro';
+import { aanvraagLink, site } from '../../config/site';
+
+// Eén template voor alle routes. Voorlopig alleen actieve routes;
+// de binnenkort-variant (Lefkas, Split) volgt in een volgende stap.
+export async function getStaticPaths() {
+  const routes = await getCollection('wijnroutes', ({ data }) => data.status === 'actief');
+  return routes.map((route) => ({ params: { slug: route.id }, props: { route } }));
+}
+
+interface Props {
+  route: CollectionEntry<'wijnroutes'>;
+}
+
+const { route } = Astro.props;
+const d = route.data;
+const slug = route.id;
+const { Content } = await render(route);
+
+// Kaart per route; een nieuwe route krijgt hier zijn eigen kaart.
+const kaarten: Record<string, typeof TiranaKaart> = { tirana: TiranaKaart };
+const Kaart = kaarten[slug];
+
+const alleRoutes = (await getCollection('wijnroutes', ({ data }) => data.status !== 'gearchiveerd')).sort(
+  (a, b) => a.data.volgorde - b.data.volgorde,
+);
+const nummer = String(alleRoutes.findIndex((r) => r.id === slug) + 1).padStart(2, '0');
+const andereRoutes = alleRoutes.filter((r) => r.id !== slug);
+
+const artikelen = (await getCollection('inspiratie', ({ data }) => !data.concept && data.route === slug))
+  .sort((a, b) => b.data.datum.getTime() - a.data.datum.getTime())
+  .slice(0, 3);
+
+let fig = 0;
+const volgendeFig = () => ++fig;
+
+const url = new URL(`/wijnroutes/${slug}/`, site.url).href;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Wijnroutes', item: new URL('/wijnroutes/', site.url).href },
+      { '@type': 'ListItem', position: 3, name: d.naam, item: url },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'TouristTrip',
+    name: d.h1 ?? `Wijnroute ${d.naam}`,
+    description: d.seoOmschrijving ?? d.regel,
+    url,
+    inLanguage: 'nl-NL',
+    touristType: 'Wijnliefhebbers',
+    provider: { '@type': 'TravelAgency', name: site.naam, url: site.url },
+    itinerary: { '@type': 'Place', name: `${d.naam}, ${d.land}` },
+  },
+];
+---
+
+<BaseLayout
+  titel={d.seoTitel ?? `Wijnroute ${d.naam} | ${site.naam}`}
+  omschrijving={d.seoOmschrijving ?? d.regel}
+  deelbeeld={d.hoofdfoto}
+  deelbeeldAlt={d.hoofdfotoAlt}
+  jsonLd={jsonLd}
+>
+  <!-- Opening -->
+  <section class="r-opening" aria-labelledby="route-kop">
+    <div class="wrap r-opening-grid">
+      <div class="r-opening-tekst">
+        <nav class="kruimel label" aria-label="Kruimelpad">
+          <a href="/">Home</a><span class="kruimel-streep" aria-hidden="true">/</span><a href="/wijnroutes/">Wijnroutes</a><span class="kruimel-streep" aria-hidden="true">/</span><span aria-current="page">{d.naam}</span>
+        </nav>
+
+        <p class="label label--rood reveal">Wijnroute {nummer} · {d.land} · Nu te ontdekken</p>
+        <h1 id="route-kop" class="kop r-kop reveal">{d.h1 ?? d.naam}</h1>
+        {d.intro && <p class="r-intro reveal">{d.intro}</p>}
+        {d.lead && <p class="lead reveal">{d.lead}</p>}
+
+        <a class="r-knop reveal" href={aanvraagLink(slug)} target="_blank" rel="noopener">
+          <span>Vraag jouw wijnreis aan</span>
+          <span class="pijl" aria-hidden="true">→</span>
+          <span class="sr-only">(opent een formulier in een nieuw tabblad)</span>
+        </a>
+      </div>
+
+      {
+        d.hoofdfoto && (
+          <figure class="r-opening-foto reveal">
+            <div class="foto reveal-foto">
+              <Picture
+                src={d.hoofdfoto}
+                formats={['avif', 'webp']}
+                widths={[420, 640, 900, 1200]}
+                sizes="(min-width: 60rem) 42vw, 100vw"
+                alt={d.hoofdfotoAlt ?? ''}
+                loading="eager"
+                fetchpriority="high"
+              />
+            </div>
+            {d.hoofdfotoBijschrift && (
+              <figcaption class="bijschrift">
+                <b>Fig. {volgendeFig()}</b>
+                <span>{d.hoofdfotoBijschrift}</span>
+              </figcaption>
+            )}
+          </figure>
+        )
+      }
+
+      {
+        d.feiten.length > 0 && (
+          <dl class="feiten reveal">
+            {d.feiten.map((f) => (
+              <div class="feit">
+                <dt class="label">{f.label}</dt>
+                <dd>{f.waarde}</dd>
+              </div>
+            ))}
+          </dl>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Waarom deze route -->
+  <section class="r-sectie" aria-labelledby="waarom-kop">
+    <div class="wrap r-twee">
+      <div class="r-kopkolom">
+        <div class="rubriek reveal"><p class="label">Waarom deze route</p></div>
+        <h2 id="waarom-kop" class="kop kop--l reveal">Wijn die je hier <em>niet verwacht.</em></h2>
+      </div>
+      <div class="tekst r-verhaal reveal">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  <!-- Wat je proeft -->
+  {
+    d.druiven && (
+      <section class="r-sectie" aria-labelledby="proeven-kop">
+        <div class="wrap r-twee">
+          <div class="r-kopkolom">
+            <div class="rubriek reveal"><p class="label">Wat je proeft</p></div>
+            <h2 id="proeven-kop" class="kop kop--l reveal">
+              Inheemse druiven, <em>en meer.</em>
+            </h2>
+            <p class="tekst reveal">{d.druiven.intro}</p>
+          </div>
+
+          <div class="druiven reveal">
+            <h3 class="label">Lokale druiven</h3>
+            <ul class="druif-lijst" role="list">
+              {d.druiven.inheems.map((druif) => (
+                <li>
+                  <span class="druif-naam">{druif.naam}</span>
+                  <span class="druif-kleur label">{druif.kleur}</span>
+                </li>
+              ))}
+            </ul>
+
+            <h3 class="label">Internationale druiven</h3>
+            <p class="druif-internationaal">{d.druiven.internationaal.join(' · ')}</p>
+
+            <h3 class="label">Stijlen</h3>
+            <p class="druif-stijlen">{d.druiven.stijlen}</p>
+
+            {d.druiven.notitie && (
+              <p class="notitie druif-notitie" aria-hidden="true">
+                {d.druiven.notitie}
+              </p>
+            )}
+            {d.druiven.notitie && <p class="sr-only">{d.druiven.notitie}</p>}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- De route in vogelvlucht -->
+  {
+    Kaart && (
+      <section class="r-sectie" aria-labelledby="gebied-kop">
+        <div class="wrap r-twee r-twee--kaart">
+          <div class="r-kopkolom">
+            <div class="rubriek reveal"><p class="label">De route in vogelvlucht</p></div>
+            <h2 id="gebied-kop" class="kop kop--l reveal">
+              Geen vaste route. <em>Wel een vaste basis.</em>
+            </h2>
+            {d.gebied && <p class="tekst reveal">{d.gebied}</p>}
+          </div>
+          <figure class="r-kaart reveal">
+            <Kaart />
+            <figcaption class="bijschrift">
+              <b>Kaart</b>
+              <span>Het werkgebied van deze route. Schematisch, zonder adressen.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Momenten -->
+  {
+    d.momenten.length > 0 && (
+      <section class="r-sectie" aria-labelledby="momenten-kop">
+        <div class="wrap">
+          <div class="rubriek reveal"><p class="label">Uit het notitieboek</p></div>
+          <h2 id="momenten-kop" class="kop kop--l r-sectiekop reveal">
+            Twee plekken <em>waar ik graag terugkom.</em>
+          </h2>
+
+          <div class="momenten">
+            {d.momenten.map((m, i) => (
+              <article class:list={['moment', i % 2 === 1 && 'moment--om']}>
+                <div class="moment-tekst reveal">
+                  <p class="label label--rood">{m.soort}</p>
+                  <h3 class="kop kop--m">{m.naam}</h3>
+                  <p class="tekst">{m.tekst}</p>
+                </div>
+                <figure class="moment-foto reveal">
+                  <div class="foto reveal-foto">
+                    <Picture
+                      src={m.foto}
+                      formats={['avif', 'webp']}
+                      widths={[420, 640, 900]}
+                      sizes="(min-width: 60rem) 36vw, 100vw"
+                      alt={m.fotoAlt}
+                      style={m.positie ? `object-position: ${m.positie}` : undefined}
+                    />
+                  </div>
+                  <figcaption class="bijschrift">
+                    <b>Fig. {volgendeFig()}</b>
+                    <span>{m.naam}.</span>
+                  </figcaption>
+                </figure>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Plekken die ik ken -->
+  {
+    d.plekken.length > 0 && (
+      <section class="r-sectie" aria-labelledby="plekken-kop">
+        <div class="wrap r-twee">
+          <div class="r-kopkolom">
+            <div class="rubriek reveal"><p class="label">Plekken die ik ken</p></div>
+            <h2 id="plekken-kop" class="kop kop--l reveal">
+              En verder… <em>een paar voorproefjes.</em>
+            </h2>
+          </div>
+          <div>
+            <ul class="plekken" role="list">
+              {d.plekken.map((p, i) => (
+                <li class="plek reveal" style={`--vertraging: ${i * 0.06}s`}>
+                  <h3 class="plek-soort">{p.soort}</h3>
+                  <p class="plek-tekst">{p.tekst}</p>
+                </li>
+              ))}
+            </ul>
+            <p class="plekken-noot label reveal">Namen en adressen krijg je in je persoonlijke reisconcept.</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Aan tafel -->
+  {
+    d.tafel && (
+      <section class="r-tafel" aria-labelledby="tafel-kop">
+        <div class="wrap r-tafel-grid">
+          <div class="rubriek r-tafel-rubriek reveal"><p class="label">Aan tafel</p></div>
+          <h2 id="tafel-kop" class="kop kop--l r-tafel-kop reveal">
+            Eten hoort <em>bij de wijn.</em>
+          </h2>
+          <p class="tekst r-tafel-tekst reveal">{d.tafel.tekst}</p>
+          {d.tafel.fotos.map((f, i) => (
+            <figure class:list={['r-tafel-foto', `r-tafel-foto--${i + 1}`, 'reveal']}>
+              <div class="foto reveal-foto">
+                <Picture
+                  src={f.foto}
+                  formats={['avif', 'webp']}
+                  widths={[420, 640, 900]}
+                  sizes="(min-width: 60rem) 30vw, 100vw"
+                  alt={f.alt}
+                  class:list={[f.warm && 'warm']}
+                />
+              </div>
+              <figcaption class="bijschrift">
+                <b>Fig. {volgendeFig()}</b>
+                <span>{f.bijschrift}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Wanneer -->
+  {
+    d.seizoenen.length > 0 && (
+      <section class="r-sectie" aria-labelledby="wanneer-kop">
+        <div class="wrap">
+          <div class="rubriek reveal"><p class="label">Wanneer</p></div>
+          <div class="r-twee r-twee--strak">
+            <h2 id="wanneer-kop" class="kop kop--l reveal">
+              Het hele jaar <em>open.</em>
+            </h2>
+            {d.seizoenenIntro && <p class="tekst reveal">{d.seizoenenIntro}</p>}
+          </div>
+          <ol class="seizoenen" role="list">
+            {d.seizoenen.map((s, i) => (
+              <li class="seizoen reveal" style={`--vertraging: ${i * 0.06}s`}>
+                <h3 class="seizoen-naam">{s.naam}</h3>
+                <p class="label">{s.maanden}</p>
+                <p class="seizoen-tekst">{s.tekst}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Voorbeeld reisconcept -->
+  <section class="r-sectie" aria-labelledby="voorbeeld-kop">
+    <div class="wrap">
+      <div class="rubriek reveal"><p class="label">Van deze route naar jouw reis</p></div>
+      <h2 id="voorbeeld-kop" class="kop kop--l r-sectiekop reveal">
+        Je krijgt geen brochure, <em>maar een eigen reisconcept.</em>
+      </h2>
+      <VoorbeeldReisconcept fig={volgendeFig()} />
+    </div>
+  </section>
+
+  <Aanvraag
+    route={slug}
+    kop={`Zin in ${d.naam}?`}
+    nadruk="Vertel me wat je zoekt."
+    tekst={`Met wie je reist, wat je graag drinkt en waar je zin in hebt. ${d.naam} staat in het formulier al ingevuld. Ik kijk er persoonlijk naar en neem contact met je op.`}
+  />
+
+  {
+    artikelen.length > 0 && (
+      <section class="r-sectie" aria-labelledby="meer-kop">
+        <div class="wrap">
+          <div class="rubriek"><p class="label">Meer over {d.naam}</p></div>
+          <h2 id="meer-kop" class="sr-only">Meer over {d.naam}</h2>
+          <ul class="meer" role="list">
+            {artikelen.map((a) => (
+              <li>
+                <a href={`/inspiratie/${a.id}/`}>{a.data.titel}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Andere routes -->
+  {
+    andereRoutes.length > 0 && (
+      <section class="r-sectie r-anders" aria-labelledby="anders-kop">
+        <div class="wrap">
+          <div class="rubriek"><p class="label">Andere wijnroutes</p></div>
+          <h2 id="anders-kop" class="sr-only">Andere wijnroutes</h2>
+          <ul class="anders" role="list">
+            {andereRoutes.map((r) => (
+              <li>
+                <a href={`/wijnroutes/${r.id}/`}>
+                  <span class="anders-naam">{r.data.naam}</span>
+                  <span class="label">
+                    {r.data.land} · {r.data.status === 'actief' ? 'Nu te ontdekken' : 'Binnenkort'}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  /* ---------- Opening ---------- */
+
+  .r-opening {
+    padding-top: 1.5rem;
+  }
+
+  .r-opening-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .r-opening-tekst {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.15rem;
+  }
+
+  .kruimel {
+    color: var(--potlood);
+    margin-bottom: 0.5rem;
+  }
+
+  .kruimel a {
+    text-decoration: none;
+  }
+
+  .kruimel-streep {
+    margin-inline: 0.6em;
+  }
+
+  .kruimel a:hover {
+    color: var(--rood);
+  }
+
+  .r-kop {
+    font-size: clamp(2.2rem, 5.6vw, 4.2rem);
+    line-height: 1.03;
+    letter-spacing: -0.024em;
+  }
+
+  .r-intro {
+    font-size: clamp(1.3rem, 2.2vw, 1.65rem);
+    font-style: italic;
+    line-height: 1.3;
+    color: var(--rood);
+    text-wrap: balance;
+  }
+
+  .r-opening-tekst .lead {
+    max-width: 32rem;
+  }
+
+  .r-knop {
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    padding: 1.05rem 1.5rem 1.05rem 1.6rem;
+    background: var(--rood);
+    color: var(--papier);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .r-knop:hover {
+    background: var(--inkt);
+  }
+
+  .r-knop .pijl {
+    transition: transform 0.3s ease;
+  }
+
+  .r-knop:hover .pijl {
+    transform: translateX(0.3em);
+  }
+
+  .r-opening-foto {
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
+  .r-opening-foto .foto {
+    aspect-ratio: 4 / 5;
+  }
+
+  .r-opening-foto img {
+    object-position: 50% 62%;
+  }
+
+  .r-opening-foto .bijschrift {
+    padding-inline: var(--gutter);
+  }
+
+  .feiten {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 0;
+    border-top: 1px solid var(--inkt);
+  }
+
+  .feit {
+    padding: 0.9rem 0.75rem 1rem 0;
+    border-bottom: 1px solid var(--lijn);
+  }
+
+  .feit dt {
+    color: var(--potlood);
+  }
+
+  .feit dd {
+    margin: 0.3rem 0 0;
+    font-size: 1.02rem;
+    line-height: 1.35;
+  }
+
+  /* ---------- Algemene secties ---------- */
+
+  .r-sectie {
+    padding-top: var(--sectie);
+  }
+
+  .r-twee {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .r-kopkolom {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .r-twee--strak {
+    margin-top: 1.25rem;
+  }
+
+  .r-sectiekop {
+    margin-top: 1.25rem;
+    max-width: 46rem;
+  }
+
+  .r-verhaal :global(p + p) {
+    margin-top: 1em;
+  }
+
+  /* ---------- Druiven ---------- */
+
+  .druiven {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .druiven h3 {
+    margin-top: 1.25rem;
+  }
+
+  .druiven h3:first-child {
+    margin-top: 0;
+  }
+
+  .druif-lijst {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--inkt);
+  }
+
+  .druif-lijst li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.8rem;
+    border-bottom: 1px solid var(--lijn);
+  }
+
+  .druif-naam {
+    font-size: clamp(1.45rem, 2.4vw, 1.9rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .druif-kleur {
+    color: var(--potlood);
+  }
+
+  .druif-internationaal,
+  .druif-stijlen {
+    color: var(--inkt-zacht);
+    font-size: 1.05rem;
+  }
+
+  .druif-notitie {
+    margin-top: 1rem;
+    font-size: 1.9rem;
+    transform: rotate(-2deg);
+    transform-origin: left;
+  }
+
+  /* ---------- Kaart ---------- */
+
+  .r-kaart {
+    max-width: 24rem;
+    width: 100%;
+    justify-self: center;
+  }
+
+  /* ---------- Momenten ---------- */
+
+  .momenten {
+    display: grid;
+    gap: 3rem;
+    margin-top: 2.25rem;
+  }
+
+  .moment {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+
+  .moment-tekst {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .moment-foto .foto {
+    aspect-ratio: 4 / 5;
+  }
+
+  /* ---------- Plekken ---------- */
+
+  .plekken {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--inkt);
+  }
+
+  .plek {
+    padding-block: 1.1rem 1.25rem;
+    border-bottom: 1px solid var(--lijn);
+  }
+
+  .plek-soort {
+    font-size: clamp(1.3rem, 2vw, 1.55rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .plek-tekst {
+    margin-top: 0.3rem;
+    color: var(--inkt-zacht);
+    font-size: 1.02rem;
+  }
+
+  .plekken-noot {
+    margin-top: 1rem;
+    color: var(--rood);
+  }
+
+  /* ---------- Aan tafel ---------- */
+
+  .r-tafel {
+    margin-top: var(--sectie);
+    padding-block: clamp(3rem, 7vw, 6rem);
+    background: var(--papier-diep);
+  }
+
+  .r-tafel-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .r-tafel-foto .foto {
+    aspect-ratio: 4 / 5;
+  }
+
+  .r-tafel-foto--1 img {
+    object-position: 60% 30%;
+  }
+
+  .r-tafel-foto--2 {
+    max-width: 78%;
+    justify-self: end;
+  }
+
+  .warm {
+    filter: sepia(0.22) saturate(0.92);
+  }
+
+  /* ---------- Seizoenen ---------- */
+
+  .seizoenen {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    border-top: 1px solid var(--inkt);
+  }
+
+  .seizoen {
+    padding: 1rem 0.9rem 1.25rem 0;
+    border-bottom: 1px solid var(--lijn);
+  }
+
+  .seizoen-naam {
+    font-size: 1.45rem;
+    font-weight: 400;
+    line-height: 1.1;
+  }
+
+  .seizoen .label {
+    margin-top: 0.3rem;
+    color: var(--potlood);
+  }
+
+  .seizoen-tekst {
+    margin-top: 0.6rem;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--inkt-zacht);
+  }
+
+  /* ---------- Meer & andere routes ---------- */
+
+  .meer,
+  .anders {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 0;
+  }
+
+  .anders a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--lijn);
+    text-decoration: none;
+  }
+
+  .anders-naam {
+    font-size: clamp(1.7rem, 3vw, 2.4rem);
+    line-height: 1;
+    color: var(--inkt-zacht);
+  }
+
+  .anders a:hover .anders-naam {
+    color: var(--rood);
+    font-style: italic;
+  }
+
+  /* ---------- Desktop ---------- */
+
+  @media (min-width: 60rem) {
+    .r-opening {
+      padding-top: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .r-opening-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      row-gap: 3rem;
+      align-items: center;
+    }
+
+    .r-opening-tekst {
+      grid-column: 1 / span 6;
+      gap: 1.5rem;
+    }
+
+    .r-knop {
+      align-self: flex-start;
+    }
+
+    .r-opening-foto {
+      grid-column: 8 / span 5;
+      margin-inline: 0 calc(var(--gutter) * -1);
+    }
+
+    .r-opening-foto .bijschrift {
+      padding-inline: 0;
+    }
+
+    .feiten {
+      grid-column: 1 / -1;
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: var(--gutter);
+    }
+
+    .r-twee {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      margin-top: 0;
+    }
+
+    .r-twee > :first-child {
+      grid-column: 1 / span 5;
+    }
+
+    .r-twee > :last-child {
+      grid-column: 7 / span 6;
+    }
+
+    .r-twee--kaart {
+      align-items: center;
+    }
+
+    .r-twee--strak {
+      align-items: end;
+      margin-top: 1.25rem;
+    }
+
+    .r-kaart {
+      max-width: 26rem;
+    }
+
+    .momenten {
+      gap: 5rem;
+      margin-top: 3rem;
+    }
+
+    .moment {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: center;
+    }
+
+    .moment-tekst {
+      grid-column: 1 / span 5;
+    }
+
+    .moment-foto {
+      grid-column: 7 / span 5;
+    }
+
+    .moment--om .moment-tekst {
+      grid-column: 8 / span 5;
+      grid-row: 1;
+    }
+
+    .moment--om .moment-foto {
+      grid-column: 2 / span 5;
+      grid-row: 1;
+    }
+
+    .r-tafel-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      row-gap: 2rem;
+    }
+
+    .r-tafel-rubriek {
+      grid-column: 1 / -1;
+    }
+
+    .r-tafel-kop {
+      grid-column: 1 / span 5;
+      grid-row: 2;
+    }
+
+    .r-tafel-tekst {
+      grid-column: 1 / span 4;
+      grid-row: 3;
+    }
+
+    .r-tafel-foto--1 {
+      grid-column: 6 / span 4;
+      grid-row: 2 / span 3;
+    }
+
+    .r-tafel-foto--2 {
+      grid-column: 10 / span 3;
+      grid-row: 3 / span 2;
+      max-width: none;
+      justify-self: stretch;
+    }
+
+    .seizoenen {
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: var(--gutter);
+    }
+  }
+</style>

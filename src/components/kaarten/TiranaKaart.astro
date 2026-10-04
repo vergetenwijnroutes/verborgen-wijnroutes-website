@@ -1,0 +1,47 @@
+---
+// Schematische regiokaart: Tirana en ongeveer een uur rijden daaromheen.
+// Coördinaten afgeleid van echte lengte- en breedtegraden, bewust vereenvoudigd:
+// richting en afstand, geen adressen.
+---
+
+<svg class="regiokaart" viewBox="0 -10 380 400" role="img" aria-labelledby="regio-titel regio-omschrijving">
+  <title id="regio-titel">Kaart van de wijnroute rond Tirana</title>
+  <desc id="regio-omschrijving">
+    Schematische kaart van Midden-Albanië met Tirana in het midden en een cirkel van ongeveer een uur rijden, met
+    Durrës aan de kust, Krujë in het noorden en Elbasan in het zuidoosten.
+  </desc>
+
+  <path d="M67.5 0.0 L90.0 42.0 L112.5 51.0 L132.7 60.0 L130.5 90.0 L117.0 114.0 L99.0 126.0 L112.5 144.0 L112.5 165.0 L103.5 189.0 L99.0 207.0 L112.5 225.0 L110.2 246.0 L105.7 285.0 L96.7 315.0 L87.8 345.0 L78.8 375.0" fill="none" stroke="var(--olijf)" stroke-width="1.1" stroke-linejoin="round" stroke-linecap="round" />
+  <text x="40" y="300" font-family="var(--serif)" font-style="italic" font-size="14" fill="var(--potlood)" transform="rotate(-80 40 300)">Adriatische Zee</text>
+
+  <circle class="regio-straal" cx="184.5" cy="201.0" r="135" fill="color-mix(in srgb, var(--rood) 5%, transparent)" stroke="var(--rood)" stroke-width="1" stroke-dasharray="3 5" />
+  <text x="184.5" y="356" text-anchor="middle" font-family="var(--mono)" font-size="9" letter-spacing="1.5" fill="var(--rood)">± 1 UUR RIJDEN</text>
+
+  <g font-family="var(--serif)" font-size="13" fill="var(--inkt-zacht)">
+    <circle cx="101.2" cy="204.0" r="2.6" fill="var(--papier)" stroke="var(--olijf)" stroke-width="1" />
+    <text x="93.2" y="208.0" text-anchor="end">Durrës</text>
+    <circle cx="177.7" cy="147.0" r="2.6" fill="var(--papier)" stroke="var(--olijf)" stroke-width="1" />
+    <text x="185.7" y="151.0" text-anchor="start">Krujë</text>
+    <circle cx="243.0" cy="267.0" r="2.6" fill="var(--papier)" stroke="var(--olijf)" stroke-width="1" />
+    <text x="251.0" y="271.0" text-anchor="start">Elbasan</text>
+  </g>
+
+  <g>
+    <circle cx="184.5" cy="201.0" r="11" fill="none" stroke="var(--rood)" stroke-width="0.8" opacity="0.5" />
+    <circle cx="184.5" cy="201.0" r="5" fill="var(--rood)" />
+    <text x="199.5" y="207.0" font-family="var(--serif)" font-size="20" fill="var(--inkt)">Tirana</text>
+  </g>
+
+  <text x="250" y="70" font-family="var(--mono)" font-size="9" letter-spacing="2" fill="var(--potlood)">ALBANIË</text>
+  <g font-family="var(--mono)" font-size="8" fill="var(--potlood)">
+    <text x="352" y="14">N</text>
+    <path d="M355 20 L355 36" stroke="var(--potlood)" stroke-width="0.8" />
+  </g>
+</svg>
+
+<style>
+  .regiokaart {
+    width: 100%;
+    overflow: visible;
+  }
+</style>
