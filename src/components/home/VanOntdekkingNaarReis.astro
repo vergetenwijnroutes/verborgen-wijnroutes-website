@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import opening from '../../assets/reisconcept/voorbeeld-opening.png';
 import route from '../../assets/reisconcept/voorbeeld-route.png';
-import wijnmoment from '../../assets/reisconcept/voorbeeld-wijnmoment.png';
+import wijnhuis from '../../assets/reisconcept/voorbeeld-wijnhuis.png';
 
 const stappen = [
   { kop: 'Je ontdekt een route.', tekst: 'Je leest over een streek, een wijn of een tafel en denkt: daar wil ik heen.' },
@@ -13,7 +13,7 @@ const stappen = [
 const voorbeelden = [
   { src: opening, alt: 'Openingsscherm van een voorbeeld-reisconcept: “Een persoonlijke wijnreis voor Sophie & Thomas”, Albanië' },
   { src: route, alt: 'Routekaart uit een voorbeeld-reisconcept: zeven dagen door Albanië, met Tirana, Durrës en de Albanese kust' },
-  { src: wijnmoment, alt: 'Wijnmoment uit een voorbeeld-reisconcept over de Albanese druif Shesh i Bardhë' },
+  { src: wijnhuis, alt: 'Kaart van wijnhuis Kantina Enol uit een voorbeeld-reisconcept, met beschrijving, link en een foto van het terras' },
 ];
 ---
 
@@ -51,14 +51,18 @@ const voorbeelden = [
           {
             voorbeelden.map((scherm, i) => (
               <div class={`scherm scherm--${i + 1}`}>
-                <Image src={scherm.src} alt={scherm.alt} widths={[260, 390, 520]} sizes="(min-width: 60rem) 16vw, 42vw" />
+                <Image src={scherm.src} alt={scherm.alt} widths={[260, 390, 520]} sizes="(min-width: 60rem) 16vw, 64vw" />
               </div>
             ))
           }
         </div>
         <figcaption class="bijschrift">
-          <b>Fig. 6</b>
-          <span>Fragmenten uit een voorbeeld-reisconcept voor een fictief stel. Elke reis krijgt een eigen pagina.</span>
+          <b>Fig. 7</b>
+          <span>
+            Dit kun je verwachten van jouw persoonlijke reisconcept. Elke reis krijgt een eigen pagina, zodat de
+            voorpret al begint voordat je vertrekt. En natuurlijk passen we het concept aan op basis van jouw
+            feedback.
+          </span>
         </figcaption>
       </figure>
     </div>
@@ -124,15 +128,38 @@ const voorbeelden = [
     max-width: 26rem;
   }
 
+  /* Mobiel: de schermen naast elkaar om doorheen te vegen, groot genoeg om te lezen */
+  .voorbeeld-schermen {
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
   .schermen {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     gap: 0.75rem;
     align-items: start;
+    padding: 0 var(--gutter) 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .schermen::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scherm {
+    flex: 0 0 64%;
+    scroll-snap-align: start;
+  }
+
+  .voorbeeld-schermen .bijschrift {
+    padding-inline: var(--gutter);
   }
 
   .scherm {
     overflow: hidden;
+    margin: 0;
     border: 1px solid var(--inkt);
     box-shadow: 0 1px 0 var(--inkt);
     background: #f5f0e8;
@@ -178,10 +205,19 @@ const voorbeelden = [
 
     .voorbeeld-schermen {
       grid-column: 6 / span 7;
+      margin-inline: 0;
+    }
+
+    .voorbeeld-schermen .bijschrift {
+      padding-inline: 0;
     }
 
     .schermen {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
+      padding: 0;
+      overflow: visible;
     }
   }
 </style>

@@ -1,44 +1,91 @@
 ---
 import { Picture } from 'astro:assets';
 import proeflokaal from '../../assets/fotografie/proeflokaal-corten.jpg';
+import wijnbar from '../../assets/fotografie/wijnbar-vena.jpg';
+import tafel from '../../assets/fotografie/albanese-tafel-arberi.jpg';
+
+// De mooiste beelden van onderweg. Volgorde = volgorde in de carrousel.
+const fotos = [
+  {
+    src: proeflokaal,
+    alt: 'Een ronde bank van roestig cortenstaal in een proeflokaal, met daarachter een wand vol wijnflessen en een rode deur',
+    bijschrift: 'Proeflokaal van een klein wijnhuis in Albanië.',
+    positie: '50% 62%',
+  },
+  {
+    src: wijnbar,
+    alt: 'Interieur van wijnbar Vena in Tirana, met gekoelde wijnkasten, bistrostoelen en een rode luifel voor het raam',
+    bijschrift: 'Wijnbar Vena, midden in Tirana.',
+    positie: '30% 50%',
+  },
+  {
+    src: tafel,
+    alt: 'Een gedekte tafel met Albanese gerechten, witte wijn en een kurk met de naam Arbëri',
+    bijschrift: 'Een kurk van Arbëri tussen de schalen. Albanese wijn bij Albanees eten.',
+    positie: '60% 30%',
+    warm: true,
+  },
+];
 ---
 
 <section class="opening" aria-labelledby="opening-kop">
   <div class="wrap opening-grid">
-    <div class="opening-tekst">
-      <p class="label label--rood reveal">Persoonlijke wijnroutes · Albanië, Griekenland, Kroatië</p>
+    <div class="carrousel reveal" data-carrousel>
+      <ul class="carrousel-spoor" role="list" tabindex="0" aria-label="Foto's van onderweg, veeg of scroll om te bladeren">
+        {
+          fotos.map((foto, i) => (
+            <li class="dia" aria-label={`Foto ${i + 1} van ${fotos.length}`}>
+              <figure>
+                <div class:list={['foto', i === 0 && 'reveal-foto']}>
+                  <Picture
+                    src={foto.src}
+                    formats={['avif', 'webp']}
+                    widths={[420, 640, 900, 1200]}
+                    sizes="(min-width: 60rem) 48vw, 86vw"
+                    alt={foto.alt}
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    fetchpriority={i === 0 ? 'high' : 'auto'}
+                    style={`object-position: ${foto.positie}`}
+                    class:list={[foto.warm && 'warm']}
+                  />
+                </div>
+                <figcaption class="bijschrift">
+                  <b>Fig. {i + 1}</b>
+                  <span>{foto.bijschrift}</span>
+                </figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
 
-      <h1 id="opening-kop" class="kop kop--xl reveal" style="--vertraging: 0.08s">
-        Ik ken een paar plekken die je <em>niet zomaar</em> tegenkomt.
-      </h1>
-
-      <div class="opening-intro reveal" style="--vertraging: 0.16s">
-        <p class="lead">
-          Kleine wijnhuizen zonder bordje aan de weg. Tafels waar de eigenaar zelf kookt. Wijnen die in
-          Nederland bijna niemand kent. Ik ben er geweest — en ik help je er een reis van te maken die bij
-          jullie past.
+      <div class="carrousel-bediening">
+        <p class="carrousel-teller label" aria-live="polite">
+          <span data-huidig>01</span> / {String(fotos.length).padStart(2, '0')}
         </p>
-        <a class="doorlink" href="#wijnroutes">Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span></a>
+        <div class="carrousel-knoppen">
+          <button type="button" data-vorige aria-label="Vorige foto">←</button>
+          <button type="button" data-volgende aria-label="Volgende foto">→</button>
+        </div>
       </div>
     </div>
 
-    <figure class="opening-foto reveal" style="--vertraging: 0.1s">
-      <div class="foto reveal-foto">
-        <Picture
-          src={proeflokaal}
-          formats={['avif', 'webp']}
-          widths={[480, 720, 960, 1200]}
-          sizes="(min-width: 60rem) 40vw, 100vw"
-          alt="Een ronde bank van roestig cortenstaal in een proeflokaal, met daarachter een wand vol wijnflessen en een rode deur"
-          loading="eager"
-          fetchpriority="high"
-        />
-      </div>
-      <figcaption class="bijschrift">
-        <b>Fig. 1</b>
-        <span>Proeflokaal van een klein wijnhuis in Albanië. Je loopt er zo voorbij — en dat is precies het punt.</span>
-      </figcaption>
-    </figure>
+    <div class="opening-tekst">
+      <p class="label label--rood reveal">Persoonlijke wijnroutes · Albanië, Griekenland, Kroatië</p>
+
+      <h1 id="opening-kop" class="kop opening-kop reveal" style="--vertraging: 0.08s">
+        Ik ken een paar plekken die je <em>niet zomaar</em> tegenkomt.
+      </h1>
+
+      <p class="lead reveal" style="--vertraging: 0.16s">
+        Kleine wijnhuizen zonder bordje aan de weg. Tafels waar de eigenaar zelf kookt. Wijnen die in Nederland
+        bijna niemand kent. Ik ben er geweest — en ik help je er een reis van te maken die bij jullie past.
+      </p>
+
+      <a class="doorlink reveal" href="#wijnroutes" style="--vertraging: 0.22s">
+        Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span>
+      </a>
+    </div>
   </div>
 
   <svg class="opening-lijn tekenlijn" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
@@ -46,65 +93,229 @@ import proeflokaal from '../../assets/fotografie/proeflokaal-corten.jpg';
   </svg>
 </section>
 
+<script>
+  // Carrousel zonder bibliotheek: de browser regelt het vegen (scroll-snap),
+  // dit script houdt alleen de teller en de pijlknoppen bij.
+  document.querySelectorAll<HTMLElement>('[data-carrousel]').forEach((carrousel) => {
+    const spoor = carrousel.querySelector<HTMLElement>('.carrousel-spoor');
+    const dias = carrousel.querySelectorAll<HTMLElement>('.dia');
+    const huidig = carrousel.querySelector<HTMLElement>('[data-huidig]');
+    const vorige = carrousel.querySelector<HTMLButtonElement>('[data-vorige]');
+    const volgende = carrousel.querySelector<HTMLButtonElement>('[data-volgende]');
+    if (!spoor || !dias.length) return;
+
+    const actieveIndex = () => {
+      const links = spoor.getBoundingClientRect().left;
+      let beste = 0;
+      let afstand = Infinity;
+      dias.forEach((dia, i) => {
+        const d = Math.abs(dia.getBoundingClientRect().left - links);
+        if (d < afstand) {
+          afstand = d;
+          beste = i;
+        }
+      });
+      return beste;
+    };
+
+    const bijwerken = () => {
+      const i = actieveIndex();
+      if (huidig) huidig.textContent = String(i + 1).padStart(2, '0');
+      if (vorige) vorige.disabled = i === 0;
+      if (volgende) volgende.disabled = i === dias.length - 1;
+    };
+
+    const ga = (stap: number) => {
+      const doel = dias[Math.min(dias.length - 1, Math.max(0, actieveIndex() + stap))];
+      spoor.scrollTo({ left: doel.offsetLeft - spoor.offsetLeft, behavior: 'smooth' });
+    };
+
+    vorige?.addEventListener('click', () => ga(-1));
+    volgende?.addEventListener('click', () => ga(1));
+    let wacht: number | undefined;
+    spoor.addEventListener('scroll', () => {
+      window.clearTimeout(wacht);
+      wacht = window.setTimeout(bijwerken, 60);
+    });
+    bijwerken();
+  });
+</script>
+
 <style>
   .opening {
     position: relative;
-    padding-top: clamp(2.5rem, 6vw, 5.5rem);
+    padding-top: 1.25rem;
   }
 
   .opening-grid {
     display: grid;
-    gap: 2.75rem;
+    gap: 2.25rem;
   }
+
+  /* ---------- Carrousel: mobiel eerst ---------- */
+
+  .carrousel {
+    /* Op mobiel tot de schermrand, met de volgende foto net zichtbaar */
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
+  .carrousel-spoor {
+    display: flex;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0 var(--gutter);
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .carrousel-spoor::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carrousel-spoor:focus-visible {
+    outline-offset: -2px;
+  }
+
+  .dia {
+    flex: 0 0 86%;
+    scroll-snap-align: start;
+  }
+
+  .dia .foto {
+    aspect-ratio: 4 / 5;
+    max-height: 68svh;
+  }
+
+  .dia .bijschrift {
+    min-height: 2.6em;
+  }
+
+  /* Deze foto is aan de koele kant; iets warmer past hij bij de rest van de reeks */
+  .warm {
+    filter: sepia(0.22) saturate(0.92);
+  }
+
+  .carrousel-bediening {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.4rem;
+    padding-inline: var(--gutter);
+  }
+
+  .carrousel-teller {
+    color: var(--inkt);
+  }
+
+  .carrousel-knoppen {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .carrousel-knoppen button {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--inkt);
+    border-radius: 0;
+    background: transparent;
+    color: var(--inkt);
+    font-family: var(--mono);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+  }
+
+  .carrousel-knoppen button:hover:not(:disabled) {
+    background: var(--inkt);
+    color: var(--papier);
+  }
+
+  .carrousel-knoppen button:disabled {
+    opacity: 0.25;
+    cursor: default;
+  }
+
+  /* ---------- Tekst ---------- */
 
   .opening-tekst {
     display: flex;
     flex-direction: column;
-    gap: 1.75rem;
-  }
-
-  .opening-intro {
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
-    gap: 1.75rem;
-    max-width: 31rem;
+    gap: 1.25rem;
   }
 
-  .opening-foto .foto {
-    aspect-ratio: 4 / 5;
+  .opening-kop {
+    font-size: clamp(2.35rem, 6.2vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.024em;
   }
 
-  .opening-foto img {
-    object-position: 50% 62%;
+  .opening-tekst .lead {
+    max-width: 30rem;
+  }
+
+  .opening-tekst .doorlink {
+    margin-top: 0.5rem;
   }
 
   .opening-lijn {
     width: 100%;
-    height: 4.5rem;
-    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+    height: 3.5rem;
+    margin-top: 2.5rem;
   }
 
   @media (min-width: 60rem) {
+    .opening {
+      padding-top: clamp(2.5rem, 5vw, 4.5rem);
+    }
+
     .opening-grid {
       grid-template-columns: repeat(12, 1fr);
       column-gap: var(--gutter);
-      align-items: end;
+      align-items: center;
     }
 
     .opening-tekst {
-      grid-column: 1 / span 7;
-      padding-bottom: 3.5rem;
-      gap: 2.25rem;
+      grid-column: 1 / span 5;
+      grid-row: 1;
+      gap: 1.75rem;
     }
 
-    .opening-foto {
-      grid-column: 9 / span 4;
-      margin-right: calc(var(--gutter) * -1);
+    .carrousel {
+      grid-column: 7 / span 6;
+      grid-row: 1;
+      margin-inline: 0 calc(var(--gutter) * -1);
     }
 
-    .opening-intro {
-      margin-left: 18%;
+    .carrousel-spoor {
+      gap: var(--gutter);
+      padding: 0;
+      scroll-padding-inline: 0;
+    }
+
+    .dia {
+      flex-basis: 100%;
+    }
+
+    /* Foto, bijschrift en knoppen passen samen boven de vouw */
+    .dia .foto {
+      aspect-ratio: auto;
+      width: 100%;
+      height: clamp(26rem, calc(100svh - 17rem), 46rem);
+      max-height: none;
+    }
+
+    .carrousel-bediening {
+      padding-inline: 0;
+    }
+
+    .opening-lijn {
+      height: 4.5rem;
+      margin-top: 4rem;
     }
   }
 </style>

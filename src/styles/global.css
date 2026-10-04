@@ -167,8 +167,8 @@ a {
 }
 
 .kop--xl {
-  font-size: clamp(2.6rem, 7.4vw, 6.4rem);
-  line-height: 0.98;
+  font-size: clamp(2.4rem, 6.6vw, 5.6rem);
+  line-height: 1;
   letter-spacing: -0.028em;
 }
 

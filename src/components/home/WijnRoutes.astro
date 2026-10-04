@@ -38,10 +38,10 @@ const routes = [
 
     <div class="routes-grid">
       <div class="routes-intro">
-        <h2 id="routes-kop" class="kop kop--l reveal">Niet veel routes. <em>Wel goede.</em></h2>
+        <h2 id="routes-kop" class="kop kop--l reveal">Niet veel routes. <em>Wel de leukste.</em></h2>
         <p class="tekst reveal">
-          Elke route heb ik zelf gereden en geproefd. Er komt pas een nieuwe bij als ik er echt iets over te
-          vertellen heb.
+          Alles wat in een route staat, heb ik zelf ervaren. Er komt pas een nieuwe bij als ik er echt iets over
+          te vertellen heb.
         </p>
       </div>
 
@@ -77,7 +77,7 @@ const routes = [
         <RouteKaart />
         <figcaption class="bijschrift">
           <b>Kaart</b>
-          <span>De routes, schematisch. Geen adressen — wel richting.</span>
+          <span>Het huidige aanbod van Verborgen Wijnroutes.</span>
         </figcaption>
       </figure>
     </div>
@@ -217,7 +217,9 @@ const routes = [
   }
 
   .routes-kaart {
-    max-width: 26rem;
+    width: 100%;
+    max-width: 21rem;
+    justify-self: center;
   }
 
   /* Kaart reageert op de route waar je overheen beweegt */
@@ -262,6 +264,7 @@ const routes = [
       position: sticky;
       top: 2rem;
       max-width: none;
+      justify-self: stretch;
       margin-top: 1rem;
     }
 
