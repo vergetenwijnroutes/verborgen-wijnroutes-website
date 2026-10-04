@@ -5,6 +5,13 @@ import stijn from '../../assets/fotografie/stijn-tirana.jpg';
 
 <section class="wie" aria-labelledby="wie-kop">
   <div class="wrap wie-grid">
+    <div class="wie-kop">
+      <div class="rubriek reveal">
+        <p class="label">Wie zit hierachter</p>
+      </div>
+      <h2 id="wie-kop" class="kop kop--l reveal">Ik ben Stijn. <em>Ik ga eerst zelf.</em></h2>
+    </div>
+
     <figure class="wie-foto reveal">
       <div class="foto reveal-foto">
         <Picture
@@ -23,10 +30,6 @@ import stijn from '../../assets/fotografie/stijn-tirana.jpg';
     </figure>
 
     <div class="wie-tekst">
-      <div class="rubriek reveal">
-        <p class="label">Wie zit hierachter</p>
-      </div>
-      <h2 id="wie-kop" class="kop kop--l reveal">Ik ben Stijn. <em>Ik ga eerst zelf.</em></h2>
       <div class="tekst reveal">
         <p>
           Ik loop rond in de steden, rijd de heuvels in, proef bij wijnmakers en schuif aan tafel waar het
@@ -54,7 +57,7 @@ import stijn from '../../assets/fotografie/stijn-tirana.jpg';
 
   .wie-grid {
     display: grid;
-    gap: 3rem;
+    gap: 2rem;
   }
 
   .wie-foto {
@@ -80,6 +83,12 @@ import stijn from '../../assets/fotografie/stijn-tirana.jpg';
     transform: rotate(-3deg);
   }
 
+  .wie-kop {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
   .wie-tekst {
     display: flex;
     flex-direction: column;
@@ -87,19 +96,17 @@ import stijn from '../../assets/fotografie/stijn-tirana.jpg';
     gap: 1.75rem;
   }
 
-  .wie-tekst .rubriek {
-    align-self: stretch;
-  }
-
   @media (min-width: 60rem) {
     .wie-grid {
       grid-template-columns: repeat(12, 1fr);
       column-gap: var(--gutter);
-      align-items: center;
+      row-gap: 1.75rem;
     }
 
     .wie-foto {
       grid-column: 2 / span 4;
+      grid-row: 1 / span 2;
+      align-self: center;
       max-width: none;
     }
 
@@ -108,8 +115,16 @@ import stijn from '../../assets/fotografie/stijn-tirana.jpg';
       top: 64%;
     }
 
+    .wie-kop {
+      grid-column: 7 / span 5;
+      grid-row: 1;
+      align-self: end;
+    }
+
     .wie-tekst {
       grid-column: 7 / span 5;
+      grid-row: 2;
+      align-self: start;
     }
   }
 </style>
