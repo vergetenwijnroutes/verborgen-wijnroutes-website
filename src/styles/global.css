@@ -19,7 +19,7 @@
 
   --gutter: 1rem;
   --maat: 82rem;
-  --sectie: clamp(5rem, 11vw, 10rem);
+  --sectie: clamp(3.5rem, 10vw, 10rem);
 
   color-scheme: light;
 }
@@ -269,6 +269,48 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* ---------- Carrousel-bediening (teller + pijlen) ---------- */
+
+.carrousel-bediening {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+
+.carrousel-teller {
+  color: var(--inkt);
+}
+
+.carrousel-knoppen {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.carrousel-knoppen button {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--inkt);
+  border-radius: 0;
+  background: transparent;
+  color: var(--inkt);
+  font-family: var(--mono);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+}
+
+.carrousel-knoppen button:hover:not(:disabled) {
+  background: var(--inkt);
+  color: var(--papier);
+}
+
+.carrousel-knoppen button:disabled {
+  opacity: 0.25;
+  cursor: default;
 }
 
 /* ---------- Beweging ---------- */

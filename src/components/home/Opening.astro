@@ -52,10 +52,10 @@ const fotos = [
     </div>
 
     <div class="carrousel reveal" data-carrousel>
-      <ul class="carrousel-spoor" role="list" tabindex="0" aria-label="Foto's van onderweg, veeg of scroll om te bladeren">
+      <ul class="carrousel-spoor" data-spoor role="list" tabindex="0" aria-label="Foto's van onderweg, veeg of scroll om te bladeren">
         {
           fotos.map((foto, i) => (
-            <li class="dia" aria-label={`Foto ${i + 1} van ${fotos.length}`}>
+            <li class="dia" data-dia aria-label={`Foto ${i + 1} van ${fotos.length}`}>
               <figure>
                 <div class:list={['foto', i === 0 && 'reveal-foto']}>
                   <Picture
@@ -98,51 +98,7 @@ const fotos = [
 </section>
 
 <script>
-  // Carrousel zonder bibliotheek: de browser regelt het vegen (scroll-snap),
-  // dit script houdt alleen de teller en de pijlknoppen bij.
-  document.querySelectorAll<HTMLElement>('[data-carrousel]').forEach((carrousel) => {
-    const spoor = carrousel.querySelector<HTMLElement>('.carrousel-spoor');
-    const dias = carrousel.querySelectorAll<HTMLElement>('.dia');
-    const huidig = carrousel.querySelector<HTMLElement>('[data-huidig]');
-    const vorige = carrousel.querySelector<HTMLButtonElement>('[data-vorige]');
-    const volgende = carrousel.querySelector<HTMLButtonElement>('[data-volgende]');
-    if (!spoor || !dias.length) return;
-
-    const actieveIndex = () => {
-      const links = spoor.getBoundingClientRect().left;
-      let beste = 0;
-      let afstand = Infinity;
-      dias.forEach((dia, i) => {
-        const d = Math.abs(dia.getBoundingClientRect().left - links);
-        if (d < afstand) {
-          afstand = d;
-          beste = i;
-        }
-      });
-      return beste;
-    };
-
-    const bijwerken = () => {
-      const i = actieveIndex();
-      if (huidig) huidig.textContent = String(i + 1).padStart(2, '0');
-      if (vorige) vorige.disabled = i === 0;
-      if (volgende) volgende.disabled = i === dias.length - 1;
-    };
-
-    const ga = (stap: number) => {
-      const doel = dias[Math.min(dias.length - 1, Math.max(0, actieveIndex() + stap))];
-      spoor.scrollTo({ left: doel.offsetLeft - spoor.offsetLeft, behavior: 'smooth' });
-    };
-
-    vorige?.addEventListener('click', () => ga(-1));
-    volgende?.addEventListener('click', () => ga(1));
-    let wacht: number | undefined;
-    spoor.addEventListener('scroll', () => {
-      window.clearTimeout(wacht);
-      wacht = window.setTimeout(bijwerken, 60);
-    });
-    bijwerken();
-  });
+  import '../../scripts/carrousel';
 </script>
 
 <style>
@@ -153,6 +109,7 @@ const fotos = [
 
   .opening-grid {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 2.25rem;
   }
 
@@ -160,6 +117,7 @@ const fotos = [
 
   .carrousel {
     /* Op mobiel tot de schermrand, met de volgende foto net zichtbaar */
+    min-width: 0;
     margin-inline: calc(var(--gutter) * -1);
   }
 
@@ -204,43 +162,7 @@ const fotos = [
   }
 
   .carrousel-bediening {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 0.4rem;
     padding-inline: var(--gutter);
-  }
-
-  .carrousel-teller {
-    color: var(--inkt);
-  }
-
-  .carrousel-knoppen {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .carrousel-knoppen button {
-    width: 2.75rem;
-    height: 2.75rem;
-    border: 1px solid var(--inkt);
-    border-radius: 0;
-    background: transparent;
-    color: var(--inkt);
-    font-family: var(--mono);
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
-  }
-
-  .carrousel-knoppen button:hover:not(:disabled) {
-    background: var(--inkt);
-    color: var(--papier);
-  }
-
-  .carrousel-knoppen button:disabled {
-    opacity: 0.25;
-    cursor: default;
   }
 
   /* ---------- Tekst ---------- */
@@ -281,9 +203,7 @@ const fotos = [
   }
 
   .opening-lijn {
-    width: 100%;
-    height: 3.5rem;
-    margin-top: 2.5rem;
+    display: none;
   }
 
   @media (min-width: 60rem) {
@@ -333,6 +253,8 @@ const fotos = [
     }
 
     .opening-lijn {
+      display: block;
+      width: 100%;
       height: 4.5rem;
       margin-top: 4rem;
     }

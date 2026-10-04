@@ -46,15 +46,25 @@ const voorbeelden = [
         </p>
       </div>
 
-      <figure class="voorbeeld-schermen reveal">
-        <div class="schermen">
+      <figure class="voorbeeld-schermen reveal" data-carrousel>
+        <div class="schermen" data-spoor tabindex="0" aria-label="Schermen uit een voorbeeld-reisconcept, veeg om te bladeren">
           {
             voorbeelden.map((scherm, i) => (
-              <div class={`scherm scherm--${i + 1}`}>
+              <div class={`scherm scherm--${i + 1}`} data-dia>
                 <Image src={scherm.src} alt={scherm.alt} widths={[260, 390, 520]} sizes="(min-width: 60rem) 16vw, 64vw" />
               </div>
             ))
           }
+        </div>
+        <div class="carrousel-bediening voorbeeld-bediening">
+          <p class="carrousel-teller label" aria-live="polite">
+            <span data-huidig>01</span> / {String(voorbeelden.length).padStart(2, '0')}
+            <span class="veeg-hint" aria-hidden="true">· veeg →</span>
+          </p>
+          <div class="carrousel-knoppen">
+            <button type="button" data-vorige aria-label="Vorig scherm">←</button>
+            <button type="button" data-volgende aria-label="Volgend scherm">→</button>
+          </div>
         </div>
         <figcaption class="bijschrift">
           <b>Fig. 7</b>
@@ -117,6 +127,7 @@ const voorbeelden = [
 
   .voorbeeld {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 2rem;
     margin-top: clamp(3rem, 7vw, 5rem);
   }
@@ -130,6 +141,7 @@ const voorbeelden = [
 
   /* Mobiel: de schermen naast elkaar om doorheen te vegen, groot genoeg om te lezen */
   .voorbeeld-schermen {
+    min-width: 0;
     margin-inline: calc(var(--gutter) * -1);
   }
 
@@ -220,4 +232,24 @@ const voorbeelden = [
       overflow: visible;
     }
   }
+
+  .voorbeeld-bediening {
+    padding-inline: var(--gutter);
+    margin-top: 0.75rem;
+  }
+
+  .veeg-hint {
+    margin-left: 0.5rem;
+    color: var(--potlood);
+  }
+
+  /* Op desktop staan de drie schermen naast elkaar: geen bediening nodig */
+  @media (min-width: 60rem) {
+    .voorbeeld-bediening {
+      display: none;
+    }
+  }
 </style>
+<script>
+  import '../../scripts/carrousel';
+</script>
