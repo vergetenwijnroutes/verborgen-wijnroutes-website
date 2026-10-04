@@ -19,8 +19,8 @@ export const aanvraagFormulier =
 export const bestemmingVeld = 'entry.1648549759';
 export const bestemmingOpties = {
   tirana: 'Tirana, Albanië (live)',
-  // lefkas: nog aan te leveren (exacte tekst van de antwoordoptie)
-  // split: nog aan te leveren (exacte tekst van de antwoordoptie)
+  lefkas: 'Lefkas, Griekenland (komt eraan)',
+  split: 'Split, Kroatië (komt eraan)',
 } as Record<string, string>;
 
 /** Link naar het aanvraagformulier, met de bestemming al ingevuld als die bekend is. */
