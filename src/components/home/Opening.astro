@@ -7,16 +7,16 @@ import tafel from '../../assets/fotografie/albanese-tafel-arberi.jpg';
 // De mooiste beelden van onderweg. Volgorde = volgorde in de carrousel.
 const fotos = [
   {
-    src: proeflokaal,
-    alt: 'Een ronde bank van roestig cortenstaal in een proeflokaal, met daarachter een wand vol wijnflessen en een rode deur',
-    bijschrift: 'Proeflokaal van een klein wijnhuis in Albanië.',
-    positie: '50% 62%',
-  },
-  {
     src: wijnbar,
     alt: 'Interieur van wijnbar Vena in Tirana, met gekoelde wijnkasten, bistrostoelen en een rode luifel voor het raam',
     bijschrift: 'Wijnbar Vena, midden in Tirana.',
     positie: '30% 50%',
+  },
+  {
+    src: proeflokaal,
+    alt: 'Een ronde bank van roestig cortenstaal in een proeflokaal, met daarachter een wand vol wijnflessen en een rode deur',
+    bijschrift: 'Proeflokaal van een klein wijnhuis in Albanië.',
+    positie: '50% 62%',
   },
   {
     src: tafel,
@@ -41,10 +41,16 @@ const fotos = [
         Ik ken een paar plekken die je niet zomaar tegenkomt.
       </p>
 
-      <p class="lead reveal" style="--vertraging: 0.16s">
-        Kleine wijnhuizen zonder bordje aan de weg. Tafels waar de eigenaar zelf kookt. Wijnen die in Nederland
-        bijna niemand kent. Ik ben er geweest — en ik help je er een reis van te maken die bij jullie past.
-      </p>
+      <div class="opening-lead reveal" style="--vertraging: 0.16s">
+        <p class="lead">
+          Ik neem je mee naar plekken die je niet zomaar tegenkomt. Kleine wijnhuizen, lokale restaurants en
+          bijzondere wijnen die in Nederland nog nauwelijks bekend zijn.
+        </p>
+        <p class="lead">
+          Omdat ik deze plekken zelf heb bezocht, weet ik waar je moet zijn. Samen maken we er een reis van die
+          past bij jullie wensen.
+        </p>
+      </div>
 
       <a class="doorlink reveal" href="#wijnroutes" style="--vertraging: 0.22s">
         Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span>
@@ -188,6 +194,12 @@ const fotos = [
     line-height: 1.3;
     color: var(--rood);
     text-wrap: balance;
+  }
+
+  .opening-lead {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
   }
 
   .opening-tekst .lead {
