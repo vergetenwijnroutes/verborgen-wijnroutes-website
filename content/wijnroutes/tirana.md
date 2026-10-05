@@ -5,11 +5,10 @@ status: actief
 volgorde: 1
 regel: Familiewijnhuizen in de heuvels rond de hoofdstad, inheemse druiven en de beste tafels van de stad.
 
-seoTitel: "Wijnreis Albanië: de wijnroute rond Tirana | Verborgen Wijnroutes"
-seoOmschrijving: "Persoonlijke wijnreis in Albanië: wijnhuizen, wijnbars en de Albanese keuken in en rond Tirana. Zelf ontdekt, op maat samengesteld voor jullie."
+seoTitel: "Wijnreis Albanië samenstellen rond Tirana | Verborgen Wijnroutes"
+seoOmschrijving: "Laat een persoonlijke wijnreis naar Albanië samenstellen. Wijnhuizen, wijnbars en de lokale keuken in en rond Tirana. Plekken die je niet zomaar tegenkomt."
 h1: "Wijnreis Albanië: Tirana en de wijnheuvels eromheen"
-intro: "Een hoofdstad met wijnhuizen op een uur rijden. Bijna niemand weet het."
-lead: "Rond Tirana maken families al generaties wijn, van inheemse druiven die je buiten Albanië bijna nergens proeft. Ik ken de weg, de mensen en de tafels — en stel er een reis mee samen die bij jullie past."
+lead: "Rond Tirana maken families al generaties wijn, waaronder van inheemse druiven die je buiten Albanië bijna nergens proeft. Ik ken de plekken, de mensen en de verhalen erachter. Daar maak ik een reis van die past bij jullie."
 
 hoofdfoto: ../../src/assets/fotografie/proeflokaal-corten.jpg
 hoofdfotoAlt: "Een ronde bank van roestig cortenstaal in een proeflokaal, met daarachter een wand vol wijnflessen en een rode deur"
@@ -19,9 +18,9 @@ feiten:
   - label: Gebied
     waarde: Tirana en ± 1 uur rijden daaromheen
   - label: Route
-    waarde: Geen vaste route — op maat samengesteld
+    waarde: "Geen vaste route: op maat samengesteld"
   - label: Wanneer
-    waarde: Het hele jaar
+    waarde: Het hele jaar leuk, met de oogst in september als bijzondere periode
   - label: Wijn
     waarde: Inheemse én internationale druiven
 
@@ -66,7 +65,10 @@ plekken:
     tekst: "Net buiten de stad, waar je 's ochtends wakker wordt tussen de olijfbomen."
 
 tafel:
-  tekst: "Albanees eten is eerlijk en royaal: groenten uit de tuin, lam, kaas en verse vis van de kust. In Tirana vind je zowel de traditionele keuken als restaurants die er iets nieuws mee doen. En bij elk diner hoort een glas lokale wijn — of een raki na afloop."
+  tekst: |
+    Albanees eten draait om goede, lokale producten. Groenten uit de tuin, lam, kaas en verse vis van de kust. In Tirana vind je zowel de traditionele keuken als restaurants die er hun eigen draai aan geven.
+
+    En natuurlijk wordt er aan tafel gedronken. Een glas lokale wijn bij het eten, of een raki als afsluiter. Je moet ervan houden…
   fotos:
     - foto: ../../src/assets/fotografie/albanese-tafel-arberi.jpg
       alt: "Een gedekte tafel met Albanese gerechten, witte wijn en een kurk met de naam Arbëri"
