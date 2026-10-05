@@ -82,7 +82,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 
 - Homepage (`/`) is af en goedgekeurd door Stijn. Volgende pagina's worden pas gebouwd als hij daarom vraagt.
 - Routes staan in `content/wijnroutes/*.md` (schema in `src/content.config.ts`); homepage en routepagina lezen daaruit.
-- `/wijnroutes/tirana/` gebouwd (template `src/pages/wijnroutes/[slug].astro`, genereert nu alleen `actief`-routes). Wacht op feedback van Stijn.
+- `/wijnroutes/tirana/` gebouwd (template `src/pages/wijnroutes/[slug].astro`, genereert nu alleen `actief`-routes). Goedgekeurd door Stijn. Les: bij feedback op 'desktop' eerst vragen welk deel precies bedoeld is; niet op eigen initiatief goedgekeurde secties omgooien.
 - Nog te bouwen: `/wijnroutes/` (overzicht) en de binnenkort-variant voor Lefkas en Split.
 - Tirana-content: Stijn wil niet alles weggeven. Alleen Tufa Winery en wijnbar Vena bij naam; overige plekken vaag omschrijven ("namen en adressen in je reisconcept"). Geen vaste route: Tirana + ± 1 uur rijden. Niet pushen op september; het hele jaar kan (zomer 35–40 °C).
 
