@@ -133,7 +133,7 @@ const jsonLd = [
 
   <!-- Waarom deze route -->
   <section class="r-sectie" aria-labelledby="waarom-kop">
-    <div class="wrap r-waarom">
+    <div class="wrap r-twee">
       <div class="r-kopkolom">
         <div class="rubriek reveal"><p class="label">Waarom deze route</p></div>
         <h2 id="waarom-kop" class="kop kop--l reveal">Wijn die je hier <em>niet verwacht.</em></h2>
@@ -148,7 +148,7 @@ const jsonLd = [
   {
     d.druiven && (
       <section class="r-sectie" aria-labelledby="proeven-kop">
-        <div class="wrap r-proeven">
+        <div class="wrap r-twee">
           <div class="r-kopkolom">
             <div class="rubriek reveal"><p class="label">Wat je proeft</p></div>
             <h2 id="proeven-kop" class="kop kop--l reveal">
@@ -553,13 +553,6 @@ const jsonLd = [
     max-width: 46rem;
   }
 
-  .r-waarom,
-  .r-proeven {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1.5rem;
-  }
-
   .r-verhaal :global(p + p) {
     margin-top: 1em;
   }
@@ -847,115 +840,6 @@ const jsonLd = [
       grid-column: 1 / span 5;
       grid-row: 1;
       justify-self: start;
-    }
-
-    /* Waarom: brede kop, tekst eronder in twee tijdschriftkolommen */
-    .r-waarom {
-      gap: 2.5rem;
-    }
-
-    .r-waarom .r-kopkolom {
-      max-width: 52rem;
-    }
-
-    .r-waarom .r-verhaal {
-      max-width: none;
-      columns: 2;
-      column-gap: calc(var(--gutter) * 2);
-    }
-
-    .r-waarom .r-verhaal :global(p) {
-      break-inside: avoid;
-    }
-
-    .r-waarom .r-verhaal :global(p:first-child::first-letter) {
-      float: left;
-      margin: 0.08em 0.12em 0 0;
-      font-size: 3.6em;
-      line-height: 0.8;
-      color: var(--rood);
-    }
-
-    /* Proeven: kop en intro naast elkaar, druiven als rij eronder */
-    .r-proeven {
-      grid-template-columns: repeat(12, 1fr);
-      column-gap: var(--gutter);
-      row-gap: 2.5rem;
-    }
-
-    .r-proeven .r-kopkolom {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      column-gap: var(--gutter);
-      row-gap: 1.25rem;
-      align-items: end;
-    }
-
-    .r-proeven .r-kopkolom .rubriek {
-      grid-column: 1 / -1;
-    }
-
-    .r-proeven .r-kopkolom h2 {
-      grid-column: 1 / span 6;
-    }
-
-    .r-proeven .r-kopkolom .tekst {
-      grid-column: 8 / span 5;
-    }
-
-    .r-proeven .druiven {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      column-gap: var(--gutter);
-      row-gap: 0.6rem;
-    }
-
-    .r-proeven .druiven h3:first-child,
-    .r-proeven .druif-lijst {
-      grid-column: 1 / -1;
-    }
-
-    .r-proeven .druif-lijst {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      column-gap: var(--gutter);
-    }
-
-    .r-proeven .druif-lijst li {
-      flex-direction: column;
-      gap: 0.4rem;
-      padding-block: 1.1rem 1.3rem;
-    }
-
-    .r-proeven .druif-naam {
-      font-size: clamp(1.7rem, 2.4vw, 2.3rem);
-    }
-
-    .r-proeven .druiven h3:nth-of-type(2),
-    .r-proeven .druif-internationaal {
-      grid-column: 1 / span 6;
-    }
-
-    .r-proeven .druiven h3:nth-of-type(3),
-    .r-proeven .druif-stijlen {
-      grid-column: 8 / span 5;
-    }
-
-    .r-proeven .druiven h3:nth-of-type(2),
-    .r-proeven .druiven h3:nth-of-type(3) {
-      grid-row: 3;
-      margin-top: 1.5rem;
-    }
-
-    .r-proeven .druif-internationaal,
-    .r-proeven .druif-stijlen {
-      grid-row: 4;
-    }
-
-    .r-proeven .druif-notitie {
-      grid-column: 8 / span 5;
     }
 
     .r-twee--strak {
