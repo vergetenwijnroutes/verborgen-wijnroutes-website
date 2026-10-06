@@ -37,7 +37,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
   /
   ├── /wijnroutes/            overzicht — het hart van de site
   │   ├── /tirana/            actief
-  │   ├── /lefkas/            binnenkort
+  │   ├── /kreta/             binnenkort (was Lefkas)
   │   └── /split/             binnenkort
   ├── /inspiratie/
   │   └── /[artikel]/
@@ -70,7 +70,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 - Geen vaste vertrekdata, geen "Boek nu".
 - CTA per route-status (alle naar hetzelfde Google Form, bestemming vooraf ingevuld via een Google Forms prefill-link `entry.<id>=<bestemming>`):
   - actief (Tirana): "Vraag jouw wijnreis aan"
-  - binnenkort (Lefkas, Split): "Laat me weten dat je interesse hebt"
+  - binnenkort (Kreta, Split): "Laat me weten dat je interesse hebt"
 - Overige CTA's: homepage/overzicht "Ontdek de wijnroutes" / "Ontdek [route]"; artikelen "Bekijk de wijnroute"; Mijn verhaal eindigt bij de routes.
 - Voorbeeld-reisconcept op routepagina's: klein blok met 2–3 screenshots + uitleg ("Geen standaardprogramma. Na je aanvraag stel ik op basis van jullie wensen een persoonlijk reisconcept samen.") + link "Bekijk een voorbeeld van een persoonlijk reisconcept". Gebruik een fictief/geanonimiseerd voorbeeld, nooit een echte klant (geen namen, prijzen of herkenbare gasten).
 - Het aanvraagformulier is het **bestaande Google Form** (Google Forms → Google Sheets → n8n blijft leidend). Geen eigen formulier bouwen, geen vragen wijzigen.
@@ -83,20 +83,21 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 - Homepage (`/`) is af en goedgekeurd door Stijn. Volgende pagina's worden pas gebouwd als hij daarom vraagt.
 - Routes staan in `content/wijnroutes/*.md` (schema in `src/content.config.ts`); homepage en routepagina lezen daaruit.
 - `/wijnroutes/tirana/` gebouwd (template `src/pages/wijnroutes/[slug].astro`, genereert nu alleen `actief`-routes). Goedgekeurd door Stijn. Les: bij feedback op 'desktop' eerst vragen welk deel precies bedoeld is; niet op eigen initiatief goedgekeurde secties omgooien.
-- Nog te bouwen: `/wijnroutes/` (overzicht) en de binnenkort-variant voor Lefkas en Split.
+- Lefkas is vervangen door Kreta. `/wijnroutes/kreta/` gebouwd als binnenkort-pagina (geen foto's op binnenkort-routes, op verzoek van Stijn). Binnenkort-pagina's worden alleen gegenereerd als het bestand een `lead` heeft.
+- Nog te bouwen: `/wijnroutes/` (overzicht) en de Split-pagina (wacht op tekst van Stijn).
 - Tirana-content: Stijn wil niet alles weggeven. Alleen Tufa Winery en wijnbar Vena bij naam; overige plekken vaag omschrijven ("namen en adressen in je reisconcept"). Geen vaste route: Tirana + ± 1 uur rijden. Niet pushen op september; het hele jaar kan (zomer 35–40 °C).
 
 ## Nog open
 
 - Juridisch: Stijn verkoopt een reisconcept; optioneel boekt hij voor €50 extra namens de klant, maar de klant betaalt de aanbieders altijd zelf. Waarschijnlijk geen pakketreisorganisator, maar de boekservice is het grijze gebied: kort laten checken (SGR/ANVR/jurist). Tot die tijd op de site nooit 'boek bij ons', 'pakket' of totaalprijzen; wel 'reisconcept' en 'aanvragen'.
 - Welke bestaande teksten hergebruikt worden.
-- Prefill bestemmingsvraag: veld `entry.1648549759`, Tirana = `Tirana, Albanië (live)`, Lefkas = `Lefkas, Griekenland (komt eraan)`, Split = `Split, Kroatië (komt eraan)` (in `src/config/site.ts`, helper `aanvraagLink(route)`). Wijzigt Stijn een antwoordoptie in het formulier, dan hier ook aanpassen.
+- Prefill bestemmingsvraag: veld `entry.1648549759`, Tirana = `Tirana, Albanië (live)`, Kreta = nog toe te voegen in het formulier, Split = `Split, Kroatië (komt eraan)` (in `src/config/site.ts`, helper `aanvraagLink(route)`). Wijzigt Stijn een antwoordoptie in het formulier, dan hier ook aanpassen.
 
 ## Beeldmateriaal (inventaris)
 
 - Eigen foto's (staand, telefoon, documentair): proeflokaal met cortenstalen bank (hero-kandidaat home/Tirana), wijntanks, flessenkast, pasta met rode wijn, Albanese tafel met ARBËRI-kurk, wijnbar Vena (interieur + straatkant), hapjes, en Stijn op straat in Tirana onder de linten (hero Mijn verhaal; origineel in hoge resolutie nodig).
 - Niet gebruiken: champagnekast (Franse luxe, merklogo's), mortadella (supermarktlogo's).
-- Ontbreekt: landschap/wijngaarden, liggende foto's, video. Lefkas en Split: geen beeld → illustratie en tekst. Opvullen via partnerfoto's (met toestemming) en AI-illustratie in één consistente stijl.
+- Ontbreekt: landschap/wijngaarden, liggende foto's, video. Kreta en Split: geen beeld → illustratie en tekst. Opvullen via partnerfoto's (met toestemming) en AI-illustratie in één consistente stijl.
 - Toestemming nodig voor herkenbare personen.
 - Homepage-opening: carrousel (scroll-snap, geen library) met proeflokaal, wijnbar Vena (straatkant-foto; de mooiere interieurfoto van Vena is nog niet als bestand aangeleverd) en de Albanese tafel.
 - Voorbeeld-reisconcept op de homepage: op verzoek van Stijn drie screenshots uit een echt reisconcept (route Ohrid & Albanië, Çobo Winery, prijsindicatie), zonder klantnaam. Bewust gekozen: de prijsindicaties van partners zijn daarmee publiek zichtbaar.

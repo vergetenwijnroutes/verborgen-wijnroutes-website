@@ -5,12 +5,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Aanvraag from '../../components/Aanvraag.astro';
 import VoorbeeldReisconcept from '../../components/VoorbeeldReisconcept.astro';
 import TiranaKaart from '../../components/kaarten/TiranaKaart.astro';
+import KretaKaart from '../../components/kaarten/KretaKaart.astro';
 import { aanvraagLink, site } from '../../config/site';
 
-// Eén template voor alle routes. Voorlopig alleen actieve routes;
-// de binnenkort-variant (Lefkas, Split) volgt in een volgende stap.
+// Eén template voor alle routes. Binnenkort-routes krijgen een kortere variant,
+// maar pas als er inhoud is (een lead); zonder inhoud geen lege pagina.
 export async function getStaticPaths() {
-  const routes = await getCollection('wijnroutes', ({ data }) => data.status === 'actief');
+  const routes = await getCollection(
+    'wijnroutes',
+    ({ data }) => data.status === 'actief' || (data.status === 'binnenkort' && !!data.lead),
+  );
   return routes.map((route) => ({ params: { slug: route.id }, props: { route } }));
 }
 
@@ -20,11 +24,13 @@ interface Props {
 
 const { route } = Astro.props;
 const d = route.data;
+const actief = d.status === 'actief';
+const knopTekst = actief ? 'Vraag jouw wijnreis aan' : 'Laat me weten dat je interesse hebt';
 const slug = route.id;
 const { Content } = await render(route);
 
 // Kaart per route; een nieuwe route krijgt hier zijn eigen kaart.
-const kaarten: Record<string, typeof TiranaKaart> = { tirana: TiranaKaart };
+const kaarten: Record<string, typeof TiranaKaart> = { tirana: TiranaKaart, kreta: KretaKaart };
 const Kaart = kaarten[slug];
 
 const alleRoutes = (await getCollection('wijnroutes', ({ data }) => data.status !== 'gearchiveerd')).sort(
@@ -80,13 +86,13 @@ const jsonLd = [
           <a href="/">Home</a><span class="kruimel-streep" aria-hidden="true">/</span><a href="/wijnroutes/">Wijnroutes</a><span class="kruimel-streep" aria-hidden="true">/</span><span aria-current="page">{d.naam}</span>
         </nav>
 
-        <p class="label label--rood reveal">Wijnroute {nummer} · {d.land} · Nu te ontdekken</p>
+        <p class="label label--rood reveal">Wijnroute {nummer} · {d.land} · {actief ? 'Nu te ontdekken' : 'Binnenkort'}</p>
         <h1 id="route-kop" class="kop r-kop reveal">{d.h1 ?? d.naam}</h1>
         {d.intro && <p class="r-intro reveal">{d.intro}</p>}
         {d.lead && <p class="lead reveal">{d.lead}</p>}
 
         <a class="r-knop reveal" href={aanvraagLink(slug)} target="_blank" rel="noopener">
-          <span>Vraag jouw wijnreis aan</span>
+          <span>{knopTekst}</span>
           <span class="pijl" aria-hidden="true">→</span>
           <span class="sr-only">(opent een formulier in een nieuw tabblad)</span>
         </a>
@@ -194,7 +200,11 @@ const jsonLd = [
           <div class="r-kopkolom">
             <div class="rubriek reveal"><p class="label">De route in vogelvlucht</p></div>
             <h2 id="gebied-kop" class="kop kop--l reveal">
-              Geen vaste route. <em>Wel een vaste basis.</em>
+              {actief ? (
+                <>Geen vaste route. <em>Wel een vaste basis.</em></>
+              ) : (
+                <>{d.naam} <em>in vogelvlucht.</em></>
+              )}
             </h2>
             {d.gebied && <p class="tekst reveal">{d.gebied}</p>}
           </div>
@@ -202,7 +212,7 @@ const jsonLd = [
             <Kaart />
             <figcaption class="bijschrift">
               <b>Kaart</b>
-              <span>Het werkgebied van deze route. Schematisch, zonder adressen.</span>
+              <span>{actief ? 'Het werkgebied van deze route. Schematisch, zonder adressen.' : `${d.naam}, schematisch.`}</span>
             </figcaption>
           </figure>
         </div>
@@ -217,33 +227,35 @@ const jsonLd = [
         <div class="wrap">
           <div class="rubriek reveal"><p class="label">Uit het notitieboek</p></div>
           <h2 id="momenten-kop" class="kop kop--l r-sectiekop reveal">
-            Twee plekken <em>waar ik graag terugkom.</em>
+            {d.momenten.length === 1 ? 'Een plek' : 'Twee plekken'} <em>waar ik graag terugkom.</em>
           </h2>
 
           <div class="momenten">
             {d.momenten.map((m, i) => (
-              <article class:list={['moment', i % 2 === 1 && 'moment--om']}>
+              <article class:list={['moment', i % 2 === 1 && 'moment--om', !m.foto && 'moment--zonder-foto']}>
                 <div class="moment-tekst reveal">
                   <p class="label label--rood">{m.soort}</p>
                   <h3 class="kop kop--m">{m.naam}</h3>
                   <p class="tekst">{m.tekst}</p>
                 </div>
-                <figure class="moment-foto reveal">
-                  <div class="foto reveal-foto">
-                    <Picture
-                      src={m.foto}
-                      formats={['avif', 'webp']}
-                      widths={[420, 640, 900]}
-                      sizes="(min-width: 60rem) 36vw, 100vw"
-                      alt={m.fotoAlt}
-                      style={m.positie ? `object-position: ${m.positie}` : undefined}
-                    />
-                  </div>
-                  <figcaption class="bijschrift">
-                    <b>Fig. {volgendeFig()}</b>
-                    <span>{m.naam}.</span>
-                  </figcaption>
-                </figure>
+                {m.foto && (
+                  <figure class="moment-foto reveal">
+                    <div class="foto reveal-foto">
+                      <Picture
+                        src={m.foto}
+                        formats={['avif', 'webp']}
+                        widths={[420, 640, 900]}
+                        sizes="(min-width: 60rem) 36vw, 100vw"
+                        alt={m.fotoAlt ?? ''}
+                        style={m.positie ? `object-position: ${m.positie}` : undefined}
+                      />
+                    </div>
+                    <figcaption class="bijschrift">
+                      <b>Fig. {volgendeFig()}</b>
+                      <span>{m.naam}.</span>
+                    </figcaption>
+                  </figure>
+                )}
               </article>
             ))}
           </div>
@@ -351,12 +363,24 @@ const jsonLd = [
     </div>
   </section>
 
-  <Aanvraag
-    route={slug}
-    kop={`Zin in ${d.naam}?`}
-    nadruk="Vertel me wat je zoekt."
-    tekst={`Met wie je reist, wat je graag drinkt en waar je zin in hebt. ${d.naam} staat in het formulier al ingevuld. Ik kijk er persoonlijk naar en neem contact met je op.`}
-  />
+  {
+    actief ? (
+      <Aanvraag
+        route={slug}
+        kop={`Zin in ${d.naam}?`}
+        nadruk="Vertel me wat je zoekt."
+        tekst={`Met wie je reist, wat je graag drinkt en waar je zin in hebt. ${d.naam} staat in het formulier al ingevuld. Ik kijk er persoonlijk naar en neem contact met je op.`}
+      />
+    ) : (
+      <Aanvraag
+        route={slug}
+        kop={`Zin in ${d.naam}?`}
+        nadruk="Laat het me weten."
+        tekst={`Deze route is nog in voorbereiding. Laat weten dat je interesse hebt, dan hoor je het als eerste zodra ${d.naam} klaar is. Of we kijken samen wat er nu al mogelijk is.`}
+        knop="Laat me weten dat je interesse hebt"
+      />
+    )
+  }
 
   {
     artikelen.length > 0 && (
@@ -873,6 +897,10 @@ const jsonLd = [
     .moment--om .moment-tekst {
       grid-column: 8 / span 5;
       grid-row: 1;
+    }
+
+    .moment--zonder-foto .moment-tekst {
+      grid-column: 1 / span 7;
     }
 
     .moment--om .moment-foto {

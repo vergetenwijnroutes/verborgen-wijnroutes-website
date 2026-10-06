@@ -202,14 +202,14 @@ const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 
   }
 
   /* Kaart reageert op de route waar je overheen beweegt */
-  .routes:has(.route[data-route='lefkas'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='lefkas'] circle),
+  .routes:has(.route[data-route='kreta'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='kreta'] circle),
   .routes:has(.route[data-route='split'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='split'] circle) {
     fill: var(--rood);
     stroke: var(--rood);
   }
 
   .routes:has(.route[data-route='tirana'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='tirana'] text),
-  .routes:has(.route[data-route='lefkas'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='lefkas'] text),
+  .routes:has(.route[data-route='kreta'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='kreta'] text),
   .routes:has(.route[data-route='split'] .route-link:is(:hover, :focus-visible)) :global(.punt[data-route='split'] text) {
     fill: var(--rood);
     font-style: italic;

@@ -1,0 +1,31 @@
+---
+// Schematische kaart van Kreta. Coördinaten afgeleid van echte lengte- en breedtegraden,
+// bewust vereenvoudigd: oriëntatie, geen adressen.
+---
+
+<svg class="regiokaart" viewBox="0 -10 300 135" role="img" aria-labelledby="kreta-titel kreta-omschrijving">
+  <title id="kreta-titel">Kaart van Kreta</title>
+  <desc id="kreta-omschrijving">Schematische kaart van het eiland Kreta met Chania, Rethymno, Heraklion en Agios Nikolaos.</desc>
+
+  <path d="M16.3 55.2 L21.7 31.0 L45.9 36.5 L63.9 33.2 L72.8 27.7 L81.8 36.5 L102.5 49.7 L126.7 47.5 L149.1 51.9 L160.8 55.2 L185.0 58.5 L212.0 64.0 L216.4 69.5 L237.1 60.7 L265.8 64.0 L265.8 86.0 L247.9 91.5 L216.4 88.2 L194.0 93.7 L158.1 97.0 L131.2 100.3 L122.2 80.5 L95.3 69.5 L63.9 67.3 L41.4 67.3 L19.0 64.0 Z" fill="color-mix(in srgb, var(--rood) 5%, transparent)" stroke="var(--olijf)" stroke-width="1.1" stroke-linejoin="round" />
+  <text x="150" y="-2" text-anchor="middle" font-family="var(--serif)" font-style="italic" font-size="11" fill="var(--potlood)">Kretenzische Zee</text>
+  <text x="150" y="120" text-anchor="middle" font-family="var(--serif)" font-style="italic" font-size="11" fill="var(--potlood)">Libische Zee</text>
+
+  <g font-family="var(--serif)" font-size="10" fill="var(--inkt-zacht)">
+    <circle cx="61.2" cy="35.4" r="2.6" fill="var(--papier)" stroke="var(--olijf)" stroke-width="1" />
+    <text x="61.2" y="27.4" text-anchor="middle">Chania</text>
+    <circle cx="101.6" cy="50.8" r="2.6" fill="var(--papier)" stroke="var(--olijf)" stroke-width="1" />
+    <text x="101.6" y="63.8" text-anchor="middle">Rethymno</text>
+    <circle cx="160.8" cy="54.1" r="2.6" fill="var(--papier)" stroke="var(--olijf)" stroke-width="1" />
+    <text x="160.8" y="46.1" text-anchor="middle">Heraklion</text>
+    <circle cx="213.8" cy="70.6" r="2.6" fill="var(--papier)" stroke="var(--olijf)" stroke-width="1" />
+    <text x="213.8" y="83.6" text-anchor="middle">Agios Nikolaos</text>
+  </g>
+</svg>
+
+<style>
+  .regiokaart {
+    width: 100%;
+    overflow: visible;
+  }
+</style>
