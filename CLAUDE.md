@@ -92,7 +92,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 
 - Juridisch: Stijn verkoopt een reisconcept; optioneel boekt hij voor €50 extra namens de klant, maar de klant betaalt de aanbieders altijd zelf. Waarschijnlijk geen pakketreisorganisator, maar de boekservice is het grijze gebied: kort laten checken (SGR/ANVR/jurist). Tot die tijd op de site nooit 'boek bij ons', 'pakket' of totaalprijzen; wel 'reisconcept' en 'aanvragen'.
 - Welke bestaande teksten hergebruikt worden.
-- Prefill bestemmingsvraag: veld `entry.1648549759`, Tirana = `Tirana, Albanië (live)`, Kreta = nog toe te voegen in het formulier, Split = `Split, Kroatië (komt eraan)` (in `src/config/site.ts`, helper `aanvraagLink(route)`). Wijzigt Stijn een antwoordoptie in het formulier, dan hier ook aanpassen.
+- Prefill bestemmingsvraag: veld `entry.1648549759`, Tirana = `Tirana, Albanië (live)`, Kreta = `Kreta, Griekenland (komt eraan)`, Split = `Split, Kroatië (komt eraan)` (in `src/config/site.ts`, helper `aanvraagLink(route)`). Wijzigt Stijn een antwoordoptie in het formulier, dan hier ook aanpassen.
 
 ## Beeldmateriaal (inventaris)
 

@@ -19,7 +19,7 @@ export const aanvraagFormulier =
 export const bestemmingVeld = 'entry.1648549759';
 export const bestemmingOpties = {
   tirana: 'Tirana, Albanië (live)',
-  // kreta: nog toe te voegen als antwoordoptie in het Google Form; tot die tijd opent het formulier zonder voorinvulling
+  kreta: 'Kreta, Griekenland (komt eraan)',
   split: 'Split, Kroatië (komt eraan)',
 } as Record<string, string>;
 
