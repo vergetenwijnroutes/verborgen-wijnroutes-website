@@ -6,6 +6,7 @@ import Aanvraag from '../../components/Aanvraag.astro';
 import VoorbeeldReisconcept from '../../components/VoorbeeldReisconcept.astro';
 import TiranaKaart from '../../components/kaarten/TiranaKaart.astro';
 import KretaKaart from '../../components/kaarten/KretaKaart.astro';
+import SplitKaart from '../../components/kaarten/SplitKaart.astro';
 import { aanvraagLink, site } from '../../config/site';
 
 // Eén template voor alle routes. Binnenkort-routes krijgen een kortere variant,
@@ -30,7 +31,7 @@ const slug = route.id;
 const { Content } = await render(route);
 
 // Kaart per route; een nieuwe route krijgt hier zijn eigen kaart.
-const kaarten: Record<string, typeof TiranaKaart> = { tirana: TiranaKaart, kreta: KretaKaart };
+const kaarten: Record<string, typeof TiranaKaart> = { tirana: TiranaKaart, kreta: KretaKaart, split: SplitKaart };
 const Kaart = kaarten[slug];
 
 const alleRoutes = (await getCollection('wijnroutes', ({ data }) => data.status !== 'gearchiveerd')).sort(
@@ -158,7 +159,11 @@ const jsonLd = [
           <div class="r-kopkolom">
             <div class="rubriek reveal"><p class="label">Wat je proeft</p></div>
             <h2 id="proeven-kop" class="kop kop--l reveal">
-              Inheemse druiven, <em>en meer.</em>
+              {d.druiven.internationaal.length > 0 ? (
+                <>Inheemse druiven, <em>en meer.</em></>
+              ) : (
+                <>Eigen druiven, <em>eigen verhalen.</em></>
+              )}
             </h2>
             <p class="tekst reveal">{d.druiven.intro}</p>
           </div>
@@ -174,8 +179,10 @@ const jsonLd = [
               ))}
             </ul>
 
-            <h3 class="label">Internationale druiven</h3>
-            <p class="druif-internationaal">{d.druiven.internationaal.join(' · ')}</p>
+            {d.druiven.internationaal.length > 0 && <h3 class="label">Internationale druiven</h3>}
+            {d.druiven.internationaal.length > 0 && (
+              <p class="druif-internationaal">{d.druiven.internationaal.join(' · ')}</p>
+            )}
 
             <h3 class="label">Stijlen</h3>
             <p class="druif-stijlen">{d.druiven.stijlen}</p>

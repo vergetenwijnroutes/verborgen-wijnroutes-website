@@ -46,7 +46,7 @@ const wijnroutes = defineCollection({
         .object({
           intro: z.string(),
           inheems: z.array(z.object({ naam: z.string(), kleur: z.string() })),
-          internationaal: z.array(z.string()),
+          internationaal: z.array(z.string()).default([]),
           stijlen: z.string(),
           notitie: z.string().optional(),
         })
