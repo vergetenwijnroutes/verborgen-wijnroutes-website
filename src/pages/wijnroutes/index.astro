@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import RouteKaart from '../../components/RouteKaart.astro';
 import hapjes from '../../assets/fotografie/hapjes-witte-wijn.jpg';
 import Aanvraag from '../../components/Aanvraag.astro';
 import TiranaKaart from '../../components/kaarten/TiranaKaart.astro';
@@ -16,6 +17,11 @@ const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 
 
 // Binnenkort-routes hebben (bewust) geen foto's; die krijgen hun getekende kaart als beeld.
 const kaarten: Record<string, typeof TiranaKaart> = { tirana: TiranaKaart, kreta: KretaKaart, split: SplitKaart };
+
+// Eigen beeld per route op dit overzicht (anders de hoofdfoto van de route).
+const overzichtFotos: Record<string, { src: ImageMetadata; bijschrift: string; positie?: string }> = {
+  tirana: { src: hapjes, bijschrift: 'Kleine gerechten en een glas lokale witte wijn in Tirana.', positie: '50% 55%' },
+};
 
 const actief = routes.filter((r) => r.data.status === 'actief').length;
 let fig = 0;
@@ -66,21 +72,11 @@ const jsonLd = [
         <p class="notitie o-notitie reveal" aria-hidden="true">Kies een route, de rest regelen we samen.</p>
       </div>
 
-      <figure class="o-foto reveal">
-        <div class="foto reveal-foto">
-          <Picture
-            src={hapjes}
-            formats={['avif', 'webp']}
-            widths={[420, 640, 900, 1200]}
-            sizes="(min-width: 60rem) 40vw, 100vw"
-            alt="Een plank met opgerolde flatbreads en een plank met ham en tomaatjes, met daarachter glazen witte wijn op een terrazzo-tafel"
-            loading="eager"
-            fetchpriority="high"
-          />
-        </div>
+      <figure class="o-kaart reveal">
+        <RouteKaart />
         <figcaption class="bijschrift">
-          <b>Fig. {++fig}</b>
-          <span>Kleine gerechten en een glas lokale witte wijn in Tirana.</span>
+          <b>Kaart</b>
+          <span>Het huidige aanbod van Verborgen Wijnroutes.</span>
         </figcaption>
       </figure>
     </div>
@@ -94,6 +90,7 @@ const jsonLd = [
         const Kaart = kaarten[r.id];
         const isActief = d.status === 'actief';
         const druiven = d.druiven?.inheems.slice(0, 4) ?? [];
+        const foto = overzichtFotos[r.id] ?? (d.hoofdfoto ? { src: d.hoofdfoto, bijschrift: d.hoofdfotoBijschrift ?? '' } : undefined);
         return (
           <article class:list={['spread', i % 2 === 1 && 'spread--om', !isActief && 'spread--binnenkort']}>
             <div class="wrap spread-grid">
@@ -125,22 +122,23 @@ const jsonLd = [
               </div>
 
               <a class="spread-beeld reveal" href={`/wijnroutes/${r.id}/`} tabindex="-1" aria-hidden="true">
-                {isActief && d.hoofdfoto ? (
+                {isActief && foto ? (
                   <figure>
                     <div class="foto reveal-foto spread-foto">
                       <Picture
-                        src={d.hoofdfoto}
+                        src={foto.src}
                         formats={['avif', 'webp']}
                         widths={[420, 640, 900, 1200]}
                         sizes="(min-width: 60rem) 45vw, 100vw"
                         alt=""
+                        style={foto.positie ? `object-position: ${foto.positie}` : undefined}
                         loading={i === 0 ? 'eager' : 'lazy'}
                       />
                     </div>
-                    {d.hoofdfotoBijschrift && (
+                    {foto.bijschrift && (
                       <figcaption class="bijschrift">
                         <b>Fig. {++fig}</b>
-                        <span>{d.hoofdfotoBijschrift}</span>
+                        <span>{foto.bijschrift}</span>
                       </figcaption>
                     )}
                   </figure>
@@ -221,20 +219,10 @@ const jsonLd = [
     transform-origin: left;
   }
 
-  .o-foto {
-    margin-inline: calc(var(--gutter) * -1);
-  }
-
-  .o-foto .foto {
-    aspect-ratio: 4 / 5;
-  }
-
-  .o-foto img {
-    object-position: 50% 55%;
-  }
-
-  .o-foto .bijschrift {
-    padding-inline: var(--gutter);
+  .o-kaart {
+    width: 100%;
+    max-width: 22rem;
+    justify-self: center;
   }
 
   /* ---------- Spreads ---------- */
@@ -377,13 +365,9 @@ const jsonLd = [
       gap: 1.5rem;
     }
 
-    .o-foto {
+    .o-kaart {
       grid-column: 8 / span 5;
-      margin-inline: 0 calc(var(--gutter) * -1);
-    }
-
-    .o-foto .bijschrift {
-      padding-inline: 0;
+      max-width: none;
     }
 
     .spread-grid {
