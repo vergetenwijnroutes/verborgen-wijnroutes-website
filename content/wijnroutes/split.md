@@ -3,7 +3,7 @@ naam: Split
 land: Kroatië
 status: binnenkort
 volgorde: 3
-regel: Dalmatische wijn, eigen vleeswaren en kazen, en een boerderij waar alles nog authentiek is.
+regel: Een levendige kuststad met wijnboerderijen in het achterland, Dalmatische druiven en eilanden voor de deur.
 
 seoTitel: "Wijnreis Kroatië samenstellen rond Split | Verborgen Wijnroutes"
 seoOmschrijving: "Laat een persoonlijke wijnreis naar Kroatië samenstellen. Dalmatische druiven als Plavac Mali, authentieke boerderijen en de keuken rond Split. Binnenkort."

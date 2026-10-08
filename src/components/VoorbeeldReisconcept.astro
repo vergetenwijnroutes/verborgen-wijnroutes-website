@@ -25,6 +25,10 @@ const voorbeelden = [
       Geen standaardprogramma. Na je aanvraag stel ik op basis van jullie wensen een persoonlijk reisconcept
       samen.
     </p>
+    <p class="voorbeeld-prijs">
+      Een persoonlijk reisconcept kost € 250. Wil je dat ik daarna alles voor je klaarzet en de afspraken maak,
+      dan komt daar € 100 bij. De reis zelf betaal je rechtstreeks aan de plekken.
+    </p>
   </div>
 
   <figure class="voorbeeld-schermen reveal" data-carrousel>
@@ -74,6 +78,15 @@ const voorbeelden = [
   }
 
   /* Mobiel: de schermen naast elkaar om doorheen te vegen, groot genoeg om te lezen */
+  .voorbeeld-prijs {
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--lijn);
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    line-height: 1.6;
+    color: var(--potlood);
+  }
+
   .voorbeeld-schermen {
     min-width: 0;
     margin-inline: calc(var(--gutter) * -1);
