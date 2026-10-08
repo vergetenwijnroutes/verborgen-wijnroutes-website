@@ -1,0 +1,488 @@
+---
+import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { aanvraagLink, site } from '../config/site';
+import stijn from '../assets/fotografie/stijn-tirana.jpg';
+import wijntanks from '../assets/fotografie/wijntanks.jpg';
+
+const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 'gearchiveerd')).sort(
+  (a, b) => a.data.volgorde - b.data.volgorde,
+);
+
+const principes = [
+  {
+    kop: 'Geen overvolle programma’s',
+    tekst: 'Geen standaardtours en geen dagen waarin je van de ene proeverij naar de volgende rent. Liever minder, en dan goed.',
+  },
+  {
+    kop: 'Authentieke tijd',
+    tekst: 'Tijd bij de mensen die de wijn maken, op plekken waar ze het nog op hun eigen manier doen.',
+  },
+  {
+    kop: 'Leren en proeven',
+    tekst: 'Je gaat naar huis met nieuwe smaken, en met het verhaal erachter: de druif, de streek, de familie.',
+  },
+  {
+    kop: 'Lekker eten',
+    tekst: 'Goede wijn hoort bij goed eten. Lokaal, eerlijk, en het liefst waar de wijnmaker zelf ook eet.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'Mijn verhaal',
+    url: new URL('/mijn-verhaal/', site.url).href,
+    inLanguage: 'nl-NL',
+    about: {
+      '@type': 'Person',
+      name: site.oprichter,
+      jobTitle: 'Oprichter van Verborgen Wijnroutes',
+      worksFor: { '@type': 'Organization', name: site.naam, url: site.url },
+      hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'WSET Level 1 Award in Wines' },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Mijn verhaal', item: new URL('/mijn-verhaal/', site.url).href },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  titel="Mijn verhaal: waarom ik wijnreizen samenstel | Verborgen Wijnroutes"
+  omschrijving="Ik ben Stijn, oprichter van Verborgen Wijnroutes. Liefde voor wijn, WSET-gecertificeerd en altijd op zoek naar de minder bekende plekken. Dit is mijn verhaal."
+  deelbeeld={stijn}
+  deelbeeldAlt="Stijn loopt door een straat in Tirana onder blauwe en groene linten"
+  jsonLd={jsonLd}
+>
+  <!-- Opening -->
+  <section class="v-opening" aria-labelledby="verhaal-kop">
+    <div class="wrap v-opening-grid">
+      <div class="v-opening-tekst">
+        <nav class="kruimel label" aria-label="Kruimelpad">
+          <a href="/">Home</a><span class="kruimel-streep" aria-hidden="true">/</span><span aria-current="page">Mijn verhaal</span>
+        </nav>
+        <p class="label label--rood reveal">Mijn verhaal</p>
+        <h1 id="verhaal-kop" class="kop v-kop reveal">
+          Ik ben Stijn. <em>Die vriend die er al geweest is.</em>
+        </h1>
+        <p class="lead reveal">
+          Ik heb een achtergrond in commerciële economie en marketing, maar mijn liefde ligt bij wijn. En bij de
+          plekken waar die vandaan komt: de wijnhuizen, de mensen en de keuken eromheen.
+        </p>
+      </div>
+
+      <figure class="v-foto reveal">
+        <div class="foto reveal-foto">
+          <Picture
+            src={stijn}
+            formats={['avif', 'webp']}
+            widths={[420, 640, 900, 1179]}
+            sizes="(min-width: 60rem) 40vw, 100vw"
+            alt="Stijn loopt in een rood T-shirt door een lommerrijke straat in Tirana, onder blauwe en groene linten die boven de straat hangen"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
+        <figcaption class="bijschrift">
+          <b>Fig. 1</b>
+          <span>Stijn, ergens in Blloku, een levendige wijk in Tirana.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Hoe het begon -->
+  <section class="v-sectie" aria-labelledby="begon-kop">
+    <div class="wrap v-twee">
+      <div class="v-kopkolom">
+        <div class="rubriek reveal"><p class="label">Hoe het begon</p></div>
+        <h2 id="begon-kop" class="kop kop--l reveal">Een vriendenvakantie <em>in Split.</em></h2>
+      </div>
+      <div class="tekst reveal">
+        <p>
+          Het begon met een vriendenvakantie naar Split. Zon, zee en een leuk nachtleven. Maar wat me het meest is
+          bijgebleven, was een wijnproeverij bij Marin’s Family Farm. Marin leidt de proeverij zelf, met eigen
+          vleeswaren, kazen, vijgen en natuurlijk wijn. Alles van eigen land.
+        </p>
+        <p>
+          Daar zag ik hoe een reis kan voelen als je op de juiste plek terechtkomt: niet als toerist, maar als gast.
+          Dat gevoel wilde ik vaker. En ik wilde het delen.
+        </p>
+        <p class="notitie v-notitie" aria-hidden="true">Hier begon het voor mij.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Wijn en kennis -->
+  <section class="v-sectie" aria-labelledby="kennis-kop">
+    <div class="wrap v-twee v-twee--foto">
+      <div class="v-kopkolom">
+        <div class="rubriek reveal"><p class="label">Wijn en kennis</p></div>
+        <h2 id="kennis-kop" class="kop kop--l reveal">Liefde voor wijn, <em>en blijven leren.</em></h2>
+        <div class="tekst reveal">
+          <p>
+            Ik heb mijn WSET Level 1 gehaald, de internationale wijnopleiding, en ik ben van plan me daar verder in
+            te verdiepen. Niet om een afstandelijke wijnexpert te worden, maar om je beter te kunnen vertellen wat
+            je proeft, en waarom.
+          </p>
+          <p>
+            In Albanië vond ik veel van wat ik zocht. Ik deins er niet voor terug om naar de minder bekende plekken
+            te gaan. Juist daar vind je de wijnmakers die je nergens anders tegenkomt.
+          </p>
+        </div>
+      </div>
+      <figure class="v-foto-klein reveal">
+        <div class="foto reveal-foto">
+          <Picture
+            src={wijntanks}
+            formats={['avif', 'webp']}
+            widths={[360, 560, 800]}
+            sizes="(min-width: 60rem) 28vw, 80vw"
+            alt="Een lange rij roestvrijstalen wijntanks onder betonnen dakspanten, met twee mannen die verderop door de hal lopen"
+          />
+        </div>
+        <figcaption class="bijschrift">
+          <b>Fig. 2</b>
+          <span>Achter de schermen bij een wijnmaker.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Hoe ik reis -->
+  <section class="v-sectie" aria-labelledby="reis-kop">
+    <div class="wrap">
+      <div class="rubriek reveal"><p class="label">Hoe ik reis</p></div>
+      <h2 id="reis-kop" class="kop kop--l v-sectiekop reveal">
+        Een leuke reis, <em>en uiteraard iets met wijn.</em>
+      </h2>
+      <p class="tekst v-intro reveal">
+        Een wijnreis moet vooral een fijne reis zijn: vol ontspanning en plezier. Dit vind ik daarbij belangrijk.
+      </p>
+      <ol class="principes" role="list">
+        {
+          principes.map((p, i) => (
+            <li class="principe reveal" style={`--vertraging: ${i * 0.07}s`}>
+              <span class="principe-nummer" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="principe-kop">{p.kop}</h3>
+              <p class="principe-tekst">{p.tekst}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Eindigt bij de routes -->
+  <section class="v-sectie v-routes" aria-labelledby="routes-kop">
+    <div class="wrap">
+      <div class="rubriek reveal"><p class="label">Waar ik je mee naartoe neem</p></div>
+      <h2 id="routes-kop" class="kop kop--l v-sectiekop reveal">De wijnroutes</h2>
+      <ul class="v-routelijst" role="list">
+        {
+          routes.map((r, i) => (
+            <li class="reveal" style={`--vertraging: ${i * 0.06}s`}>
+              <a href={`/wijnroutes/${r.id}/`}>
+                <span class="v-route-nummer label" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                <span class="v-route-naam">{r.data.naam}</span>
+                <span class="label v-route-meta">
+                  {r.data.land} · {r.data.status === 'actief' ? 'Nu te ontdekken' : 'Binnenkort'}
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="v-knoppen reveal">
+        <a class="doorlink" href="/wijnroutes/">Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span></a>
+        <a class="doorlink doorlink--rood" href={aanvraagLink()} target="_blank" rel="noopener">
+          Vraag jouw wijnreis aan <span class="pijl" aria-hidden="true">→</span>
+          <span class="sr-only">(opent een formulier in een nieuw tabblad)</span>
+        </a>
+      </div>
+      <p class="notitie v-handtekening" aria-hidden="true">— Stijn</p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .v-opening {
+    padding-top: 1.5rem;
+  }
+
+  .v-opening-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .v-opening-tekst {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.15rem;
+  }
+
+  .kruimel {
+    color: var(--potlood);
+    margin-bottom: 0.5rem;
+  }
+
+  .kruimel a {
+    text-decoration: none;
+  }
+
+  .kruimel a:hover {
+    color: var(--rood);
+  }
+
+  .kruimel-streep {
+    margin-inline: 0.6em;
+  }
+
+  .v-kop {
+    font-size: clamp(2.3rem, 5.8vw, 4.4rem);
+    line-height: 1.03;
+    letter-spacing: -0.024em;
+  }
+
+  .v-opening-tekst .lead {
+    max-width: 32rem;
+  }
+
+  .v-foto {
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
+  .v-foto .foto {
+    aspect-ratio: 4 / 5;
+  }
+
+  .v-foto img {
+    object-position: 46% 60%;
+  }
+
+  .v-foto .bijschrift {
+    padding-inline: var(--gutter);
+  }
+
+  .v-sectie {
+    padding-top: var(--sectie);
+  }
+
+  .v-twee {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .v-kopkolom {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .v-twee .tekst p + p {
+    margin-top: 1em;
+  }
+
+  .v-notitie {
+    margin-top: 1.25rem;
+    font-size: 1.8rem;
+    transform: rotate(-2deg);
+    transform-origin: left;
+  }
+
+  .v-foto-klein {
+    max-width: 20rem;
+  }
+
+  .v-foto-klein .foto {
+    aspect-ratio: 3 / 4;
+  }
+
+  .v-sectiekop {
+    margin-top: 1.25rem;
+    max-width: 46rem;
+  }
+
+  .v-intro {
+    margin-top: 1.25rem;
+  }
+
+  .principes {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    list-style: none;
+    padding: 0;
+    margin: 2.25rem 0 0;
+  }
+
+  .principe {
+    display: grid;
+    grid-template-columns: 3.25rem 1fr;
+    column-gap: 1rem;
+    padding-block: 1.3rem 1.5rem;
+    border-top: 1px solid var(--inkt);
+  }
+
+  .principe-nummer {
+    grid-row: 1 / span 2;
+    font-family: var(--mono);
+    font-size: 1.6rem;
+    line-height: 1.1;
+    color: var(--rood);
+  }
+
+  .principe-kop {
+    font-size: clamp(1.35rem, 2vw, 1.6rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .principe-tekst {
+    margin-top: 0.4rem;
+    font-size: 1rem;
+    color: var(--inkt-zacht);
+  }
+
+  .v-routelijst {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    border-top: 1px solid var(--lijn);
+  }
+
+  .v-routelijst a {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    column-gap: 1rem;
+    row-gap: 0.3rem;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--lijn);
+    text-decoration: none;
+  }
+
+  .v-route-nummer {
+    grid-row: 1 / span 2;
+    padding-top: 0.7rem;
+    color: var(--potlood);
+  }
+
+  .v-route-naam {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 360;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
+  }
+
+  .v-routelijst a:hover .v-route-naam {
+    color: var(--rood);
+    font-style: italic;
+  }
+
+  .v-route-meta {
+    color: var(--potlood);
+  }
+
+  .v-knoppen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 2.5rem;
+    margin-top: 2.25rem;
+  }
+
+  .v-handtekening {
+    margin-top: 2rem;
+    font-size: 2rem;
+  }
+
+  @media (min-width: 60rem) {
+    .v-opening {
+      padding-top: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .v-opening-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: center;
+    }
+
+    .v-opening-tekst {
+      grid-column: 1 / span 6;
+      gap: 1.5rem;
+    }
+
+    .v-foto {
+      grid-column: 8 / span 5;
+      margin-inline: 0 calc(var(--gutter) * -1);
+    }
+
+    .v-foto .bijschrift {
+      padding-inline: 0;
+    }
+
+    .v-twee {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+    }
+
+    .v-twee > :first-child {
+      grid-column: 1 / span 5;
+    }
+
+    .v-twee > :last-child {
+      grid-column: 7 / span 6;
+    }
+
+    .v-twee--foto {
+      align-items: center;
+    }
+
+    /* In de HTML staat de kop eerst (mobiel), op desktop de foto links */
+    .v-twee--foto > .v-kopkolom {
+      grid-column: 7 / span 6;
+      grid-row: 1;
+    }
+
+    .v-twee--foto > .v-foto-klein {
+      grid-column: 2 / span 4;
+      grid-row: 1;
+      max-width: none;
+    }
+
+    .principes {
+      grid-template-columns: repeat(4, 1fr);
+      column-gap: var(--gutter);
+    }
+
+    .principe {
+      grid-template-columns: 1fr;
+      row-gap: 0.75rem;
+      padding-right: 1rem;
+    }
+
+    .principe-nummer {
+      grid-row: auto;
+    }
+
+    .v-routelijst a {
+      grid-template-columns: 3.75rem 1fr auto;
+      align-items: baseline;
+    }
+
+    .v-route-nummer {
+      grid-row: auto;
+      padding-top: 0;
+    }
+  }
+</style>

@@ -86,6 +86,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 - Lefkas is vervangen door Kreta. `/wijnroutes/kreta/` gebouwd als binnenkort-pagina (geen foto's op binnenkort-routes, op verzoek van Stijn). Binnenkort-pagina's worden alleen gegenereerd als het bestand een `lead` heeft.
 - `/wijnroutes/split/` gebouwd als binnenkort-pagina (Stijns verhaal: vriendenvakantie, wijnproeverij bij Marin's Family Farm, waar het voor hem begon; Marin leidt de proeverij zelf).
 - `/wijnroutes/` (overzicht) gebouwd: opening met kaart, per route een spread (Tirana met foto, binnenkort-routes met hun getekende kaart), aanvraagblok. Wacht op feedback.
+- `/mijn-verhaal/` gebouwd: opening met foto Stijn, hoe het begon (Split, Marin's Family Farm), wijn en kennis (achtergrond commerciële economie en marketing, WSET Level 1, wil verder), hoe ik reis (geen overvolle programma's, authentieke tijd, leren en proeven, lekker eten), eindigt bij de routes. Wacht op feedback.
 - Tirana-content: Stijn wil niet alles weggeven. Alleen Tufa Winery en wijnbar Vena bij naam; overige plekken vaag omschrijven ("namen en adressen in je reisconcept"). Geen vaste route: Tirana + ± 1 uur rijden. Niet pushen op september; het hele jaar kan (zomer 35–40 °C).
 
 ## Nog open
