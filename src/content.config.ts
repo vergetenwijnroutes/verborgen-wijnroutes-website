@@ -15,6 +15,8 @@ const inspiratie = defineCollection({
       seoTitel: z.string().optional(),
       seoOmschrijving: z.string().optional(),
       datum: z.coerce.date(),
+      // Datum van een inhoudelijke update; anders geldt `datum`.
+      bijgewerkt: z.coerce.date().optional(),
       // Rubriek: Druiven, Tips, Wijnreizen, ...
       categorie: z.string(),
       route: z.enum(['tirana', 'kreta', 'split']).optional(),

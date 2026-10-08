@@ -9,30 +9,21 @@ import Inspiratie from '../components/home/Inspiratie.astro';
 import VanOntdekkingNaarReis from '../components/home/VanOntdekkingNaarReis.astro';
 import Aanvraag from '../components/Aanvraag.astro';
 import { site } from '../config/site';
+import { organisatie, organisatieId, persoon, websiteId } from '../config/structured-data';
 
 const jsonLd = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'TravelAgency',
-    name: site.naam,
-    url: site.url,
-    email: site.email,
-    sameAs: [site.instagram],
-    description: site.omschrijving,
-    logo: new URL('/apple-touch-icon.png', site.url).href,
-    founder: { '@type': 'Person', name: site.oprichter },
-    areaServed: { '@type': 'Country', name: 'Nederland' },
-    knowsLanguage: 'nl',
-  },
+  organisatie(),
+  persoon(),
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': websiteId,
     name: site.naam,
     url: site.url,
     inLanguage: 'nl-NL',
+    publisher: { '@id': organisatieId },
   },
-];
----
+];---
 
 <BaseLayout
   titel="Wijnreis samenstellen naar onbekende regio’s | Verborgen Wijnroutes"

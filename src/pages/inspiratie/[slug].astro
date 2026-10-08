@@ -1,12 +1,13 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TiranaKaart from '../../components/kaarten/TiranaKaart.astro';
 import KretaKaart from '../../components/kaarten/KretaKaart.astro';
 import SplitKaart from '../../components/kaarten/SplitKaart.astro';
 import { site } from '../../config/site';
 import { leestijd } from '../../lib/leestijd';
+import { auteur, uitgever, websiteId } from '../../config/structured-data';
 
 // Eén template voor alle inspiratieartikelen uit content/inspiratie/. Concepten worden niet gebouwd.
 export async function getStaticPaths() {
@@ -56,6 +57,9 @@ const meer = (await getCollection('inspiratie', ({ id, data }) => !data.concept 
   .slice(0, 3);
 
 const url = new URL(`/inspiratie/${slug}/`, site.url).href;
+const artikelBeeld = d.hoofdfoto
+  ? new URL((await getImage({ src: d.hoofdfoto, width: 1200, format: 'jpg' })).src, site.url).href
+  : undefined;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -76,8 +80,16 @@ const jsonLd = [
     url,
     mainEntityOfPage: url,
     articleSection: d.categorie,
-    author: { '@type': 'Person', name: site.oprichter, url: new URL('/mijn-verhaal/', site.url).href },
-    publisher: { '@type': 'Organization', name: site.naam, url: site.url },
+    dateModified: (d.bijgewerkt ?? d.datum).toISOString().slice(0, 10),
+    ...(artikelBeeld && { image: [artikelBeeld] }),
+    wordCount: (artikel.body ?? '').split(/\s+/).filter(Boolean).length,
+    timeRequired: `PT${minuten}M`,
+    ...(route && {
+      about: { '@type': 'Place', name: `${route.data.naam}, ${route.data.land}` },
+    }),
+    isPartOf: { '@id': websiteId },
+    author: auteur,
+    publisher: uitgever,
   },
 ];
 ---
@@ -104,7 +116,7 @@ const jsonLd = [
           <h1 class="kop a-titel reveal">{d.titel}</h1>
           <p class="lead reveal">{d.samenvatting}</p>
           <p class="label a-meta reveal">
-            <span>Door {site.oprichter}</span>
+            <span>Door <a class="a-auteur" href="/mijn-verhaal/" rel="author">{site.oprichter}</a></span>
             <time datetime={d.datum.toISOString().slice(0, 10)}>{datum.format(d.datum)}</time>
             <span>{minuten} min lezen</span>
           </p>
@@ -308,6 +320,16 @@ const jsonLd = [
     flex-wrap: wrap;
     gap: 0.4rem 1.25rem;
     color: var(--potlood);
+  }
+
+  .a-auteur {
+    color: var(--inkt);
+    text-decoration-color: var(--rood);
+    text-underline-offset: 0.25em;
+  }
+
+  .a-auteur:hover {
+    color: var(--rood);
   }
 
   .a-hoofdfoto .foto {

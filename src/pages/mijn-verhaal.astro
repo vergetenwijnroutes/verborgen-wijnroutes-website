@@ -5,6 +5,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { aanvraagLink, site } from '../config/site';
 import stijn from '../assets/fotografie/stijn-tirana.jpg';
 import wijntanks from '../assets/fotografie/wijntanks.jpg';
+import { getImage } from 'astro:assets';
+import { persoon, persoonId, websiteId } from '../config/structured-data';
+
+const portret = await getImage({ src: stijn, width: 800, format: 'jpg' });
+const portretUrl = new URL(portret.src, site.url).href;
 
 const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 'gearchiveerd')).sort(
   (a, b) => a.data.volgorde - b.data.volgorde,
@@ -36,14 +41,11 @@ const jsonLd = [
     name: 'Mijn verhaal',
     url: new URL('/mijn-verhaal/', site.url).href,
     inLanguage: 'nl-NL',
-    about: {
-      '@type': 'Person',
-      name: site.oprichter,
-      jobTitle: 'Oprichter van Verborgen Wijnroutes',
-      worksFor: { '@type': 'Organization', name: site.naam, url: site.url },
-      hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'WSET Level 1 Award in Wines' },
-    },
+    isPartOf: { '@id': websiteId },
+    about: { '@id': persoonId },
+    mainEntity: { '@id': persoonId },
   },
+  persoon(portretUrl),
   {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

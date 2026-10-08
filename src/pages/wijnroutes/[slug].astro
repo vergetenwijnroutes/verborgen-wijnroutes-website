@@ -8,6 +8,7 @@ import TiranaKaart from '../../components/kaarten/TiranaKaart.astro';
 import KretaKaart from '../../components/kaarten/KretaKaart.astro';
 import SplitKaart from '../../components/kaarten/SplitKaart.astro';
 import { aanvraagLink, site } from '../../config/site';
+import { organisatieId } from '../../config/structured-data';
 
 // Eén template voor alle routes. Binnenkort-routes krijgen een kortere variant,
 // maar pas als er inhoud is (een lead); zonder inhoud geen lege pagina.
@@ -66,7 +67,7 @@ const jsonLd = [
     url,
     inLanguage: 'nl-NL',
     touristType: 'Wijnliefhebbers',
-    provider: { '@type': 'TravelAgency', name: site.naam, url: site.url },
+    provider: { '@type': 'TravelAgency', '@id': organisatieId, name: site.naam, url: site.url },
     itinerary: { '@type': 'Place', name: `${d.naam}, ${d.land}` },
   },
 ];
