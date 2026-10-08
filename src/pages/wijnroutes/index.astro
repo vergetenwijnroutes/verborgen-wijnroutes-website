@@ -3,7 +3,6 @@ import { getCollection } from 'astro:content';
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import RouteKaart from '../../components/RouteKaart.astro';
-import hapjes from '../../assets/fotografie/hapjes-witte-wijn.jpg';
 import Aanvraag from '../../components/Aanvraag.astro';
 import TiranaKaart from '../../components/kaarten/TiranaKaart.astro';
 import KretaKaart from '../../components/kaarten/KretaKaart.astro';
@@ -15,13 +14,9 @@ const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 
   (a, b) => a.data.volgorde - b.data.volgorde,
 );
 
-// Binnenkort-routes hebben (bewust) geen foto's; die krijgen hun getekende kaart als beeld.
+// Elke route krijgt op dit overzicht zijn getekende kaart als beeld; alleen zonder kaart valt hij terug op de hoofdfoto.
 const kaarten: Record<string, typeof TiranaKaart> = { tirana: TiranaKaart, kreta: KretaKaart, split: SplitKaart };
 
-// Eigen beeld per route op dit overzicht (anders de hoofdfoto van de route).
-const overzichtFotos: Record<string, { src: ImageMetadata; bijschrift: string; positie?: string }> = {
-  tirana: { src: hapjes, bijschrift: 'Kleine gerechten en een glas lokale witte wijn in Tirana.', positie: '50% 55%' },
-};
 
 const actief = routes.filter((r) => r.data.status === 'actief').length;
 let fig = 0;
@@ -90,7 +85,7 @@ const jsonLd = [
         const Kaart = kaarten[r.id];
         const isActief = d.status === 'actief';
         const druiven = d.druiven?.inheems.slice(0, 4) ?? [];
-        const foto = overzichtFotos[r.id] ?? (d.hoofdfoto ? { src: d.hoofdfoto, bijschrift: d.hoofdfotoBijschrift ?? '' } : undefined);
+        const foto = Kaart ? undefined : (d.hoofdfoto ? { src: d.hoofdfoto, bijschrift: d.hoofdfotoBijschrift ?? '' } : undefined);
         return (
           <article class:list={['spread', i % 2 === 1 && 'spread--om', !isActief && 'spread--binnenkort']}>
             <div class="wrap spread-grid">
@@ -122,7 +117,7 @@ const jsonLd = [
               </div>
 
               <a class="spread-beeld reveal" href={`/wijnroutes/${r.id}/`} tabindex="-1" aria-hidden="true">
-                {isActief && foto ? (
+                {foto ? (
                   <figure>
                     <div class="foto reveal-foto spread-foto">
                       <Picture
