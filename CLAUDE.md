@@ -42,7 +42,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
   ├── /inspiratie/
   │   └── /[artikel]/
   └── /mijn-verhaal/
-  Footer-only: /privacy/ (verwerking Google Form-gegevens; inhoud later), 404-pagina.
+  Footer-only: /privacy/ (verwerking Google Form-gegevens; inhoud later), /algemene-voorwaarden/ (reisconcept € 250, boekingsservice € 100; inhoud later, juridisch laten checken), 404-pagina.
   ```
 - Navigatie: logo · Wijnroutes · Inspiratie · Mijn verhaal · knop "Vraag jouw wijnreis aan" (→ Google Form).
 - Footer: routes, Inspiratie, Mijn verhaal, contact (e-mail + Instagram, geen WhatsApp), Privacy.
