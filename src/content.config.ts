@@ -9,12 +9,24 @@ const inspiratie = defineCollection({
   schema: ({ image }) =>
     z.object({
       titel: z.string(),
+      // Korte titel voor lijsten; valt terug op de titel.
+      korteTitel: z.string().optional(),
       samenvatting: z.string(),
+      seoTitel: z.string().optional(),
+      seoOmschrijving: z.string().optional(),
       datum: z.coerce.date(),
-      categorie: z.string().optional(),
+      // Rubriek: Druiven, Tips, Wijnreizen, ...
+      categorie: z.string(),
       route: z.enum(['tirana', 'kreta', 'split']).optional(),
       hoofdfoto: image().optional(),
       hoofdfotoAlt: z.string().optional(),
+      hoofdfotoBijschrift: z.string().optional(),
+      // Foto's in de tekst: `na` is het aantal tussenkoppen (##) waarna de foto komt.
+      fotos: z
+        .array(z.object({ foto: image(), alt: z.string(), bijschrift: z.string(), na: z.number().int().min(0) }))
+        .default([]),
+      notitie: z.string().optional(),
+      // Leestijd wordt uit de tekst berekend; alleen invullen om te overschrijven.
       leestijd: z.number().int().positive().optional(),
       concept: z.boolean().default(false),
     }),

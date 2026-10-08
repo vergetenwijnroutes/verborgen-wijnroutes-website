@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
+import { leestijd } from '../../lib/leestijd';
 
 // Vult zich automatisch vanuit content/inspiratie/. Concepten worden overgeslagen.
 const artikelen = (await getCollection('inspiratie', ({ data }) => !data.concept))
@@ -39,7 +40,7 @@ const [uitgelicht, ...overige] = artikelen;
                 )}
                 <p class="label artikel-meta">
                   <time datetime={uitgelicht.data.datum.toISOString()}>{datum.format(uitgelicht.data.datum)}</time>
-                  {uitgelicht.data.leestijd && <span>{uitgelicht.data.leestijd} min lezen</span>}
+                  <span>{leestijd(uitgelicht)} min lezen</span>
                 </p>
                 <h3 class="kop kop--m">{uitgelicht.data.titel}</h3>
                 <p class="artikel-samenvatting">{uitgelicht.data.samenvatting}</p>
@@ -54,7 +55,7 @@ const [uitgelicht, ...overige] = artikelen;
                       <p class="label artikel-meta">
                         <time datetime={artikel.data.datum.toISOString()}>{datum.format(artikel.data.datum)}</time>
                       </p>
-                      <h3 class="artikel-titel">{artikel.data.titel}</h3>
+                      <h3 class="artikel-titel">{artikel.data.korteTitel ?? artikel.data.titel}</h3>
                     </a>
                   </li>
                 ))}

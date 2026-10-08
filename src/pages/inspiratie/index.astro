@@ -1,0 +1,437 @@
+---
+import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../config/site';
+import { leestijd } from '../../lib/leestijd';
+
+// Vult zich automatisch vanuit content/inspiratie/. Het nieuwste artikel staat bovenaan,
+// de rest volgt als inhoudsopgave, zoals in een tijdschrift.
+const artikelen = (await getCollection('inspiratie', ({ data }) => !data.concept)).sort(
+  (a, b) => b.data.datum.getTime() - a.data.datum.getTime(),
+);
+const routes = await getCollection('wijnroutes');
+const routeNaam = (id?: string) => routes.find((r) => r.id === id)?.data.naam;
+
+const [uitgelicht, ...overige] = artikelen;
+const datum = new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Inspiratie', item: new URL('/inspiratie/', site.url).href },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: `Inspiratie van ${site.naam}`,
+    url: new URL('/inspiratie/', site.url).href,
+    inLanguage: 'nl-NL',
+    blogPost: artikelen.map((a) => ({
+      '@type': 'BlogPosting',
+      headline: a.data.titel,
+      datePublished: a.data.datum.toISOString().slice(0, 10),
+      url: new URL(`/inspiratie/${a.id}/`, site.url).href,
+    })),
+  },
+];
+---
+
+<BaseLayout
+  titel="Inspiratie voor je wijnreis: druiven, tips en verhalen | Verborgen Wijnroutes"
+  omschrijving="Verhalen en tips voor een wijnreis buiten de bekende paden. Over lokale druiven in Albanië, waar je goed drinkt in Tirana en hoe je een wijnreis aanpakt."
+  deelbeeld={uitgelicht?.data.hoofdfoto}
+  deelbeeldAlt={uitgelicht?.data.hoofdfotoAlt}
+  jsonLd={jsonLd}
+>
+  <!-- Opening -->
+  <section class="i-opening" aria-labelledby="inspiratie-kop">
+    <div class="wrap">
+      <nav class="kruimel label" aria-label="Kruimelpad">
+        <a href="/">Home</a><span class="kruimel-streep" aria-hidden="true">/</span><span aria-current="page">Inspiratie</span>
+      </nav>
+      <div class="i-opening-grid">
+        <h1 id="inspiratie-kop" class="kop i-kop reveal">Wat ik onderweg <em>tegenkom.</em></h1>
+        <div class="i-opening-tekst">
+          <p class="lead reveal">
+            Over druiven die je buiten Albanië bijna nergens proeft, plekken waar je een goed glas vindt en hoe je een
+            wijnreis aanpakt buiten de bekende paden.
+          </p>
+          <p class="notitie i-notitie reveal" aria-hidden="true">Elk verhaal hoort bij een route.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    uitgelicht ? (
+      <>
+        <!-- Uitgelicht -->
+        <section class="i-uitgelicht" aria-label="Nieuwste verhaal">
+          <div class="wrap">
+            <div class="rubriek reveal">
+              <p class="label">Nr. 01 · Nieuw</p>
+              <p class="label">{artikelen.length} {artikelen.length === 1 ? 'verhaal' : 'verhalen'}</p>
+            </div>
+            <a class="i-uitgelicht-grid" href={`/inspiratie/${uitgelicht.id}/`}>
+              {uitgelicht.data.hoofdfoto && (
+                <figure class="i-uitgelicht-beeld reveal">
+                  <div class="foto reveal-foto">
+                    <Picture
+                      src={uitgelicht.data.hoofdfoto}
+                      formats={['avif', 'webp']}
+                      widths={[420, 640, 900]}
+                      sizes="(min-width: 60rem) 35vw, 100vw"
+                      alt=""
+                      loading="eager"
+                    />
+                  </div>
+                  {uitgelicht.data.hoofdfotoBijschrift && (
+                    <figcaption class="bijschrift">
+                      <b>Fig. 1</b>
+                      <span>{uitgelicht.data.hoofdfotoBijschrift}</span>
+                    </figcaption>
+                  )}
+                </figure>
+              )}
+              <div class="i-uitgelicht-tekst">
+                <p class="label i-labels reveal">
+                  <span class="label--rood">{uitgelicht.data.categorie}</span>
+                  {routeNaam(uitgelicht.data.route) && <span>Wijnroute {routeNaam(uitgelicht.data.route)}</span>}
+                </p>
+                <h2 class="kop kop--l i-uitgelicht-titel reveal">{uitgelicht.data.titel}</h2>
+                <p class="lead reveal">{uitgelicht.data.samenvatting}</p>
+                <p class="label i-meta reveal">
+                  <time datetime={uitgelicht.data.datum.toISOString().slice(0, 10)}>
+                    {datum.format(uitgelicht.data.datum)}
+                  </time>
+                  <span>{leestijd(uitgelicht)} min lezen</span>
+                </p>
+                <span class="doorlink reveal">
+                  Lees het verhaal <span class="pijl" aria-hidden="true">→</span>
+                </span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <!-- Inhoudsopgave -->
+        {overige.length > 0 && (
+          <section class="i-inhoud" aria-labelledby="inhoud-kop">
+            <div class="wrap">
+              <div class="rubriek reveal">
+                <p class="label">Inhoud</p>
+              </div>
+              <h2 id="inhoud-kop" class="sr-only">Alle verhalen</h2>
+              <ol class="i-lijst" role="list">
+                {overige.map((a, i) => (
+                  <li class="reveal">
+                    <a href={`/inspiratie/${a.id}/`}>
+                      <span class="i-nr" aria-hidden="true">
+                        {String(i + 2).padStart(2, '0')}
+                      </span>
+                      <span class="i-item">
+                        <span class="label i-labels">
+                          <span class="label--rood">{a.data.categorie}</span>
+                          {routeNaam(a.data.route) && <span>Wijnroute {routeNaam(a.data.route)}</span>}
+                        </span>
+                        <span class="i-titel">{a.data.titel}</span>
+                        <span class="i-samenvatting">{a.data.samenvatting}</span>
+                        <span class="label i-tijd">{leestijd(a)} min lezen</span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </section>
+        )}
+      </>
+    ) : (
+      <section class="i-inhoud">
+        <div class="wrap">
+          <p class="label label--rood">In voorbereiding</p>
+          <p class="lead i-leeg">De eerste verhalen staan in de steigers.</p>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Naar de routes -->
+  <section class="i-routes" aria-labelledby="routes-kop">
+    <div class="wrap i-routes-grid">
+      <h2 id="routes-kop" class="kop kop--l reveal">Zin gekregen <em>om te gaan?</em></h2>
+      <div class="i-routes-tekst reveal">
+        <p class="tekst">
+          Achter elk verhaal zit een plek waar ik zelf ben geweest. In de wijnroutes lees je waar ik je mee naartoe
+          neem.
+        </p>
+        <a class="doorlink" href="/wijnroutes/">Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---------- Opening ---------- */
+
+  .i-opening {
+    padding-top: 1.5rem;
+  }
+
+  .kruimel {
+    color: var(--potlood);
+  }
+
+  .kruimel a {
+    text-decoration: none;
+  }
+
+  .kruimel a:hover {
+    color: var(--rood);
+  }
+
+  .kruimel-streep {
+    margin-inline: 0.6em;
+  }
+
+  .i-opening-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .i-kop {
+    font-size: clamp(2.6rem, 7vw, 5.6rem);
+    line-height: 1;
+    letter-spacing: -0.028em;
+  }
+
+  .i-opening-tekst {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .i-opening-tekst .lead {
+    max-width: 32rem;
+  }
+
+  .i-notitie {
+    font-size: 1.6rem;
+    transform: rotate(-2deg);
+    transform-origin: left;
+  }
+
+  /* ---------- Uitgelicht ---------- */
+
+  .i-uitgelicht {
+    margin-top: clamp(3rem, 7vw, 6rem);
+  }
+
+  .i-uitgelicht-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.75rem;
+    margin-top: 1.75rem;
+    text-decoration: none;
+  }
+
+  .i-uitgelicht-beeld .foto {
+    aspect-ratio: 4 / 5;
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
+  .i-uitgelicht-beeld img {
+    transition: transform 1.2s cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+
+  .i-uitgelicht-grid:hover .i-uitgelicht-beeld img {
+    transform: scale(1.03);
+  }
+
+  .i-uitgelicht-tekst {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  .i-uitgelicht-grid:hover .i-uitgelicht-titel {
+    color: var(--rood);
+  }
+
+  .i-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.25rem;
+    color: var(--olijf);
+  }
+
+  .i-meta {
+    display: flex;
+    gap: 1.25rem;
+    color: var(--potlood);
+  }
+
+  /* ---------- Inhoudsopgave ---------- */
+
+  .i-inhoud {
+    margin-top: clamp(3.5rem, 8vw, 7rem);
+  }
+
+  .i-lijst {
+    list-style: none;
+    padding: 0;
+  }
+
+  .i-lijst a {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 0.75rem;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--lijn);
+    text-decoration: none;
+  }
+
+  .i-nr {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 2.1;
+    color: var(--rood);
+  }
+
+  .i-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .i-titel {
+    font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+    font-weight: 380;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    transition: color 0.3s ease;
+  }
+
+  .i-lijst a:hover .i-titel {
+    color: var(--rood);
+    font-style: italic;
+  }
+
+  .i-samenvatting {
+    max-width: 38rem;
+    color: var(--inkt-zacht);
+    text-wrap: pretty;
+  }
+
+  .i-tijd {
+    color: var(--potlood);
+  }
+
+  .i-leeg {
+    margin-top: 0.75rem;
+    font-style: italic;
+  }
+
+  /* ---------- Naar de routes ---------- */
+
+  .i-routes {
+    margin-top: var(--sectie);
+    padding-block: clamp(3rem, 7vw, 6rem);
+    background: var(--papier-diep);
+  }
+
+  .i-routes-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .i-routes-tekst {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 40rem) {
+    .i-uitgelicht-beeld .foto {
+      margin-inline: 0;
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .i-opening {
+      padding-top: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .i-opening-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: end;
+      margin-top: 2rem;
+    }
+
+    .i-kop {
+      grid-column: 1 / span 7;
+    }
+
+    .i-opening-tekst {
+      grid-column: 8 / span 5;
+    }
+
+    .i-uitgelicht-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: center;
+      margin-top: 2.5rem;
+    }
+
+    .i-uitgelicht-beeld {
+      grid-column: 1 / span 5;
+    }
+
+    .i-uitgelicht-tekst {
+      grid-column: 7 / span 6;
+    }
+
+    .i-lijst a {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      padding-block: 2rem;
+    }
+
+    .i-nr {
+      grid-column: 1 / span 1;
+      font-size: 1.1rem;
+    }
+
+    .i-item {
+      grid-column: 3 / span 8;
+    }
+
+    .i-routes-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: end;
+    }
+
+    .i-routes-grid .kop {
+      grid-column: 1 / span 6;
+    }
+
+    .i-routes-tekst {
+      grid-column: 8 / span 5;
+    }
+  }
+</style>
