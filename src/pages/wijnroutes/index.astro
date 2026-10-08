@@ -1,0 +1,397 @@
+---
+import { getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import RouteKaart from '../../components/RouteKaart.astro';
+import Aanvraag from '../../components/Aanvraag.astro';
+import TiranaKaart from '../../components/kaarten/TiranaKaart.astro';
+import KretaKaart from '../../components/kaarten/KretaKaart.astro';
+import SplitKaart from '../../components/kaarten/SplitKaart.astro';
+import { site } from '../../config/site';
+
+// Alle routes uit content/wijnroutes/, behalve gearchiveerde.
+const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 'gearchiveerd')).sort(
+  (a, b) => a.data.volgorde - b.data.volgorde,
+);
+
+// Binnenkort-routes hebben (bewust) geen foto's; die krijgen hun getekende kaart als beeld.
+const kaarten: Record<string, typeof TiranaKaart> = { tirana: TiranaKaart, kreta: KretaKaart, split: SplitKaart };
+
+const actief = routes.filter((r) => r.data.status === 'actief').length;
+let fig = 0;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Wijnroutes', item: new URL('/wijnroutes/', site.url).href },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Wijnroutes van Verborgen Wijnroutes',
+    itemListElement: routes.map((r, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: `${r.data.naam}, ${r.data.land}`,
+      url: new URL(`/wijnroutes/${r.id}/`, site.url).href,
+    })),
+  },
+];
+---
+
+<BaseLayout
+  titel="Wijnroutes door Albanië, Kreta en Kroatië | Verborgen Wijnroutes"
+  omschrijving="Ontdek de wijnroutes van Verborgen Wijnroutes: Tirana, Kreta en Split. Kleine wijnhuizen, lokale druiven en een persoonlijk reisconcept op maat."
+  jsonLd={jsonLd}
+>
+  <!-- Opening -->
+  <section class="o-opening" aria-labelledby="overzicht-kop">
+    <div class="wrap o-opening-grid">
+      <div class="o-opening-tekst">
+        <nav class="kruimel label" aria-label="Kruimelpad">
+          <a href="/">Home</a><span class="kruimel-streep" aria-hidden="true">/</span><span aria-current="page">Wijnroutes</span>
+        </nav>
+        <p class="label label--rood reveal">{routes.length} routes · {actief} nu te ontdekken</p>
+        <h1 id="overzicht-kop" class="kop o-kop reveal">
+          Wijnroutes door Albanië, Kreta <em>en Kroatië</em>
+        </h1>
+        <p class="lead reveal">
+          Niet veel routes. Wel de leukste. Alles wat in een route staat, heb ik zelf ervaren: de wijnhuizen, de
+          tafels, de mensen. Er komt pas een nieuwe bij als ik er echt iets over te vertellen heb.
+        </p>
+        <p class="notitie o-notitie reveal" aria-hidden="true">Kies een route, de rest regelen we samen.</p>
+      </div>
+
+      <figure class="o-kaart reveal">
+        <RouteKaart />
+        <figcaption class="bijschrift">
+          <b>Kaart</b>
+          <span>Het huidige aanbod van Verborgen Wijnroutes.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- De routes -->
+  <section class="o-routes" aria-label="Alle wijnroutes">
+    {
+      routes.map((r, i) => {
+        const d = r.data;
+        const Kaart = kaarten[r.id];
+        const isActief = d.status === 'actief';
+        const druiven = d.druiven?.inheems.slice(0, 4) ?? [];
+        return (
+          <article class:list={['spread', i % 2 === 1 && 'spread--om', !isActief && 'spread--binnenkort']}>
+            <div class="wrap spread-grid">
+              <div class="spread-tekst">
+                <div class="rubriek reveal">
+                  <p class="label">Wijnroute {String(i + 1).padStart(2, '0')}</p>
+                  <p class:list={['label', isActief && 'label--rood']}>{isActief ? 'Nu te ontdekken' : 'Binnenkort'}</p>
+                </div>
+
+                <h2 class="spread-naam reveal">
+                  <a href={`/wijnroutes/${r.id}/`}>{d.naam}</a>
+                </h2>
+                <p class="label spread-land reveal">{d.land}</p>
+                <p class="spread-regel reveal">{d.regel}</p>
+
+                {druiven.length > 0 && (
+                  <ul class="spread-druiven reveal" role="list" aria-label="Lokale druiven">
+                    {druiven.map((dr) => (
+                      <li>
+                        {dr.naam} <span>{dr.kleur}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <a class="doorlink spread-link reveal" href={`/wijnroutes/${r.id}/`}>
+                  {isActief ? `Ontdek ${d.naam}` : `Bekijk ${d.naam}`} <span class="pijl" aria-hidden="true">→</span>
+                </a>
+              </div>
+
+              <a class="spread-beeld reveal" href={`/wijnroutes/${r.id}/`} tabindex="-1" aria-hidden="true">
+                {isActief && d.hoofdfoto ? (
+                  <figure>
+                    <div class="foto reveal-foto spread-foto">
+                      <Picture
+                        src={d.hoofdfoto}
+                        formats={['avif', 'webp']}
+                        widths={[420, 640, 900, 1200]}
+                        sizes="(min-width: 60rem) 45vw, 100vw"
+                        alt=""
+                        loading={i === 0 ? 'eager' : 'lazy'}
+                      />
+                    </div>
+                    {d.hoofdfotoBijschrift && (
+                      <figcaption class="bijschrift">
+                        <b>Fig. {++fig}</b>
+                        <span>{d.hoofdfotoBijschrift}</span>
+                      </figcaption>
+                    )}
+                  </figure>
+                ) : Kaart ? (
+                  <figure class="spread-kaart">
+                    <Kaart />
+                    <figcaption class="bijschrift">
+                      <b>Kaart</b>
+                      <span>{d.naam}, schematisch.</span>
+                    </figcaption>
+                  </figure>
+                ) : null}
+              </a>
+            </div>
+          </article>
+        );
+      })
+    }
+  </section>
+
+  <Aanvraag
+    kop="Twijfel je nog welke route"
+    nadruk="bij jullie past?"
+    tekst="Vertel me met wie je reist, wat je graag drinkt en waar je zin in hebt. Dan kijken we samen welke route het wordt, of wat er nu al mogelijk is."
+  />
+</BaseLayout>
+
+<style>
+  /* ---------- Opening ---------- */
+
+  .o-opening {
+    padding-top: 1.5rem;
+  }
+
+  .o-opening-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+  }
+
+  .o-opening-tekst {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.15rem;
+  }
+
+  .kruimel {
+    color: var(--potlood);
+    margin-bottom: 0.5rem;
+  }
+
+  .kruimel a {
+    text-decoration: none;
+  }
+
+  .kruimel a:hover {
+    color: var(--rood);
+  }
+
+  .kruimel-streep {
+    margin-inline: 0.6em;
+  }
+
+  .o-kop {
+    font-size: clamp(2.3rem, 5.8vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.024em;
+  }
+
+  .o-opening-tekst .lead {
+    max-width: 32rem;
+  }
+
+  .o-notitie {
+    font-size: 1.6rem;
+    transform: rotate(-2deg);
+    transform-origin: left;
+  }
+
+  .o-kaart {
+    width: 100%;
+    max-width: 22rem;
+    justify-self: center;
+  }
+
+  /* ---------- Spreads ---------- */
+
+  .o-routes {
+    margin-top: var(--sectie);
+  }
+
+  .spread {
+    padding-block: clamp(3rem, 7vw, 6rem);
+    border-top: 1px solid var(--inkt);
+  }
+
+  .spread--binnenkort {
+    background: var(--papier-diep);
+  }
+
+  .spread-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+
+  .spread-tekst {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+
+  .spread-tekst .rubriek {
+    align-self: stretch;
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .spread-tekst .rubriek .label--rood {
+    color: var(--rood);
+  }
+
+  .spread-naam {
+    margin-top: 0.5rem;
+    font-size: clamp(3.6rem, 13vw, 8.5rem);
+    font-weight: 340;
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+  }
+
+  .spread-naam a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .spread-naam a:hover {
+    color: var(--rood);
+    font-style: italic;
+  }
+
+  .spread--binnenkort .spread-naam {
+    color: var(--inkt-zacht);
+  }
+
+  .spread-land {
+    color: var(--inkt);
+  }
+
+  .spread-regel {
+    max-width: 30rem;
+    font-size: clamp(1.15rem, 1.6vw, 1.3rem);
+    line-height: 1.5;
+    color: var(--inkt-zacht);
+    text-wrap: pretty;
+  }
+
+  .spread-druiven {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+  }
+
+  .spread-druiven li {
+    padding: 0.35rem 0.7rem 0.4rem;
+    border: 1px solid var(--lijn);
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+
+  .spread-druiven span {
+    margin-left: 0.3rem;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--potlood);
+  }
+
+  .spread-link {
+    margin-top: 1rem;
+  }
+
+  .spread-beeld {
+    display: block;
+    text-decoration: none;
+  }
+
+  .spread-foto {
+    aspect-ratio: 4 / 5;
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
+  .spread-foto img {
+    object-position: 50% 62%;
+    transition: transform 1.2s cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+
+  .spread-beeld:hover .spread-foto img {
+    transform: scale(1.03);
+  }
+
+  .spread-kaart {
+    padding: 1.5rem 0.5rem;
+  }
+
+  @media (min-width: 60rem) {
+    .o-opening {
+      padding-top: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .o-opening-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: center;
+    }
+
+    .o-opening-tekst {
+      grid-column: 1 / span 6;
+      gap: 1.5rem;
+    }
+
+    .o-kaart {
+      grid-column: 8 / span 5;
+      max-width: none;
+    }
+
+    .spread-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: center;
+    }
+
+    .spread-tekst {
+      grid-column: 1 / span 6;
+      grid-row: 1;
+    }
+
+    .spread-beeld {
+      grid-column: 8 / span 5;
+      grid-row: 1;
+    }
+
+    .spread--om .spread-tekst {
+      grid-column: 7 / span 6;
+    }
+
+    .spread--om .spread-beeld {
+      grid-column: 1 / span 5;
+    }
+
+    .spread-foto {
+      margin-inline: 0;
+    }
+
+    .spread-kaart {
+      padding: 2rem;
+    }
+  }
+</style>
