@@ -36,9 +36,9 @@ druiven:
   stijlen: "Stevige rode wijnen van Plavac Mali, frisse witte van Pošip en Debit, en wijnen van kleine boerderijen die je alleen ter plekke proeft."
 
 momenten:
-  - naam: Waar het begon
-    soort: Boerderij in de omgeving van Split
-    tekst: "Een boerderij met eigen vleeswaren, kazen, vijgen en natuurlijk wijn. Alles van eigen land, op tafel bij een wijnproeverij die ik niet meer vergeet. Hier is alles nog authentiek, en hier begon het voor mij."
+  - naam: Marin's Family Farm
+    soort: Familieboerderij in de omgeving van Split
+    tekst: "Een familieboerderij met eigen vleeswaren, kazen, vijgen en natuurlijk wijn. Marin leidt de proeverij zelf, en alles op tafel komt van eigen land. Hier is alles nog authentiek, en hier begon het voor mij."
 ---
 
 Iedereen kent Split van de oude stad, de boulevard en de eilanden ervoor. Maar in de omgeving liggen boerderijen waar ze nog alles zelf maken: vleeswaren, kaas, vijgen en natuurlijk wijn.
