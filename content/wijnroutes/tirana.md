@@ -3,7 +3,7 @@ naam: Tirana
 land: Albanië
 status: actief
 volgorde: 1
-regel: Familiewijnhuizen in de heuvels rond de hoofdstad, inheemse druiven en de beste tafels van de stad.
+regel: Familiewijnhuizen in de heuvels rond de hoofdstad, inheemse druiven en de beste restaurants van de stad.
 
 seoTitel: "Wijnreis Albanië samenstellen rond Tirana | Verborgen Wijnroutes"
 seoOmschrijving: "Laat een persoonlijke wijnreis naar Albanië samenstellen. Wijnhuizen, wijnbars en de lokale keuken in en rond Tirana. Plekken die je niet zomaar tegenkomt."

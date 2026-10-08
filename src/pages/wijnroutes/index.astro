@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import RouteKaart from '../../components/RouteKaart.astro';
+import hapjes from '../../assets/fotografie/hapjes-witte-wijn.jpg';
 import Aanvraag from '../../components/Aanvraag.astro';
 import TiranaKaart from '../../components/kaarten/TiranaKaart.astro';
 import KretaKaart from '../../components/kaarten/KretaKaart.astro';
@@ -44,8 +44,8 @@ const jsonLd = [
 ---
 
 <BaseLayout
-  titel="Wijnroutes door Albanië, Kreta en Kroatië | Verborgen Wijnroutes"
-  omschrijving="Ontdek de wijnroutes van Verborgen Wijnroutes: Tirana, Kreta en Split. Kleine wijnhuizen, lokale druiven en een persoonlijk reisconcept op maat."
+  titel="Wijnroutes in Albanië, Kreta en Kroatië | Verborgen Wijnroutes"
+  omschrijving="Ontdek persoonlijke wijnroutes naar Tirana, Kreta en Split. Kleine wijnhuizen, lokale druiven en een reisconcept dat past bij jullie wensen."
   jsonLd={jsonLd}
 >
   <!-- Opening -->
@@ -61,16 +61,26 @@ const jsonLd = [
         </h1>
         <p class="lead reveal">
           Niet veel routes. Wel de leukste. Alles wat in een route staat, heb ik zelf ervaren: de wijnhuizen, de
-          tafels, de mensen. Er komt pas een nieuwe bij als ik er echt iets over te vertellen heb.
+          restaurants, de mensen. Er komt pas een nieuwe bij als ik er echt iets over te vertellen heb.
         </p>
         <p class="notitie o-notitie reveal" aria-hidden="true">Kies een route, de rest regelen we samen.</p>
       </div>
 
-      <figure class="o-kaart reveal">
-        <RouteKaart />
+      <figure class="o-foto reveal">
+        <div class="foto reveal-foto">
+          <Picture
+            src={hapjes}
+            formats={['avif', 'webp']}
+            widths={[420, 640, 900, 1200]}
+            sizes="(min-width: 60rem) 40vw, 100vw"
+            alt="Een plank met opgerolde flatbreads en een plank met ham en tomaatjes, met daarachter glazen witte wijn op een terrazzo-tafel"
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
         <figcaption class="bijschrift">
-          <b>Kaart</b>
-          <span>Het huidige aanbod van Verborgen Wijnroutes.</span>
+          <b>Fig. {++fig}</b>
+          <span>Kleine gerechten en een glas lokale witte wijn in Tirana.</span>
         </figcaption>
       </figure>
     </div>
@@ -211,10 +221,20 @@ const jsonLd = [
     transform-origin: left;
   }
 
-  .o-kaart {
-    width: 100%;
-    max-width: 22rem;
-    justify-self: center;
+  .o-foto {
+    margin-inline: calc(var(--gutter) * -1);
+  }
+
+  .o-foto .foto {
+    aspect-ratio: 4 / 5;
+  }
+
+  .o-foto img {
+    object-position: 50% 55%;
+  }
+
+  .o-foto .bijschrift {
+    padding-inline: var(--gutter);
   }
 
   /* ---------- Spreads ---------- */
@@ -357,9 +377,13 @@ const jsonLd = [
       gap: 1.5rem;
     }
 
-    .o-kaart {
+    .o-foto {
       grid-column: 8 / span 5;
-      max-width: none;
+      margin-inline: 0 calc(var(--gutter) * -1);
+    }
+
+    .o-foto .bijschrift {
+      padding-inline: 0;
     }
 
     .spread-grid {
