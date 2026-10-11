@@ -28,6 +28,7 @@ const jaar = new Date().getFullYear();
         <p class="label">Contact</p>
         <ul>
           <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+          {site.whatsapp && <li><a href={site.whatsapp} rel="noopener" target="_blank">WhatsApp me</a></li>}
           {site.instagram && <li><a href={site.instagram} rel="me noopener" target="_blank">Instagram</a></li>}
         </ul>
       </div>

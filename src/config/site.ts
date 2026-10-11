@@ -8,6 +8,7 @@ export const site = {
   oprichter: 'Stijn',
   email: 'info@verborgenwijnroutes.nl',
   instagram: 'https://www.instagram.com/verborgenwijnroutes/',
+  whatsapp: 'https://wa.me/31614292651',
 };
 
 // Het bestaande Google Form (Google Forms → Sheets → n8n). Inhoud nooit aanpassen.

@@ -159,6 +159,28 @@ const jsonLd = [
                   {d.notitie}
                 </p>
               )}
+              {d.druiven && d.druiven.na === i && (
+                <section class="a-druiven" aria-label="Druiven">
+                  <p class="label a-druiven-kop">
+                    <span>Druivenregister</span>
+                    <span>{d.druiven.items.length} druiven</span>
+                  </p>
+                  <ol class="a-druiven-lijst" role="list">
+                    {d.druiven.items.map((druif, n) => (
+                      <li class="a-druif">
+                        <span class="a-druif-nr" aria-hidden="true">{String(n + 1).padStart(2, '0')}</span>
+                        <h3 class="a-druif-naam">{druif.naam}</h3>
+                        <p class="label a-druif-meta">
+                          <span class:list={['a-druif-stip', druif.kleur.toLowerCase() === 'wit' && 'a-druif-stip--wit']} aria-hidden="true" />
+                          {druif.kleur} · {druif.herkomst}
+                        </p>
+                        <p class="a-druif-tekst">{druif.tekst}</p>
+                        {druif.tip && <p class="notitie a-druif-tip">{druif.tip}</p>}
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              )}
               {deel.fotos.map((f) => (
                 <figure class="a-figuur">
                   <div class="foto">
@@ -355,9 +377,9 @@ const jsonLd = [
     text-wrap: pretty;
   }
 
-  .a-tekst :global(p + p),
-  .a-tekst :global(ul + p),
-  .a-tekst :global(p + ul) {
+  .a-tekst > :global(p + p),
+  .a-tekst > :global(ul + p),
+  .a-tekst > :global(p + ul) {
     margin-top: 1em;
   }
 
@@ -369,9 +391,7 @@ const jsonLd = [
   }
 
   .a-tekst :global(h2) {
-    margin: 2.75rem 0 0.9rem;
-    padding-top: 0.9rem;
-    border-top: 1px solid var(--lijn);
+    margin: 3rem 0 0.9rem;
     font-weight: 400;
     font-size: clamp(1.6rem, 2.6vw, 2.1rem);
     line-height: 1.15;
@@ -385,21 +405,21 @@ const jsonLd = [
     color: var(--inkt);
   }
 
-  .a-tekst :global(ul) {
+  .a-tekst > :global(ul) {
     list-style: none;
     padding: 0;
   }
 
-  .a-tekst :global(li) {
+  .a-tekst > :global(ul) > :global(li) {
     position: relative;
     padding-left: 1.6rem;
   }
 
-  .a-tekst :global(li + li) {
+  .a-tekst > :global(ul) > :global(li + li) {
     margin-top: 0.75rem;
   }
 
-  .a-tekst :global(li)::before {
+  .a-tekst > :global(ul) > :global(li)::before {
     content: '—';
     position: absolute;
     left: 0;
@@ -413,6 +433,92 @@ const jsonLd = [
 
   .a-tekst :global(a:hover) {
     color: var(--rood);
+  }
+
+  /* Druivenregister: vormgegeven blok in plaats van losse tussenkoppen */
+  .a-druiven {
+    margin: 2.25rem calc(var(--gutter) * -1) 0.5rem;
+    padding: 1.75rem var(--gutter) 2rem;
+    background: var(--papier-diep);
+  }
+
+  .a-druiven-kop {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--olijf);
+  }
+
+  .a-druiven-kop span + span {
+    color: var(--potlood);
+  }
+
+  .a-druiven-lijst {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .a-druif {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    column-gap: 0.75rem;
+    row-gap: 0.4rem;
+    align-content: start;
+  }
+
+  .a-druif > :not(.a-druif-nr) {
+    grid-column: 2;
+  }
+
+  .a-druif-nr {
+    grid-row: 1 / span 2;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 2.6;
+    color: var(--rood);
+  }
+
+  .a-druif-naam {
+    font-size: clamp(1.9rem, 3.4vw, 2.4rem);
+    font-weight: 360;
+    font-style: italic;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--inkt);
+  }
+
+  .a-druif-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--potlood);
+  }
+
+  .a-druif-stip {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--rood);
+  }
+
+  .a-druif-stip--wit {
+    background: transparent;
+    border: 1px solid var(--olijf);
+  }
+
+  .a-druif-tekst {
+    margin-top: 0.35rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+
+  .a-druif-tip {
+    margin-top: 0.25rem;
+    font-size: 1.4rem;
   }
 
   .a-notitie {
@@ -579,6 +685,11 @@ const jsonLd = [
     .a-hoofdfoto .foto {
       margin-inline: 0;
     }
+
+    .a-druiven {
+      margin-inline: 0;
+      padding: 2rem 2rem 2.25rem;
+    }
   }
 
   @media (min-width: 60rem) {
@@ -609,6 +720,18 @@ const jsonLd = [
 
     .a-tekst {
       grid-column: 3 / span 7;
+    }
+
+    /* Op desktop steekt het register rechts buiten de tekstkolom, in twee kolommen */
+    .a-druiven {
+      width: calc(100% + 10rem);
+      padding: 2.25rem 2.5rem 2.5rem;
+    }
+
+    .a-druiven-lijst {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 2.5rem;
+      row-gap: 2.5rem;
     }
 
     .a-route-grid {

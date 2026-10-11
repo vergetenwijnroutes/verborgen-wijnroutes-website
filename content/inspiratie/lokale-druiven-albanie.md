@@ -11,6 +11,27 @@ hoofdfoto: ../../src/assets/fotografie/tufa-flessenwand.jpg
 hoofdfotoAlt: "Houten wandkasten vol Albanese wijnflessen met kleurrijke etiketten"
 hoofdfotoBijschrift: "Albanese flessen in een proeflokaal net buiten Tirana."
 notitie: "Vraag altijd naar de lokale druif."
+druiven:
+  na: 2
+  items:
+    - naam: Kallmet
+      kleur: Rood
+      herkomst: Noord-Albanië
+      tekst: "De bekendste rode druif van het land. Donker fruit, zoals kers en pruim, en vaak iets kruidigs. Sommige makers houden het fris en sappig, anderen laten de wijn rijpen op hout en maken er iets stevigs van."
+      tip: "Proef je er maar één, laat het deze zijn."
+    - naam: Shesh i Zi
+      kleur: Rood
+      herkomst: Midden-Albanië
+      tekst: "De rode druif die je rond Tirana het meest tegenkomt. Zachter en fruitiger dan Kallmet: rood fruit, niet te zwaar. Je vindt hem puur, maar ook in blends met internationale druiven."
+      tip: "Lekker iets gekoeld, op een warme avond."
+    - naam: Shesh i Bardhë
+      kleur: Wit
+      herkomst: Midden-Albanië
+      tekst: "De witte tegenhanger van Shesh i Zi. Fris, licht en bloemig, met wat citrus. Precies wat je wilt bij groenten uit de tuin, vis of een mezze aan het begin van de avond."
+    - naam: Pulës
+      kleur: Wit
+      herkomst: Rond Berat
+      tekst: "Een witte druif die je minder vaak ziet. Fris, met tonen van appel en citrus. Kom je hem op een kaart tegen, bestel hem dan: grote kans dat je hem daarna lang niet meer ziet."
 fotos:
   - foto: ../../src/assets/fotografie/wijntanks.jpg
     alt: "Een rij roestvrijstalen wijntanks onder een betonnen dak, met achterin twee mensen"
@@ -28,25 +49,9 @@ In Albanië wordt al heel lang wijn gemaakt. Lange tijd gebeurde dat vooral in g
 
 Dat merk je als je langs gaat. Een proeverij is hier zelden een standaardverhaal. Je krijgt de wijn, maar ook de familie, de geschiedenis en vaak een bord met eten erbij.
 
-## Kallmet
+## Vier druiven om te proeven
 
-De bekendste rode druif van Albanië, van oudsher uit het noorden van het land. Kallmet geeft wijn met donker fruit, zoals kers en pruim, en vaak iets kruidigs. Sommige makers houden het fris en sappig, anderen laten de wijn rijpen op hout en maken er iets stevigs van.
-
-Als je maar één Albanese wijn proeft, laat het dan een Kallmet zijn.
-
-## Shesh i Zi
-
-De rode druif die je rond Tirana het meest tegenkomt. Shesh i Zi is zachter en fruitiger dan Kallmet: rood fruit, niet te zwaar, makkelijk te drinken. Je vindt hem puur, maar ook in blends met internationale druiven.
-
-Een fijne wijn voor bij het eten, en zeker op een warme avond iets gekoeld.
-
-## Shesh i Bardhë
-
-De witte tegenhanger van Shesh i Zi, uit hetzelfde deel van het land. Fris, licht en bloemig, met wat citrus. Precies wat je wilt bij groenten uit de tuin, vis of een mezze aan het begin van de avond.
-
-## Pulës
-
-Een witte druif die je minder vaak ziet, met wortels rond Berat. Fris, met tonen van appel en citrus. Kom je hem op een kaart tegen, bestel hem dan. Grote kans dat je hem daarna lang niet meer ziet.
+Van stevig rood tot fris wit. Dit zijn de vier die ik je als eerste zou laten proeven.
 
 ## En dan is er nog meer
 

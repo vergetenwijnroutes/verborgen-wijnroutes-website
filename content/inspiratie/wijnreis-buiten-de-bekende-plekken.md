@@ -35,7 +35,7 @@ Een paar dingen die ik onderweg heb geleerd:
 - **Niet te veel op één dag.** Twee wijnhuizen per dag is genoeg. Dan blijft er tijd over voor een lange lunch en een wandeling.
 - **Regel je vervoer.** Wie proeft, rijdt niet. Een chauffeur of een verblijf op loopafstand maakt de dag een stuk ontspannener.
 - **Combineer wijn met eten.** Proef de wijn bij de keuken waar hij bij hoort. Dan snap je hem pas echt.
-- **Denk aan de terugreis.** Albanië valt buiten de EU. Check daarom hoeveel flessen je mee terug mag nemen.
+- **Denk aan de terugreis.** Reis je alleen met handbagage? Op het vliegveld van Tirana kun je ook goede lokale wijn kopen, dus daar hoef je je geen zorgen over te maken. Albanië valt wel buiten de EU, check dus even hoeveel flessen je mee mag nemen.
 
 ## Waar ik je mee naartoe neem
 

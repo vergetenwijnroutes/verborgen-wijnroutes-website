@@ -21,7 +21,7 @@ fotos:
     na: 3
 ---
 
-Tirana is geen stad waar je meteen aan wijn denkt. Toch kun je er heel goed drinken, als je weet waar je moet zijn. Drie tips om mee te beginnen.
+Tirana is geen stad waar je meteen aan wijn denkt. Toch kun je er goede wijnen drinken. Drie tips om mee te beginnen.
 
 ## 1. Proef bij Tufa Winery
 

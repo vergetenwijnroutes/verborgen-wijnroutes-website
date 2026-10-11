@@ -27,6 +27,15 @@ const inspiratie = defineCollection({
       fotos: z
         .array(z.object({ foto: image(), alt: z.string(), bijschrift: z.string(), na: z.number().int().min(0) }))
         .default([]),
+      // Optioneel register van druiven, als vormgegeven blok na tussenkop `na`.
+      druiven: z
+        .object({
+          na: z.number().int().min(0),
+          items: z.array(
+            z.object({ naam: z.string(), kleur: z.string(), herkomst: z.string(), tekst: z.string(), tip: z.string().optional() }),
+          ),
+        })
+        .optional(),
       notitie: z.string().optional(),
       // Leestijd wordt uit de tekst berekend; alleen invullen om te overschrijven.
       leestijd: z.number().int().positive().optional(),
