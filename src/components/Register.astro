@@ -1,0 +1,156 @@
+---
+// Register: een vormgegeven, genummerde lijst in plaats van losse tussenkoppen.
+// Bruikbaar voor druiven, wijnhuizen, gerechten of andere opsommingen met een korte beschrijving.
+// Op mobiel onder elkaar, vanaf tablet in twee kolommen.
+interface Item {
+  naam: string;
+  labels?: string[];
+  stip?: 'vol' | 'open';
+  tekst: string;
+  tip?: string;
+}
+
+interface Props {
+  kop: string;
+  items: Item[];
+  /** Meervoud voor de teller rechtsboven, bijv. "druiven" → "4 druiven". */
+  eenheid?: string;
+  class?: string;
+}
+
+const { kop, items, eenheid, class: klasse } = Astro.props;
+---
+
+<section class:list={['register', klasse]} aria-label={kop}>
+  <p class="label register-kop">
+    <span>{kop}</span>
+    {eenheid && <span>{items.length} {eenheid}</span>}
+  </p>
+  <ol class="register-lijst" role="list">
+    {
+      items.map((item, n) => (
+        <li class="register-item">
+          <span class="register-nr" aria-hidden="true">
+            {String(n + 1).padStart(2, '0')}
+          </span>
+          <h3 class="register-naam">{item.naam}</h3>
+          {item.labels && item.labels.length > 0 && (
+            <p class="label register-meta">
+              {item.stip && (
+                <span class:list={['register-stip', item.stip === 'open' && 'register-stip--open']} aria-hidden="true" />
+              )}
+              {item.labels.join(' · ')}
+            </p>
+          )}
+          <p class="register-tekst">{item.tekst}</p>
+          {item.tip && <p class="notitie register-tip">{item.tip}</p>}
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .register {
+    padding: 1.75rem var(--gutter) 2rem;
+    background: var(--papier-diep);
+  }
+
+  .register-kop {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--olijf);
+  }
+
+  .register-kop span + span {
+    color: var(--potlood);
+  }
+
+  .register-lijst {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+    display: grid;
+    gap: 2rem;
+  }
+
+  .register-item {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    column-gap: 0.75rem;
+    row-gap: 0.4rem;
+    align-content: start;
+    padding: 0;
+  }
+
+  .register-naam,
+  .register-meta,
+  .register-tekst,
+  .register-tip {
+    grid-column: 2;
+    margin: 0;
+  }
+
+  .register-nr {
+    grid-row: 1 / span 2;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 2.6;
+    color: var(--rood);
+  }
+
+  .register-naam {
+    font-size: clamp(1.9rem, 3.4vw, 2.4rem);
+    font-weight: 360;
+    font-style: italic;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--inkt);
+  }
+
+  .register-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--potlood);
+  }
+
+  .register-stip {
+    flex: none;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--rood);
+  }
+
+  .register-stip--open {
+    background: transparent;
+    border: 1px solid var(--olijf);
+  }
+
+  .register-tekst {
+    margin-top: 0.35rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--inkt-zacht);
+  }
+
+  .register-tip {
+    margin-top: 0.25rem;
+    font-size: 1.4rem;
+  }
+
+  @media (min-width: 40rem) {
+    .register {
+      padding: 2.25rem 2.5rem 2.5rem;
+    }
+
+    .register-lijst {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 2.5rem;
+      row-gap: 2.5rem;
+    }
+  }
+</style>

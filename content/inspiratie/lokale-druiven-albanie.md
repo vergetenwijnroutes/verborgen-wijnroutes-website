@@ -11,27 +11,29 @@ hoofdfoto: ../../src/assets/fotografie/tufa-flessenwand.jpg
 hoofdfotoAlt: "Houten wandkasten vol Albanese wijnflessen met kleurrijke etiketten"
 hoofdfotoBijschrift: "Albanese flessen in een proeflokaal net buiten Tirana."
 notitie: "Vraag altijd naar de lokale druif."
-druiven:
-  na: 2
-  items:
-    - naam: Kallmet
-      kleur: Rood
-      herkomst: Noord-Albanië
-      tekst: "De bekendste rode druif van het land. Donker fruit, zoals kers en pruim, en vaak iets kruidigs. Sommige makers houden het fris en sappig, anderen laten de wijn rijpen op hout en maken er iets stevigs van."
-      tip: "Proef je er maar één, laat het deze zijn."
-    - naam: Shesh i Zi
-      kleur: Rood
-      herkomst: Midden-Albanië
-      tekst: "De rode druif die je rond Tirana het meest tegenkomt. Zachter en fruitiger dan Kallmet: rood fruit, niet te zwaar. Je vindt hem puur, maar ook in blends met internationale druiven."
-      tip: "Lekker iets gekoeld, op een warme avond."
-    - naam: Shesh i Bardhë
-      kleur: Wit
-      herkomst: Midden-Albanië
-      tekst: "De witte tegenhanger van Shesh i Zi. Fris, licht en bloemig, met wat citrus. Precies wat je wilt bij groenten uit de tuin, vis of een mezze aan het begin van de avond."
-    - naam: Pulës
-      kleur: Wit
-      herkomst: Rond Berat
-      tekst: "Een witte druif die je minder vaak ziet. Fris, met tonen van appel en citrus. Kom je hem op een kaart tegen, bestel hem dan: grote kans dat je hem daarna lang niet meer ziet."
+registers:
+  - na: 2
+    kop: Druivenregister
+    eenheid: druiven
+    items:
+      - naam: Kallmet
+        labels: [Rood, Noord-Albanië]
+        stip: vol
+        tekst: "De bekendste rode druif van het land. Donker fruit, zoals kers en pruim, en vaak iets kruidigs. Sommige makers houden het fris en sappig, anderen laten de wijn rijpen op hout en maken er iets stevigs van."
+        tip: "Proef je er maar één, laat het deze zijn."
+      - naam: Shesh i Zi
+        labels: [Rood, Midden-Albanië]
+        stip: vol
+        tekst: "De rode druif die je rond Tirana het meest tegenkomt. Zachter en fruitiger dan Kallmet: rood fruit, niet te zwaar. Je vindt hem puur, maar ook in blends met internationale druiven."
+        tip: "Lekker iets gekoeld, op een warme avond."
+      - naam: Shesh i Bardhë
+        labels: [Wit, Midden-Albanië]
+        stip: open
+        tekst: "De witte tegenhanger van Shesh i Zi. Fris, licht en bloemig, met wat citrus. Precies wat je wilt bij groenten uit de tuin, vis of een mezze aan het begin van de avond."
+      - naam: Pulës
+        labels: [Wit, Rond Berat]
+        stip: open
+        tekst: "Een witte druif die je minder vaak ziet. Fris, met tonen van appel en citrus. Kom je hem op een kaart tegen, bestel hem dan: grote kans dat je hem daarna lang niet meer ziet."
 fotos:
   - foto: ../../src/assets/fotografie/wijntanks.jpg
     alt: "Een rij roestvrijstalen wijntanks onder een betonnen dak, met achterin twee mensen"
