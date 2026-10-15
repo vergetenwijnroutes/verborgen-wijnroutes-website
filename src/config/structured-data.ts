@@ -6,7 +6,7 @@ export const persoonId = `${site.url}/#stijn`;
 export const organisatieId = `${site.url}/#organisatie`;
 export const websiteId = `${site.url}/#website`;
 
-const verhaalUrl = new URL('/mijn-verhaal/', site.url).href;
+const verhaalUrl = new URL('/mijn-verhaal', site.url).href;
 const logoUrl = new URL('/apple-touch-icon.png', site.url).href;
 
 /** Korte verwijzing naar Stijn, voor `author` op artikelen. */

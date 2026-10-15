@@ -55,7 +55,7 @@ const inspiratie = defineCollection({
 });
 
 // Wijnroutes: één Markdown-bestand per route in content/wijnroutes/.
-// De bestandsnaam is de slug (/wijnroutes/<slug>/). De lopende tekst onder de
+// De bestandsnaam is de slug (/wijnroutes/<slug>). De lopende tekst onder de
 // frontmatter is het verhaal "Waarom deze route".
 const wijnroutes = defineCollection({
   loader: glob({ pattern: '*.md', base: './content/wijnroutes' }),

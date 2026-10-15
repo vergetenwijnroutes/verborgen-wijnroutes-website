@@ -33,7 +33,7 @@ export function aanvraagLink(route?: string): string {
 }
 
 export const navigatie = [
-  { label: 'Wijnroutes', href: '/wijnroutes/' },
-  { label: 'Inspiratie', href: '/inspiratie/' },
-  { label: 'Mijn verhaal', href: '/mijn-verhaal/' },
+  { label: 'Wijnroutes', href: '/wijnroutes' },
+  { label: 'Inspiratie', href: '/inspiratie' },
+  { label: 'Mijn verhaal', href: '/mijn-verhaal' },
 ];

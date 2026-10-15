@@ -4,9 +4,9 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://verborgenwijnroutes.nl',
-  trailingSlash: 'always',
+  trailingSlash: 'never',
   build: {
-    format: 'directory',
+    format: 'file',
   },
   integrations: [sitemap()],
 });

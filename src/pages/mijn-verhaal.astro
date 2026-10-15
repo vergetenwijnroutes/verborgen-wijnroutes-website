@@ -39,7 +39,7 @@ const jsonLd = [
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
     name: 'Mijn verhaal',
-    url: new URL('/mijn-verhaal/', site.url).href,
+    url: new URL('/mijn-verhaal', site.url).href,
     inLanguage: 'nl-NL',
     isPartOf: { '@id': websiteId },
     about: { '@id': persoonId },
@@ -51,7 +51,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
-      { '@type': 'ListItem', position: 2, name: 'Mijn verhaal', item: new URL('/mijn-verhaal/', site.url).href },
+      { '@type': 'ListItem', position: 2, name: 'Mijn verhaal', item: new URL('/mijn-verhaal', site.url).href },
     ],
   },
 ];
@@ -192,7 +192,7 @@ const jsonLd = [
         {
           routes.map((r, i) => (
             <li class="reveal" style={`--vertraging: ${i * 0.06}s`}>
-              <a href={`/wijnroutes/${r.id}/`}>
+              <a href={`/wijnroutes/${r.id}`}>
                 <span class="v-route-nummer label" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <span class="v-route-naam">{r.data.naam}</span>
                 <span class="label v-route-meta">
@@ -204,7 +204,7 @@ const jsonLd = [
         }
       </ul>
       <div class="v-knoppen reveal">
-        <a class="doorlink" href="/wijnroutes/">Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span></a>
+        <a class="doorlink" href="/wijnroutes">Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span></a>
         <a class="doorlink doorlink--rood" href={aanvraagLink()} target="_blank" rel="noopener">
           Vraag jouw wijnreis aan <span class="pijl" aria-hidden="true">→</span>
           <span class="sr-only">(opent een formulier in een nieuw tabblad)</span>

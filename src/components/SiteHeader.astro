@@ -1,9 +1,10 @@
 ---
+import { schoonPad } from '../lib/pad';
 import { Image } from 'astro:assets';
 import logo from '../assets/merk/logo.png';
 import { aanvraagFormulier, navigatie } from '../config/site';
 
-const pad = Astro.url.pathname;
+const pad = schoonPad(Astro.url.pathname);
 ---
 
 <header class="kop-balk">

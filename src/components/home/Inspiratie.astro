@@ -32,7 +32,7 @@ const [uitgelicht, ...overige] = artikelen;
         uitgelicht ? (
           <div class="artikelen">
             <article class="artikel artikel--uitgelicht reveal">
-              <a href={`/inspiratie/${uitgelicht.id}/`}>
+              <a href={`/inspiratie/${uitgelicht.id}`}>
                 {uitgelicht.data.hoofdfoto && (
                   <div class="foto artikel-foto">
                     <Image src={uitgelicht.data.hoofdfoto} alt={uitgelicht.data.hoofdfotoAlt ?? ''} widths={[480, 800]} sizes="(min-width: 60rem) 40vw, 100vw" />
@@ -51,7 +51,7 @@ const [uitgelicht, ...overige] = artikelen;
               <ul class="artikel-lijst" role="list">
                 {overige.map((artikel) => (
                   <li class="artikel reveal">
-                    <a href={`/inspiratie/${artikel.id}/`} class="artikel-rij">
+                    <a href={`/inspiratie/${artikel.id}`} class="artikel-rij">
                       {artikel.data.hoofdfoto && (
                         <div class="foto artikel-duim">
                           <Image src={artikel.data.hoofdfoto} alt="" widths={[160, 320]} sizes="6rem" />
@@ -82,7 +82,7 @@ const [uitgelicht, ...overige] = artikelen;
     </div>
 
     <p class="inspiratie-door reveal">
-      <a class="doorlink" href="/inspiratie/">Bekijk alle inspiratie <span class="pijl" aria-hidden="true">→</span></a>
+      <a class="doorlink" href="/inspiratie">Bekijk alle inspiratie <span class="pijl" aria-hidden="true">→</span></a>
     </p>
   </div>
 </section>

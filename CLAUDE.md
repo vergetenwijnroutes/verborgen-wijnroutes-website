@@ -32,7 +32,8 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 ## Architectuur
 
 - Framework: **Astro** (statisch, SEO-vriendelijk, content collections met schema-validatie). Hosting: **Vercel**.
-- URL's altijd met trailing slash.
+- URL's **zonder** slash aan het eind (op verzoek van Stijn, oktober 2026): `/wijnroutes/tirana`, `/inspiratie`, `/privacy`. Alleen de homepage is `/`. Astro: `trailingSlash: 'never'`, `build.format: 'file'`; canonical via `schoonPad()` in `src/lib/pad.ts`. `vercel.json`: `cleanUrls` en een 301 van elke URL met slash naar de versie zonder, **behalve** de gereserveerde paden `/reis/`, `/data/`, `/images/` (die horen bij het reisconcept-project en blijven ongemoeid). Bij livegang testen dat `/reis/ed-ohrid/` nog werkt.
+- Privacypagina: `verborgenwijnroutes.nl/privacy` (zo vermeld in de algemene voorwaarden).
 - Sitemap (vastgesteld):
   ```
   /
@@ -43,7 +44,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
   ├── /inspiratie/
   │   └── /[artikel]/
   └── /mijn-verhaal/
-  Footer-only: /privacy/ (verwerking Google Form-gegevens; inhoud later), /algemene-voorwaarden/ (reisconcept € 250, boekingsservice € 100; inhoud later, juridisch laten checken), 404-pagina.
+  Footer-only: /privacy (verwerking Google Form-gegevens; inhoud later), /algemene-voorwaarden (reisconcept € 250, boekingsservice € 100; inhoud later, juridisch laten checken), 404-pagina.
   ```
 - Navigatie: logo · Wijnroutes · Inspiratie · Mijn verhaal · knop "Vraag jouw wijnreis aan" (→ Google Form).
 - Footer: routes, Inspiratie, Mijn verhaal, contact (e-mail, WhatsApp via `wa.me`-link, Instagram), Privacy.

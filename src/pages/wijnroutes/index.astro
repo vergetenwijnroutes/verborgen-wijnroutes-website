@@ -27,7 +27,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
-      { '@type': 'ListItem', position: 2, name: 'Wijnroutes', item: new URL('/wijnroutes/', site.url).href },
+      { '@type': 'ListItem', position: 2, name: 'Wijnroutes', item: new URL('/wijnroutes', site.url).href },
     ],
   },
   {
@@ -38,7 +38,7 @@ const jsonLd = [
       '@type': 'ListItem',
       position: i + 1,
       name: `${r.data.naam}, ${r.data.land}`,
-      url: new URL(`/wijnroutes/${r.id}/`, site.url).href,
+      url: new URL(`/wijnroutes/${r.id}`, site.url).href,
     })),
   },
 ];
@@ -96,7 +96,7 @@ const jsonLd = [
                 </div>
 
                 <h2 class="spread-naam reveal">
-                  <a href={`/wijnroutes/${r.id}/`}>{d.naam}</a>
+                  <a href={`/wijnroutes/${r.id}`}>{d.naam}</a>
                 </h2>
                 <p class="label spread-land reveal">{d.land}</p>
                 <p class="spread-regel reveal">{d.regel}</p>
@@ -111,12 +111,12 @@ const jsonLd = [
                   </ul>
                 )}
 
-                <a class="doorlink spread-link reveal" href={`/wijnroutes/${r.id}/`}>
+                <a class="doorlink spread-link reveal" href={`/wijnroutes/${r.id}`}>
                   {isActief ? `Ontdek ${d.naam}` : `Bekijk ${d.naam}`} <span class="pijl" aria-hidden="true">→</span>
                 </a>
               </div>
 
-              <a class="spread-beeld reveal" href={`/wijnroutes/${r.id}/`} tabindex="-1" aria-hidden="true">
+              <a class="spread-beeld reveal" href={`/wijnroutes/${r.id}`} tabindex="-1" aria-hidden="true">
                 {foto ? (
                   <figure>
                     <div class="foto reveal-foto spread-foto">

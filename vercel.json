@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/:pad((?!reis/|data/|images/).+)/",
+      "destination": "/:pad",
+      "permanent": true
+    }
+  ]
+}

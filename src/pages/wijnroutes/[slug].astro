@@ -49,14 +49,14 @@ const artikelen = (await getCollection('inspiratie', ({ data }) => !data.concept
 let fig = 0;
 const volgendeFig = () => ++fig;
 
-const url = new URL(`/wijnroutes/${slug}/`, site.url).href;
+const url = new URL(`/wijnroutes/${slug}`, site.url).href;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
-      { '@type': 'ListItem', position: 2, name: 'Wijnroutes', item: new URL('/wijnroutes/', site.url).href },
+      { '@type': 'ListItem', position: 2, name: 'Wijnroutes', item: new URL('/wijnroutes', site.url).href },
       { '@type': 'ListItem', position: 3, name: d.naam, item: url },
     ],
   },
@@ -86,7 +86,7 @@ const jsonLd = [
     <div class="wrap r-opening-grid">
       <div class="r-opening-tekst">
         <nav class="kruimel label" aria-label="Kruimelpad">
-          <a href="/">Home</a><span class="kruimel-streep" aria-hidden="true">/</span><a href="/wijnroutes/">Wijnroutes</a><span class="kruimel-streep" aria-hidden="true">/</span><span aria-current="page">{d.naam}</span>
+          <a href="/">Home</a><span class="kruimel-streep" aria-hidden="true">/</span><a href="/wijnroutes">Wijnroutes</a><span class="kruimel-streep" aria-hidden="true">/</span><span aria-current="page">{d.naam}</span>
         </nav>
 
         <p class="label label--rood reveal">Wijnroute {nummer} · {d.land} · {actief ? 'Nu te ontdekken' : 'Binnenkort'}</p>
@@ -401,7 +401,7 @@ const jsonLd = [
           <ul class="meer" role="list">
             {artikelen.map((a) => (
               <li>
-                <a href={`/inspiratie/${a.id}/`}>{a.data.titel}</a>
+                <a href={`/inspiratie/${a.id}`}>{a.data.titel}</a>
               </li>
             ))}
           </ul>
@@ -420,7 +420,7 @@ const jsonLd = [
           <ul class="anders" role="list">
             {andereRoutes.map((r) => (
               <li>
-                <a href={`/wijnroutes/${r.id}/`}>
+                <a href={`/wijnroutes/${r.id}`}>
                   <span class="anders-naam">{r.data.naam}</span>
                   <span class="label">
                     {r.data.land} · {r.data.status === 'actief' ? 'Nu te ontdekken' : 'Binnenkort'}

@@ -10,6 +10,7 @@ import { getImage } from 'astro:assets';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { site } from '../config/site';
+import { schoonPad } from '../lib/pad';
 import standaardDeelbeeld from '../assets/fotografie/proeflokaal-corten.jpg';
 
 interface Props {
@@ -28,7 +29,7 @@ const {
   jsonLd = [],
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const canonical = new URL(schoonPad(Astro.url.pathname), Astro.site).href;
 const og = await getImage({
   src: deelbeeld,
   width: 1200,

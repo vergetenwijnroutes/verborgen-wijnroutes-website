@@ -57,7 +57,7 @@ const meer = (await getCollection('inspiratie', ({ id, data }) => !data.concept 
   })
   .slice(0, 3);
 
-const url = new URL(`/inspiratie/${slug}/`, site.url).href;
+const url = new URL(`/inspiratie/${slug}`, site.url).href;
 const artikelBeeld = d.hoofdfoto
   ? new URL((await getImage({ src: d.hoofdfoto, width: 1200, format: 'jpg' })).src, site.url).href
   : undefined;
@@ -67,7 +67,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
-      { '@type': 'ListItem', position: 2, name: 'Inspiratie', item: new URL('/inspiratie/', site.url).href },
+      { '@type': 'ListItem', position: 2, name: 'Inspiratie', item: new URL('/inspiratie', site.url).href },
       { '@type': 'ListItem', position: 3, name: d.korteTitel ?? d.titel, item: url },
     ],
   },
@@ -108,7 +108,7 @@ const jsonLd = [
       <div class="wrap a-kop-grid">
         <div class="a-kop-tekst">
           <nav class="kruimel label" aria-label="Kruimelpad">
-            <a href="/">Home</a><span class="kruimel-streep" aria-hidden="true">/</span><a href="/inspiratie/">Inspiratie</a>
+            <a href="/">Home</a><span class="kruimel-streep" aria-hidden="true">/</span><a href="/inspiratie">Inspiratie</a>
           </nav>
           <div class="rubriek reveal">
             <p class="label label--rood">{d.categorie}</p>
@@ -117,7 +117,7 @@ const jsonLd = [
           <h1 class="kop a-titel reveal">{d.titel}</h1>
           <p class="lead reveal">{d.samenvatting}</p>
           <p class="label a-meta reveal">
-            <span>Door <a class="a-auteur" href="/mijn-verhaal/" rel="author">{site.oprichter}</a></span>
+            <span>Door <a class="a-auteur" href="/mijn-verhaal" rel="author">{site.oprichter}</a></span>
             <time datetime={d.datum.toISOString().slice(0, 10)}>{datum.format(d.datum)}</time>
             <span>{minuten} min lezen</span>
           </p>
@@ -203,16 +203,16 @@ const jsonLd = [
               </p>
             </div>
             <h2 id="route-kop" class="a-route-naam reveal">
-              <a href={`/wijnroutes/${route.id}/`}>{route.data.naam}</a>
+              <a href={`/wijnroutes/${route.id}`}>{route.data.naam}</a>
             </h2>
             <p class="label reveal">{route.data.land}</p>
             <p class="a-route-regel reveal">{route.data.regel}</p>
-            <a class="doorlink reveal" href={`/wijnroutes/${route.id}/`}>
+            <a class="doorlink reveal" href={`/wijnroutes/${route.id}`}>
               Bekijk de wijnroute <span class="pijl" aria-hidden="true">→</span>
             </a>
           </div>
           {Kaart && (
-            <a class="a-route-kaart reveal" href={`/wijnroutes/${route.id}/`} tabindex="-1" aria-hidden="true">
+            <a class="a-route-kaart reveal" href={`/wijnroutes/${route.id}`} tabindex="-1" aria-hidden="true">
               <Kaart />
             </a>
           )}
@@ -230,7 +230,7 @@ const jsonLd = [
           <ul class="a-routes" role="list">
             {alleRoutes.map((r) => (
               <li class="reveal">
-                <a href={`/wijnroutes/${r.id}/`}>
+                <a href={`/wijnroutes/${r.id}`}>
                   <span class="a-routes-naam">{r.data.naam}</span>
                   <span class="label">
                     {r.data.land} · {r.data.status === 'actief' ? 'Nu te ontdekken' : 'Binnenkort'}
@@ -239,7 +239,7 @@ const jsonLd = [
               </li>
             ))}
           </ul>
-          <a class="doorlink reveal" href="/wijnroutes/">
+          <a class="doorlink reveal" href="/wijnroutes">
             Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span>
           </a>
         </div>
@@ -254,13 +254,13 @@ const jsonLd = [
         <div class="wrap">
           <div class="rubriek">
             <p class="label">Lees ook</p>
-            <a class="label a-meer-alles" href="/inspiratie/">Alle inspiratie →</a>
+            <a class="label a-meer-alles" href="/inspiratie">Alle inspiratie →</a>
           </div>
           <h2 id="meer-kop" class="sr-only">Lees ook</h2>
           <ul class="a-meer-lijst" role="list">
             {meer.map((a) => (
               <li>
-                <a href={`/inspiratie/${a.id}/`}>
+                <a href={`/inspiratie/${a.id}`}>
                   {a.data.hoofdfoto && (
                     <span class="foto a-meer-duim">
                       <Picture

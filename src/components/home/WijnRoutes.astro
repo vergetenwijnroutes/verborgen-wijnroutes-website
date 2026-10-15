@@ -28,7 +28,7 @@ const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 
         {
           routes.map((route, i) => (
             <li class:list={['route', `route--${route.status}`, 'reveal']} data-route={route.slug} style={`--vertraging: ${i * 0.08}s`}>
-              <a href={`/wijnroutes/${route.slug}/`} class="route-link">
+              <a href={`/wijnroutes/${route.slug}`} class="route-link">
                 <span class="route-nummer label" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <h3 class="route-naam">{route.naam}</h3>
                 <span class="route-meta label">
@@ -62,7 +62,7 @@ const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 
     </div>
 
     <p class="routes-door reveal">
-      <a class="doorlink" href="/wijnroutes/">Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span></a>
+      <a class="doorlink" href="/wijnroutes">Ontdek de wijnroutes <span class="pijl" aria-hidden="true">→</span></a>
     </p>
   </div>
 </section>
