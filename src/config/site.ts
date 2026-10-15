@@ -4,7 +4,7 @@ export const site = {
   naam: 'Verborgen Wijnroutes',
   url: 'https://verborgenwijnroutes.nl',
   omschrijving:
-    'Persoonlijke wijnroutes langs kleine wijnhuizen en goede tafels in de Balkan en langs de Adriatische kust. Zelf ontdekt door Stijn, samengesteld voor jou.',
+    'Persoonlijke wijnreizen op maat naar bijzondere, minder bekende wijngebieden. Kleine wijnhuizen, lokale druiven en de keuken eromheen. Zelf ontdekt door Stijn.',
   oprichter: 'Stijn',
   email: 'info@verborgenwijnroutes.nl',
   instagram: 'https://www.instagram.com/verborgenwijnroutes/',
