@@ -109,4 +109,18 @@ const wijnroutes = defineCollection({
     }),
 });
 
-export const collections = { inspiratie, wijnroutes };
+// Juridische pagina's (algemene voorwaarden, privacy): één Markdown-bestand per pagina in content/juridisch/.
+// De bestandsnaam is het pad (/algemene-voorwaarden). Elke tussenkop (##) wordt een genummerd artikel.
+const juridisch = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/juridisch' }),
+  schema: z.object({
+    titel: z.string(),
+    seoTitel: z.string().optional(),
+    omschrijving: z.string(),
+    versie: z.string(),
+    datum: z.coerce.date(),
+    intro: z.string().optional(),
+  }),
+});
+
+export const collections = { inspiratie, wijnroutes, juridisch };

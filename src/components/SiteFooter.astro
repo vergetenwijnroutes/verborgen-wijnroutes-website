@@ -36,12 +36,21 @@ const jaar = new Date().getFullYear();
 
     <p class="onderregel label">
       <span>© {jaar} Verborgen Wijnroutes</span>
-      <a href="/privacy">Privacy</a>
+      <span class="onderregel-links">
+        <a href="/algemene-voorwaarden">Algemene voorwaarden</a>
+        <a href="/privacy">Privacy</a>
+      </span>
     </p>
   </div>
 </footer>
 
 <style>
+  .onderregel-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+
   .voet {
     margin-top: var(--sectie);
   }
