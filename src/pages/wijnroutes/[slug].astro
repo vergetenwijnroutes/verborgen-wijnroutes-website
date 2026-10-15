@@ -4,6 +4,7 @@ import { Picture } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Aanvraag from '../../components/Aanvraag.astro';
 import VoorbeeldReisconcept from '../../components/VoorbeeldReisconcept.astro';
+import VeiligOnderweg from '../../components/VeiligOnderweg.astro';
 import TiranaKaart from '../../components/kaarten/TiranaKaart.astro';
 import KretaKaart from '../../components/kaarten/KretaKaart.astro';
 import SplitKaart from '../../components/kaarten/SplitKaart.astro';
@@ -215,6 +216,7 @@ const jsonLd = [
               )}
             </h2>
             {d.gebied && <p class="tekst reveal">{d.gebied}</p>}
+            <VeiligOnderweg class="r-veilig reveal" />
           </div>
           <figure class="r-kaart reveal">
             <Kaart />
@@ -434,6 +436,10 @@ const jsonLd = [
 </BaseLayout>
 
 <style>
+  .r-kopkolom :global(.r-veilig) {
+    margin-top: 1rem;
+  }
+
   /* ---------- Opening ---------- */
 
   .r-opening {

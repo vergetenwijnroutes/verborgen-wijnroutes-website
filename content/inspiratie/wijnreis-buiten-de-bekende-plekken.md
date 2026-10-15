@@ -33,7 +33,7 @@ Een paar dingen die ik onderweg heb geleerd:
 
 - **Maak vooraf een afspraak.** Kleine wijnhuizen hebben vaak geen vaste openingstijden. Wie zomaar langsrijdt, staat soms voor een dichte deur.
 - **Niet te veel op één dag.** Twee wijnhuizen per dag is genoeg. Dan blijft er tijd over voor een lange lunch en een wandeling.
-- **Regel je vervoer.** Wie proeft, rijdt niet. Een chauffeur of een verblijf op loopafstand maakt de dag een stuk ontspannener.
+- **Regel je vervoer.** Wie proeft, rijdt niet. Rijd nooit als je alcohol hebt gedronken. Reizen jullie met de auto, regel dan vooraf vervoer, zodat iedereen veilig mee kan proeven. Blijft er niemand helemaal nuchter, kies dan voor een taxi, lokaal openbaar vervoer of een chauffeur. Of zoek een verblijf op loopafstand.
 - **Combineer wijn met eten.** Proef de wijn bij de keuken waar hij bij hoort. Dan snap je hem pas echt.
 - **Denk aan de terugreis.** Reis je alleen met handbagage? Op het vliegveld van Tirana kun je ook goede lokale wijn kopen, dus daar hoef je je geen zorgen over te maken. Albanië valt wel buiten de EU, check dus even hoeveel flessen je mee mag nemen.
 

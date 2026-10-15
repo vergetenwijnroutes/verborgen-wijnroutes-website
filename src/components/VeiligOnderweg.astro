@@ -1,0 +1,69 @@
+---
+// Vaste veiligheidsboodschap over alcohol en rijden. Eén plek voor de tekst,
+// zodat hij overal op de site hetzelfde is.
+interface Props {
+  class?: string;
+}
+const { class: klasse } = Astro.props;
+---
+
+<aside class:list={['veilig', klasse]} aria-labelledby="veilig-kop">
+  <p class="label label--rood">Veilig onderweg</p>
+  <p id="veilig-kop" class="veilig-kop">Wie proeft, rijdt niet.</p>
+  <ul class="veilig-lijst" role="list">
+    <li>
+      Rijd nooit als je alcohol hebt gedronken. Verborgen Wijnroutes raadt dat nadrukkelijk af.
+    </li>
+    <li>
+      Reizen jullie met de auto? Regel dan vooraf vervoer, zodat iedereen veilig mee kan doen aan de proeverijen.
+    </li>
+    <li>
+      Blijft er niemand helemaal nuchter? Kies dan voor een taxi, lokaal openbaar vervoer of vooraf geregeld vervoer.
+    </li>
+  </ul>
+</aside>
+
+<style>
+  .veilig {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 34rem;
+    padding: 1.25rem 0 1.25rem 1.25rem;
+    border-left: 2px solid var(--rood);
+  }
+
+  .veilig-kop {
+    font-size: 1.45rem;
+    font-style: italic;
+    line-height: 1.2;
+    color: var(--inkt);
+  }
+
+  .veilig-lijst {
+    list-style: none;
+    padding: 0;
+    margin: 0.25rem 0 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .veilig-lijst li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 1.02rem;
+    line-height: 1.55;
+    color: var(--inkt-zacht);
+    text-wrap: pretty;
+  }
+
+  .veilig-lijst li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.68em;
+    width: 0.6rem;
+    height: 1px;
+    background: var(--rood);
+  }
+</style>
