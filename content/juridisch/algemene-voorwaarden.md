@@ -68,7 +68,7 @@ In deze voorwaarden betekent:
 ## Herroepingsrecht
 
 1. Bij een Overeenkomst die online of op afstand is gesloten, heeft de Klant 14 dagen bedenktijd vanaf het sluiten van de Overeenkomst.
-2. Door te betalen verzoekt de Klant Verborgen Wijnroutes om direct te beginnen, ook binnen de bedenktijd van 14 dagen. De Klant verklaart daarbij te weten dat zijn herroepingsrecht vervalt zodra de dienst volledig is geleverd.
+2. De Klant verzoekt Verborgen Wijnroutes uitdrukkelijk om direct te beginnen, ook binnen de bedenktijd van 14 dagen, door via WhatsApp of e-mail "Ja, start maar" te sturen in reactie op het aanbod. De Klant verklaart daarbij te weten dat zijn herroepingsrecht vervalt zodra de dienst volledig is geleverd.
 3. Herroept de Klant nadat Verborgen Wijnroutes met zijn toestemming is begonnen, dan betaalt de Klant een bedrag in verhouding tot het al geleverde deel van de dienst.
 4. De Klant herroept door een e-mail te sturen naar info@verborgenwijnroutes.nl.
 
