@@ -10,6 +10,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 
 ## Merk
 
+- **Positionering (aangescherpt, oktober 2026):** Verborgen Wijnroutes helpt wijnliefhebbers bijzondere, minder bekende wijngebieden te ontdekken via persoonlijke wijnreizen op maat. Focus: onbekende en verrassende wijngebieden; kleinschalige wijnhuizen en persoonlijke ontmoetingen met wijnmakers; lokale druivenrassen, authentieke wijnen en wijntradities; gastronomie, cultuur en omgeving; persoonlijk samengestelde reisconcepten die aansluiten bij wensen en wijnvoorkeuren. De Balkan blijft belangrijk in het aanbod, maar is **niet** meer de centrale positionering: merkteksten (header, footer, meta, structured data) niet aan één regio binden, zodat later andere wijngebieden passen. Kern van de site blijft hetzelfde; alleen op plekken aanscherpen, in overleg.
 - Hoofdmerk: **Verborgen Wijnroutes**. Stijn is het gezicht en de stem, maar de site is geen persoonlijke portfolio.
 - Toon: persoonlijk, veel vanuit "ik". Kernverhaal: Stijn is die ene vriend die er al is geweest, de wijn heeft geproefd, de mensen kent en je helpt er een mooie reis van te maken.
 - Gevoel: premium, warm, authentiek, avontuurlijk, persoonlijk. Niet elitair, geen cliché-luxe, geen standaard wijnwebsite.
