@@ -40,7 +40,7 @@ In deze voorwaarden betekent:
 
 1. De Klant geeft vooraf zijn wensen door, zoals bestemming, periode, aantal personen, budget en voorkeuren.
 2. Verborgen Wijnroutes levert het Concept binnen 5 werkdagen na ontvangst van de betaling en alle benodigde informatie.
-3. Bij het Concept zijn twee aanpassingsrondes inbegrepen (op basis van de eerste call en na aanlevering van het eerste reisconcept).
+3. Bij het Concept zijn twee momenten van afstemming inbegrepen. Eerst een call, waarin Verborgen Wijnroutes en de Klant samen de door de Klant ingevulde informatie doornemen. Daarna één feedbackronde na levering van het eerste Concept, waarna Verborgen Wijnroutes het Concept op basis van die feedback aanpast.
 4. Verborgen Wijnroutes voert de opdracht zorgvuldig en naar beste kunnen uit. Dit is een inspanningsverplichting: Verborgen Wijnroutes garandeert niet dat de reis aan alle verwachtingen van de Klant voldoet.
 
 ## Reserveringshulp
