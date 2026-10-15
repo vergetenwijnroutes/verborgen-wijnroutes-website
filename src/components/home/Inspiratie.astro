@@ -51,11 +51,18 @@ const [uitgelicht, ...overige] = artikelen;
               <ul class="artikel-lijst" role="list">
                 {overige.map((artikel) => (
                   <li class="artikel reveal">
-                    <a href={`/inspiratie/${artikel.id}/`}>
-                      <p class="label artikel-meta">
-                        <time datetime={artikel.data.datum.toISOString()}>{datum.format(artikel.data.datum)}</time>
-                      </p>
-                      <h3 class="artikel-titel">{artikel.data.korteTitel ?? artikel.data.titel}</h3>
+                    <a href={`/inspiratie/${artikel.id}/`} class="artikel-rij">
+                      {artikel.data.hoofdfoto && (
+                        <div class="foto artikel-duim">
+                          <Image src={artikel.data.hoofdfoto} alt="" widths={[160, 320]} sizes="6rem" />
+                        </div>
+                      )}
+                      <span class="artikel-rij-tekst">
+                        <span class="label artikel-meta">
+                          <time datetime={artikel.data.datum.toISOString()}>{datum.format(artikel.data.datum)}</time>
+                        </span>
+                        <h3 class="artikel-titel">{artikel.data.korteTitel ?? artikel.data.titel}</h3>
+                      </span>
                     </a>
                   </li>
                 ))}
@@ -140,6 +147,23 @@ const [uitgelicht, ...overige] = artikelen;
   .artikel-lijst .artikel {
     padding-block: 1.1rem;
     border-top: 1px solid var(--lijn);
+  }
+
+  .artikel .artikel-rij {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .artikel-duim {
+    aspect-ratio: 4 / 5;
+  }
+
+  .artikel-rij-tekst {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
   }
 
   .artikel-titel {

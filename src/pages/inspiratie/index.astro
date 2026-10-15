@@ -143,6 +143,17 @@ const jsonLd = [
                         <span class="i-samenvatting">{a.data.samenvatting}</span>
                         <span class="label i-tijd">{leestijd(a)} min lezen</span>
                       </span>
+                      {a.data.hoofdfoto && (
+                        <span class="foto i-duim">
+                          <Picture
+                            src={a.data.hoofdfoto}
+                            formats={['avif', 'webp']}
+                            widths={[200, 400, 600]}
+                            sizes="(min-width: 60rem) 16vw, 6rem"
+                            alt=""
+                          />
+                        </span>
+                      )}
                     </a>
                   </li>
                 ))}
@@ -300,6 +311,23 @@ const jsonLd = [
     text-decoration: none;
   }
 
+  .i-duim {
+    display: block;
+    grid-column: 2;
+    width: 100%;
+    max-width: 14rem;
+    aspect-ratio: 4 / 3;
+    margin-top: 0.5rem;
+  }
+
+  .i-duim img {
+    transition: transform 1.2s cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+
+  .i-lijst a:hover .i-duim img {
+    transform: scale(1.04);
+  }
+
   .i-nr {
     font-family: var(--mono);
     font-size: 0.9rem;
@@ -417,7 +445,15 @@ const jsonLd = [
     }
 
     .i-item {
-      grid-column: 3 / span 8;
+      grid-column: 3 / span 6;
+    }
+
+    .i-duim {
+      grid-column: 10 / span 3;
+      grid-row: 1;
+      max-width: none;
+      margin-top: 0;
+      aspect-ratio: 4 / 3;
     }
 
     .i-routes-grid {
