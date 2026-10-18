@@ -54,10 +54,13 @@ const jsonLd = [
         <a href="/">Home</a><span class="kruimel-streep" aria-hidden="true">/</span><span aria-current="page">{d.titel}</span>
       </nav>
       <h1 class="kop j-titel">{d.titel}</h1>
-      <p class="label j-versie">
-        {d.versie ? `Versie ${d.versie} · ` : 'Laatst bijgewerkt '}
-        <time datetime={d.datum.toISOString().slice(0, 10)}>{datum.format(d.datum)}</time>
-      </p>
+      {
+        d.versie && (
+          <p class="label j-versie">
+            Versie {d.versie} · <time datetime={d.datum.toISOString().slice(0, 10)}>{datum.format(d.datum)}</time>
+          </p>
+        )
+      }
       {d.intro && <p class="lead j-intro">{d.intro}</p>}
     </header>
 
@@ -92,7 +95,7 @@ const jsonLd = [
         }
 
         <p class="j-slot label">
-          {d.titel} · {d.versie ? `versie ${d.versie}` : 'laatst bijgewerkt'} · {datum.format(d.datum)}
+          {d.versie ? `${d.titel} · versie ${d.versie} · ${datum.format(d.datum)}` : `Laatst bijgewerkt: ${datum.format(d.datum)}`}
         </p>
         <p class="j-contact">
           Vragen? Mail naar <a href={`mailto:${site.email}`}>{site.email}</a>{' of '}
