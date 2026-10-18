@@ -18,15 +18,21 @@ const d = pagina.data;
 const datum = new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
 
 // Vaste gegevens invullen; zolang het KvK-nummer ontbreekt, staat er een nette tijdelijke tekst.
-const kvk = site.kvk ? `onder nummer ${site.kvk}` : '(nummer volgt)';
-const html = (pagina.rendered?.html ?? '').replaceAll('{{kvk}}', kvk);
+const html = (pagina.rendered?.html ?? '')
+  .replaceAll('{{kvk}}', site.kvk ? `onder nummer ${site.kvk}` : '(nummer volgt)')
+  .replaceAll('{{kvknummer}}', site.kvk || 'volgt na inschrijving');
+const artikelen_ = d.nummering === 'artikelen';
+const slug = (t: string) =>
+  t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 // Elke tussenkop wordt een artikel: genummerd, met een anker voor de inhoudsopgave.
-const artikelen: { nr: number; titel: string; html: string }[] = [];
+const artikelen: { nr: number; anker: string; titel: string; html: string }[] = [];
 for (const [i, stuk] of html.split(/(?=<h2[\s>])/).entries()) {
   const kop = stuk.match(/<h2[^>]*>([\s\S]*?)<\/h2>/);
   if (!kop) continue;
-  artikelen.push({ nr: artikelen.length + 1, titel: kop[1].replace(/<[^>]+>/g, ''), html: stuk.replace(kop[0], '') });
+  const titel = kop[1].replace(/<[^>]+>/g, '');
+  const nr = artikelen.length + 1;
+  artikelen.push({ nr, anker: artikelen_ ? `artikel-${nr}` : slug(titel), titel, html: stuk.replace(kop[0], '') });
 }
 
 const jsonLd = [
@@ -49,7 +55,8 @@ const jsonLd = [
       </nav>
       <h1 class="kop j-titel">{d.titel}</h1>
       <p class="label j-versie">
-        Versie {d.versie} · <time datetime={d.datum.toISOString().slice(0, 10)}>{datum.format(d.datum)}</time>
+        {d.versie ? `Versie ${d.versie} · ` : 'Laatst bijgewerkt '}
+        <time datetime={d.datum.toISOString().slice(0, 10)}>{datum.format(d.datum)}</time>
       </p>
       {d.intro && <p class="lead j-intro">{d.intro}</p>}
     </header>
@@ -61,7 +68,7 @@ const jsonLd = [
           {
             artikelen.map((a) => (
               <li>
-                <a href={`#artikel-${a.nr}`}>
+                <a href={`#${a.anker}`}>
                   <span class="j-inhoud-nr">{a.nr}</span>
                   {a.titel}
                 </a>
@@ -74,9 +81,9 @@ const jsonLd = [
       <div class="j-tekst">
         {
           artikelen.map((a) => (
-            <section class="j-artikel" id={`artikel-${a.nr}`} aria-labelledby={`artikel-${a.nr}-kop`}>
-              <p class="label label--rood">Artikel {a.nr}</p>
-              <h2 id={`artikel-${a.nr}-kop`} class="j-artikel-kop">
+            <section class="j-artikel" id={a.anker} aria-labelledby={`${a.anker}-kop`}>
+              {artikelen_ && <p class="label label--rood">Artikel {a.nr}</p>}
+              <h2 id={`${a.anker}-kop`} class="j-artikel-kop">
                 {a.titel}
               </h2>
               <Fragment set:html={a.html} />
@@ -85,7 +92,7 @@ const jsonLd = [
         }
 
         <p class="j-slot label">
-          {d.titel} · versie {d.versie} · {datum.format(d.datum)}
+          {d.titel} · {d.versie ? `versie ${d.versie}` : 'laatst bijgewerkt'} · {datum.format(d.datum)}
         </p>
         <p class="j-contact">
           Vragen? Mail naar <a href={`mailto:${site.email}`}>{site.email}</a>{' of '}
@@ -250,6 +257,61 @@ const jsonLd = [
     font-family: var(--mono);
     font-size: 0.78rem;
     color: var(--potlood);
+  }
+
+  .j-artikel :global(ul) {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.9rem;
+  }
+
+  .j-artikel :global(ul li) {
+    counter-increment: none;
+    padding-left: 1.4rem;
+  }
+
+  .j-artikel :global(ul li)::before {
+    content: '';
+    top: 0.82em;
+    width: 0.6rem;
+    height: 1px;
+    background: var(--rood);
+  }
+
+  .j-artikel :global(ul li + li) {
+    margin-top: 0.45rem;
+  }
+
+  .j-artikel :global(table) {
+    width: 100%;
+    margin: 0.25rem 0 1rem;
+    border-collapse: collapse;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .j-artikel :global(th) {
+    padding: 0 1rem 0.5rem 0;
+    border-bottom: 1px solid var(--inkt);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--olijf);
+  }
+
+  .j-artikel :global(td) {
+    padding: 0.7rem 1rem 0.7rem 0;
+    border-bottom: 1px solid var(--lijn);
+    vertical-align: top;
+    color: var(--inkt-zacht);
+  }
+
+  .j-artikel :global(td:first-child) {
+    width: 50%;
+    color: var(--inkt);
   }
 
   .j-artikel :global(strong) {
