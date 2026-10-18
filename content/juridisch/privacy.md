@@ -4,7 +4,6 @@ seoTitel: "Privacyverklaring | Verborgen Wijnroutes"
 omschrijving: "Hoe Verborgen Wijnroutes omgaat met je persoonsgegevens: welke gegevens, waarvoor, met wie ze worden gedeeld, hoe lang ze bewaard blijven en wat je rechten zijn."
 datum: 2026-10-18
 nummering: geen
-intro: "Hier lees je welke gegevens ik van je verwerk, waarom, en wat je rechten zijn. Vragen? Mail of app me gerust."
 ---
 
 ## Wie we zijn
@@ -23,9 +22,9 @@ Voor vragen over je gegevens of over deze verklaring kun je mailen naar info@ver
 We verwerken alleen gegevens die je zelf aan ons geeft of die nodig zijn om de website te laten werken.
 
 - **Contactgegevens:** naam, e-mailadres en telefoonnummer.
-- **Reiswensen:** reisperiode, aantal personen, gewenste regio, budget en wijnvoorkeuren, zoals je die invult in het kennismakingsformulier of per mail deelt.
+- **Reiswensen:** Reisperiode, aantal personen, gewenste regio, budget en wijnvoorkeuren, zoals je die invult in het kennismakingsformulier of per mail deelt.
 - **Betaalgegevens:** als je betaalt via een Tikkie of bankoverschrijving, zien wij je naam, IBAN en het betaalde bedrag.
-- **Communicatie:** de inhoud van e-mails en berichten die we uitwisselen.
+- **Communicatie:** de inhoud van e-mails en WhatsApp-berichten die we uitwisselen.
 - **Technische gegevens:** je IP-adres en browsergegevens, die onze hostingpartij tijdelijk opslaat om de website veilig te laten draaien.
 
 ## Waarvoor we je gegevens gebruiken
@@ -49,11 +48,13 @@ We delen je gegevens alleen als dat nodig is om je reis te regelen of de website
 - **Wijnhuizen, wijnbars en agriturismo's:** pas nadat je hebt besloten te boeken, en alleen wat zij nodig hebben, zoals je naam, de datum en het aantal personen. Zij zijn daarna zelf verantwoordelijk voor die gegevens.
 - **Tikkie en onze bank (Revolut):** voor het verwerken van je betaling via een Tikkie of een bankoverschrijving.
 - **Hostingpartij:** Vercel, waar onze website en reispagina's draaien, en GitHub, waar we de bestanden van de website beheren.
-- **E-mail en formulieren:** Gmail (Google) voor onze e-mail en Google Forms (ons kennismakingsformulier).
+- **E-mail en formulieren:** Gmail (Google) voor onze e-mail, Google Forms voor ons kennismakingsformulier en Google Sheets, waar de antwoorden uit het formulier worden opgeslagen.
+- **WhatsApp (Meta):** voor contact met je, het bevestigen van je reis en je akkoord om te starten.
+- **n8n:** een automatiseringstool die we gebruiken voor het verwerken van aanvragen en het opstellen van je reisconcept. n8n draait in de cloud van n8n GmbH in Duitsland.
 
 Met partijen die gegevens namens ons verwerken, hebben we een verwerkersovereenkomst.
 
-**Buiten de Europese Unie.** Sommige wijnhuizen en agriturismo's waarmee we werken, liggen buiten de EU, bijvoorbeeld in Albanië. Boek je daar een bezoek, dan sturen we je naam, de datum en het aantal personen naar die aanbieder. Dat is nodig om de afspraak voor je te maken. Houd er rekening mee dat de privacyregels in die landen minder streng kunnen zijn dan in de EU. Sommige diensten die we gebruiken, zoals Vercel, GitHub en Google, kunnen gegevens opslaan in de Verenigde Staten. Die bedrijven zijn verplicht je gegevens daar even goed te beschermen als in de EU.
+**Buiten de Europese Unie.** Sommige wijnhuizen en agriturismo's waarmee we werken, liggen buiten de EU, bijvoorbeeld in Albanië. Boek je daar een bezoek, dan sturen we je naam, de datum en het aantal personen naar die aanbieder. Dat is nodig om de afspraak voor je te maken. Houd er rekening mee dat de privacyregels in die landen minder streng kunnen zijn dan in de EU. Sommige diensten die we gebruiken, zoals Vercel, GitHub, Google en WhatsApp, kunnen gegevens opslaan in de Verenigde Staten. Die bedrijven zijn verplicht je gegevens daar even goed te beschermen als in de EU.
 
 **Reispagina's.** Je persoonlijke reispagina staat op ons eigen domein, wordt gehost via Vercel en is alleen bereikbaar via een niet-openbare link en niet vindbaar in zoekmachines.
 
@@ -92,7 +93,7 @@ Mail je verzoek naar info@verborgenwijnroutes.nl. We reageren binnen een maand.
 
 ## Klachten
 
-Ben je niet tevreden over hoe we met je gegevens omgaan? Laat het ons eerst weten, dan zoeken we samen een oplossing. Je kunt ook een klacht indienen bij de [Autoriteit Persoonsgegevens](https://www.autoriteitpersoonsgegevens.nl/).
+Ben je niet tevreden over hoe we met je gegevens omgaan? Laat het ons eerst weten, dan zoeken we samen een oplossing. Je kunt ook een klacht indienen bij de Autoriteit Persoonsgegevens.
 
 ## Wijzigingen
 
