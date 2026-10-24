@@ -1,0 +1,271 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../config/site';
+
+// Tekst van Stijn, letterlijk overgenomen. Alleen het adres komt uit de config:
+// zolang dat leeg is, staat het niet in de "Aan:"-regel.
+const aan = ['Verborgen Wijnroutes', site.adres, site.email].filter(Boolean).join(', ');
+
+// De mailknop opent een e-mail met het modelformulier al ingevuld.
+const mailTekst = [
+  `Aan: ${aan}`,
+  '',
+  'Ik/Wij* deel/delen* hierbij mee dat ik/wij* onze overeenkomst betreffende de levering van de volgende dienst herroep/herroepen*:',
+  '',
+  '',
+  'Besteld op: ',
+  'Naam: ',
+  'Adres: ',
+  'Datum: ',
+  '',
+  '* Doorhalen wat niet van toepassing is.',
+].join('\n');
+const mailLink = `mailto:${site.email}?subject=${encodeURIComponent('Herroeping')}&body=${encodeURIComponent(mailTekst)}`;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site.url + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Herroepingsformulier', item: new URL('/herroepingsformulier', site.url).href },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  titel="Herroepingsformulier | Verborgen Wijnroutes"
+  omschrijving="Wil je je opdracht bij Verborgen Wijnroutes herroepen? Dat kan binnen 14 dagen. Gebruik het modelformulier of stuur een eigen bericht."
+  jsonLd={jsonLd}
+>
+  <div class="wrap h">
+    <div class="h-grid">
+      <div class="h-tekst">
+        <nav class="kruimel label" aria-label="Kruimelpad">
+          <a href="/">Home</a><span class="kruimel-streep" aria-hidden="true">/</span><span aria-current="page">Herroepingsformulier</span>
+        </nav>
+        <h1 class="kop h-titel">Herroepingsformulier</h1>
+
+        <p>
+          Wil je je opdracht bij Verborgen Wijnroutes herroepen? Dat kan binnen 14 dagen nadat de overeenkomst is
+          gesloten. Stuur daarvoor een e-mail naar <a href={`mailto:${site.email}?subject=Herroeping`}><strong>{site.email}</strong></a>.
+          Je kunt het formulier hieronder gebruiken, maar een eigen bericht mag ook.
+        </p>
+        <p>
+          Heb je ons gevraagd direct te beginnen? Dan vervalt je herroepingsrecht zodra het reisconcept volledig is
+          geleverd. Herroep je eerder, dan betaal je alleen voor het deel dat al is geleverd. Meer hierover lees je in
+          artikel 9 van onze <a href="/algemene-voorwaarden#artikel-9">algemene voorwaarden</a>.
+        </p>
+
+        <section class="h-model" aria-labelledby="model-kop">
+          <h2 id="model-kop" class="h-model-kop">Modelformulier voor herroeping</h2>
+          <p class="h-model-noot">
+            (Vul dit formulier alleen in en stuur het terug als je de overeenkomst wilt herroepen.)
+          </p>
+
+          <p>Aan: {aan}</p>
+
+          <p>
+            Ik/Wij* deel/delen* hierbij mee dat ik/wij* onze overeenkomst betreffende de levering van de volgende dienst
+            herroep/herroepen*:
+          </p>
+          <p class="h-lijn" aria-hidden="true"></p>
+
+          <dl class="h-velden">
+            <div><dt>Besteld op:</dt><dd aria-hidden="true"></dd></div>
+            <div><dt>Naam:</dt><dd aria-hidden="true"></dd></div>
+            <div><dt>Adres:</dt><dd aria-hidden="true"></dd></div>
+            <div><dt>Datum:</dt><dd aria-hidden="true"></dd></div>
+          </dl>
+
+          <p class="h-voetnoot">* Doorhalen wat niet van toepassing is.</p>
+        </section>
+
+        <a class="h-knop" href={mailLink}>
+          <span>Mail je herroeping</span>
+          <span class="pijl" aria-hidden="true">→</span>
+        </a>
+
+        <p>Je ontvangt van ons binnen 14 dagen een bevestiging per e-mail.</p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .h {
+    padding-top: 1.5rem;
+  }
+
+  .kruimel {
+    color: var(--potlood);
+  }
+
+  .kruimel a {
+    text-decoration: none;
+  }
+
+  .kruimel a:hover {
+    color: var(--rood);
+  }
+
+  .kruimel-streep {
+    margin-inline: 0.6em;
+  }
+
+  .h-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .h-tekst {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    max-width: 40rem;
+    color: var(--inkt-zacht);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  .h-titel {
+    margin: 0.75rem 0 0.5rem;
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    line-height: 1.02;
+    letter-spacing: -0.024em;
+    color: var(--inkt);
+  }
+
+  .h-tekst a {
+    text-decoration-color: var(--rood);
+    text-underline-offset: 0.2em;
+  }
+
+  .h-tekst a:hover {
+    color: var(--rood);
+  }
+
+  .h-tekst strong {
+    font-weight: 560;
+    color: var(--inkt);
+  }
+
+  /* Het modelformulier als een vel papier */
+  .h-model {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1rem calc(var(--gutter) * -1) 0.5rem;
+    padding: 1.75rem var(--gutter) 2rem;
+    background: var(--papier-diep);
+    font-size: 1.02rem;
+  }
+
+  .h-model-kop {
+    font-size: clamp(1.45rem, 2.4vw, 1.8rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--inkt);
+  }
+
+  .h-model-noot {
+    margin-top: -0.6rem;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--potlood);
+  }
+
+  .h-lijn {
+    height: 1.6rem;
+    border-bottom: 1px dotted var(--potlood);
+  }
+
+  .h-velden {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0.25rem 0 0;
+  }
+
+  .h-velden div {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    align-items: end;
+    gap: 0.75rem;
+  }
+
+  .h-velden dt {
+    color: var(--inkt);
+  }
+
+  .h-velden dd {
+    margin: 0;
+    height: 1.4rem;
+    border-bottom: 1px dotted var(--potlood);
+  }
+
+  .h-voetnoot {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: var(--potlood);
+  }
+
+  .h-knop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    padding: 1.05rem 1.5rem 1.05rem 1.6rem;
+    background: var(--rood);
+    color: var(--papier);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .h-tekst .h-knop:hover {
+    background: var(--inkt);
+    color: var(--papier);
+  }
+
+  .h-knop .pijl {
+    transition: transform 0.3s ease;
+  }
+
+  .h-knop:hover .pijl {
+    transform: translateX(0.3em);
+  }
+
+  @media (min-width: 40rem) {
+    .h-model {
+      margin-inline: 0;
+      padding: 2rem 2.25rem 2.25rem;
+    }
+
+    .h-knop {
+      align-self: flex-start;
+      justify-content: flex-start;
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .h {
+      padding-top: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .h-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+    }
+
+    .h-tekst {
+      grid-column: 3 / span 7;
+    }
+  }
+</style>

@@ -11,6 +11,8 @@ export const site = {
   whatsapp: 'https://wa.me/31614292651',
   // KvK-nummer; leeg laten tot het bekend is.
   kvk: '',
+  // Postadres (voor het herroepingsformulier); leeg laten tot het bekend is.
+  adres: '',
 };
 
 // Het bestaande Google Form (Google Forms → Sheets → n8n). Inhoud nooit aanpassen.
