@@ -13,7 +13,6 @@ const mailTekst = [
   'Ik/Wij* deel/delen* hierbij mee dat ik/wij* onze overeenkomst betreffende de levering van de volgende dienst herroep/herroepen*:',
   '',
   '',
-  'Aangevraagd op: ',
   'Naam: ',
   'Telefoonnummer: ',
   'Datum: ',
@@ -84,7 +83,6 @@ const jsonLd = [
           </fieldset>
 
           <div class="h-velden">
-            <label><span>Aangevraagd op:</span><input type="date" name="besteld" /></label>
             <label><span>Naam:</span><input type="text" name="naam" autocomplete="name" required /></label>
             <label><span>Telefoon:</span><input type="tel" name="telefoon" autocomplete="tel" inputmode="tel" /></label>
             <label><span>Datum:</span><input type="date" name="datum" data-vandaag /></label>
@@ -150,7 +148,6 @@ const jsonLd = [
         zinVoor(wij()),
         diensten.join(' en '),
         '',
-        `Aangevraagd op: ${datum(waarde('besteld'))}`,
         `Naam: ${waarde('naam')}`,
         `Telefoonnummer: ${waarde('telefoon')}`,
         `Datum: ${datum(waarde('datum'))}`,
@@ -333,7 +330,7 @@ const jsonLd = [
 
   .h-velden label {
     display: grid;
-    grid-template-columns: 8.5rem minmax(0, 1fr);
+    grid-template-columns: 6.5rem minmax(0, 1fr);
     align-items: end;
     gap: 0.75rem;
     color: var(--inkt);
