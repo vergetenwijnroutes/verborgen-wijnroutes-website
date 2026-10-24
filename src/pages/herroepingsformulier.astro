@@ -58,7 +58,7 @@ const jsonLd = [
           artikel 9 van onze <a href="/algemene-voorwaarden#artikel-9">algemene voorwaarden</a>.
         </p>
 
-        <section class="h-model" aria-labelledby="model-kop">
+        <form class="h-model" aria-labelledby="model-kop" data-herroeping data-aan={aan} data-email={site.email} novalidate>
           <h2 id="model-kop" class="h-model-kop">Modelformulier voor herroeping</h2>
           <p class="h-model-noot">
             (Vul dit formulier alleen in en stuur het terug als je de overeenkomst wilt herroepen.)
@@ -66,32 +66,132 @@ const jsonLd = [
 
           <p>Aan: {aan}</p>
 
-          <p>
+          <fieldset class="h-keuze">
+            <legend class="sr-only">Ik of wij</legend>
+            <label><input type="radio" name="wie" value="ik" checked /> <span>Ik</span></label>
+            <label><input type="radio" name="wie" value="wij" /> <span>Wij</span></label>
+          </fieldset>
+
+          <p data-zin>
             Ik/Wij* deel/delen* hierbij mee dat ik/wij* onze overeenkomst betreffende de levering van de volgende dienst
             herroep/herroepen*:
           </p>
-          <p class="h-lijn" aria-hidden="true"></p>
 
-          <dl class="h-velden">
-            <div><dt>Besteld op:</dt><dd aria-hidden="true"></dd></div>
-            <div><dt>Naam:</dt><dd aria-hidden="true"></dd></div>
-            <div><dt>Adres:</dt><dd aria-hidden="true"></dd></div>
-            <div><dt>Datum:</dt><dd aria-hidden="true"></dd></div>
-          </dl>
+          <fieldset class="h-diensten">
+            <legend class="sr-only">Welke dienst</legend>
+            <label><input type="checkbox" name="dienst" value="Persoonlijk reisconcept" /> <span>Persoonlijk reisconcept</span></label>
+            <label><input type="checkbox" name="dienst" value="Reserveringshulp" /> <span>Reserveringshulp</span></label>
+          </fieldset>
 
-          <p class="h-voetnoot">* Doorhalen wat niet van toepassing is.</p>
-        </section>
+          <div class="h-velden">
+            <label><span>Besteld op:</span><input type="date" name="besteld" /></label>
+            <label><span>Naam:</span><input type="text" name="naam" autocomplete="name" required /></label>
+            <label><span>Adres:</span><input type="text" name="adres" autocomplete="street-address" /></label>
+            <label><span>Datum:</span><input type="date" name="datum" data-vandaag /></label>
+          </div>
 
-        <a class="h-knop" href={mailLink}>
-          <span>Mail je herroeping</span>
-          <span class="pijl" aria-hidden="true">→</span>
-        </a>
+          <p class="h-voetnoot" data-voetnoot>* Doorhalen wat niet van toepassing is.</p>
+          <p class="h-melding" role="alert" data-melding hidden></p>
+        </form>
+
+        <div class="h-knoppen">
+          <a class="h-knop" href={mailLink} data-mail>
+            <span>Mail je herroeping</span>
+            <span class="pijl" aria-hidden="true">→</span>
+          </a>
+          <button type="button" class="h-kopieer" data-kopieer hidden>Kopieer tekst</button>
+        </div>
+        <p class="h-uitleg" data-uitleg hidden>
+          Werkt de knop niet? Kopieer de tekst en plak hem in een mail aan <a href={`mailto:${site.email}`}>{site.email}</a>.
+        </p>
 
         <p>Je ontvangt van ons binnen 14 dagen een bevestiging per e-mail.</p>
       </div>
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-herroeping]');
+  if (form) {
+    const aan = form.dataset.aan ?? '';
+    const email = form.dataset.email ?? '';
+    const mail = document.querySelector<HTMLAnchorElement>('[data-mail]')!;
+    const kopieer = document.querySelector<HTMLButtonElement>('[data-kopieer]')!;
+    const melding = form.querySelector<HTMLElement>('[data-melding]')!;
+    const zin = form.querySelector<HTMLElement>('[data-zin]')!;
+    const datumVeld = form.querySelector<HTMLInputElement>('[data-vandaag]')!;
+    const nl = new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    // Met JavaScript is "doorhalen" niet nodig: ik/wij kies je met een tik.
+    form.querySelector<HTMLElement>('[data-voetnoot]')!.hidden = true;
+    kopieer.hidden = false;
+    document.querySelector<HTMLElement>('[data-uitleg]')!.hidden = false;
+    datumVeld.valueAsDate = new Date();
+
+    const waarde = (naam: string) => (form.elements.namedItem(naam) as HTMLInputElement | null)?.value.trim() ?? '';
+    const datum = (v: string) => (v ? nl.format(new Date(`${v}T12:00:00`)) : '');
+
+    function zinVoor(wij: boolean) {
+      return wij
+        ? 'Wij delen hierbij mee dat wij onze overeenkomst betreffende de levering van de volgende dienst herroepen:'
+        : 'Ik deel hierbij mee dat ik mijn overeenkomst betreffende de levering van de volgende dienst herroep:';
+    }
+
+    function wij() {
+      return (form!.querySelector<HTMLInputElement>('input[name="wie"]:checked')?.value ?? 'ik') === 'wij';
+    }
+
+    function tekst() {
+      const diensten = [...form!.querySelectorAll<HTMLInputElement>('input[name="dienst"]:checked')].map((d) => d.value);
+      return [
+        `Aan: ${aan}`,
+        '',
+        zinVoor(wij()),
+        diensten.join(' en '),
+        '',
+        `Besteld op: ${datum(waarde('besteld'))}`,
+        `Naam: ${waarde('naam')}`,
+        `Adres: ${waarde('adres')}`,
+        `Datum: ${datum(waarde('datum'))}`,
+      ].join('\n');
+    }
+
+    function controleer() {
+      const fouten = [];
+      if (!form!.querySelector('input[name="dienst"]:checked')) fouten.push('welke dienst je herroept');
+      if (!waarde('naam')) fouten.push('je naam');
+      melding.hidden = fouten.length === 0;
+      melding.textContent = fouten.length ? `Vul nog in: ${fouten.join(' en ')}.` : '';
+      return fouten.length === 0;
+    }
+
+    function werkBij() {
+      zin.textContent = zinVoor(wij());
+      mail.href = `mailto:${email}?subject=${encodeURIComponent('Herroeping')}&body=${encodeURIComponent(tekst())}`;
+      if (!melding.hidden) controleer();
+    }
+
+    form.addEventListener('input', werkBij);
+    form.addEventListener('change', werkBij);
+    werkBij();
+
+    mail.addEventListener('click', (e) => {
+      if (!controleer()) e.preventDefault();
+    });
+
+    kopieer.addEventListener('click', async () => {
+      if (!controleer()) return;
+      try {
+        await navigator.clipboard.writeText(tekst());
+        kopieer.textContent = 'Gekopieerd';
+      } catch {
+        kopieer.textContent = 'Kopiëren lukt niet';
+      }
+      setTimeout(() => (kopieer.textContent = 'Kopieer tekst'), 2500);
+    });
+  }
+</script>
 
 <style>
   .h {
@@ -177,32 +277,127 @@ const jsonLd = [
     color: var(--potlood);
   }
 
-  .h-lijn {
-    height: 1.6rem;
-    border-bottom: 1px dotted var(--potlood);
+  .h-keuze,
+  .h-diensten {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.6rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .h-keuze label,
+  .h-diensten label {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .h-keuze input,
+  .h-diensten input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .h-keuze span,
+  .h-diensten span {
+    display: inline-block;
+    padding: 0.5rem 0.95rem 0.55rem;
+    border: 1px solid var(--lijn);
+    background: var(--papier);
+    color: var(--inkt);
+    font-size: 1rem;
+    line-height: 1.2;
+    transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .h-keuze input:checked + span,
+  .h-diensten input:checked + span {
+    border-color: var(--rood);
+    background: var(--rood);
+    color: var(--papier);
+  }
+
+  .h-keuze input:focus-visible + span,
+  .h-diensten input:focus-visible + span {
+    outline: 2px solid var(--rood);
+    outline-offset: 2px;
   }
 
   .h-velden {
     display: grid;
-    gap: 0.6rem;
-    margin: 0.25rem 0 0;
+    gap: 0.85rem;
+    margin-top: 0.25rem;
   }
 
-  .h-velden div {
+  .h-velden label {
     display: grid;
     grid-template-columns: 6.5rem minmax(0, 1fr);
     align-items: end;
     gap: 0.75rem;
-  }
-
-  .h-velden dt {
     color: var(--inkt);
   }
 
-  .h-velden dd {
-    margin: 0;
-    height: 1.4rem;
+  .h-velden input {
+    width: 100%;
+    min-width: 0;
+    padding: 0.3rem 0 0.25rem;
+    border: 0;
     border-bottom: 1px dotted var(--potlood);
+    border-radius: 0;
+    background: transparent;
+    color: var(--inkt);
+    font: inherit;
+    font-size: 1.05rem;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .h-velden input:focus {
+    outline: none;
+    border-bottom: 1px solid var(--rood);
+  }
+
+  .h-melding {
+    font-size: 0.98rem;
+    color: var(--rood);
+  }
+
+  .h-knoppen {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .h-kopieer {
+    padding: 0.95rem 1.5rem;
+    border: 1px solid var(--inkt);
+    border-radius: 0;
+    background: transparent;
+    color: var(--inkt);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .h-kopieer:hover {
+    background: var(--inkt);
+    color: var(--papier);
+  }
+
+  .h-uitleg {
+    font-size: 0.95rem;
+    color: var(--potlood);
+  }
+
+  .h-velden input[type='date'] {
+    min-height: 2rem;
   }
 
   .h-voetnoot {
@@ -216,7 +411,6 @@ const jsonLd = [
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    margin-top: 0.5rem;
     padding: 1.05rem 1.5rem 1.05rem 1.6rem;
     background: var(--rood);
     color: var(--papier);
@@ -248,8 +442,13 @@ const jsonLd = [
       padding: 2rem 2.25rem 2.25rem;
     }
 
+    .h-knoppen {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: stretch;
+    }
+
     .h-knop {
-      align-self: flex-start;
       justify-content: flex-start;
     }
   }
