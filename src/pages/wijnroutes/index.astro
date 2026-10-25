@@ -21,6 +21,7 @@ const kaarten: Record<string, typeof TiranaKaart> = { tirana: TiranaKaart, kreta
 const actief = routes.filter((r) => r.data.status === 'actief').length;
 let fig = 0;
 
+const lijstId = new URL('/wijnroutes#routes', site.url).href;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -33,7 +34,9 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
+    '@id': lijstId,
     name: 'Wijnroutes van Verborgen Wijnroutes',
+    numberOfItems: routes.length,
     itemListElement: routes.map((r, i) => ({
       '@type': 'ListItem',
       position: i + 1,
@@ -48,6 +51,7 @@ const jsonLd = [
   titel="Wijnroutes in Albanië, Kreta en Kroatië | Verborgen Wijnroutes"
   omschrijving="Ontdek persoonlijke wijnroutes naar Tirana, Kreta en Split. Kleine wijnhuizen, lokale druiven en een reisconcept dat past bij jullie wensen en wijnvoorkeuren."
   jsonLd={jsonLd}
+  pagina={{ type: 'CollectionPage', mainEntity: { '@id': lijstId } }}
 >
   <!-- Opening -->
   <section class="o-opening" aria-labelledby="overzicht-kop">

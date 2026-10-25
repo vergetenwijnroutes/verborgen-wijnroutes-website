@@ -74,12 +74,13 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
+    '@id': `${url}#artikel`,
     headline: d.titel,
     description: d.seoOmschrijving ?? d.samenvatting,
     datePublished: d.datum.toISOString().slice(0, 10),
     inLanguage: 'nl-NL',
     url,
-    mainEntityOfPage: url,
+    mainEntityOfPage: { '@id': `${url}#pagina` },
     articleSection: d.categorie,
     dateModified: (d.bijgewerkt ?? d.datum).toISOString().slice(0, 10),
     ...(artikelBeeld && { image: [artikelBeeld] }),
@@ -101,6 +102,8 @@ const jsonLd = [
   deelbeeld={d.hoofdfoto}
   deelbeeldAlt={d.hoofdfotoAlt}
   jsonLd={jsonLd}
+  pagina={{ mainEntity: { '@id': `${url}#artikel` } }}
+  artikel={{ gepubliceerd: d.datum, gewijzigd: d.bijgewerkt, rubriek: d.categorie }}
 >
   <article>
     <!-- Kop van het artikel -->

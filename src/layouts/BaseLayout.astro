@@ -11,6 +11,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { site } from '../config/site';
 import { schoonPad } from '../lib/pad';
+import { websiteId } from '../config/structured-data';
 import standaardDeelbeeld from '../assets/fotografie/proeflokaal-corten.jpg';
 
 interface Props {
@@ -19,6 +20,15 @@ interface Props {
   deelbeeld?: ImageMetadata;
   deelbeeldAlt?: string;
   jsonLd?: Record<string, unknown>[];
+  /** Beschrijving van deze pagina voor schema.org (WebPage, CollectionPage, AboutPage …). */
+  pagina?: {
+    type?: 'WebPage' | 'CollectionPage' | 'AboutPage';
+    mainEntity?: Record<string, unknown>;
+    about?: Record<string, unknown>;
+    gewijzigd?: Date;
+  };
+  /** Voor artikelen: maakt van og:type een "article" met datums, auteur en rubriek. */
+  artikel?: { gepubliceerd: Date; gewijzigd?: Date; rubriek?: string };
 }
 
 const {
@@ -27,6 +37,8 @@ const {
   deelbeeld = standaardDeelbeeld,
   deelbeeldAlt = 'Proeflokaal met een ronde cortenstalen bank in een Albanees wijnhuis',
   jsonLd = [],
+  pagina = {},
+  artikel,
 } = Astro.props;
 
 const canonical = new URL(schoonPad(Astro.url.pathname), Astro.site).href;
@@ -40,6 +52,29 @@ const og = await getImage({
   quality: 82,
 });
 const ogUrl = new URL(og.src, Astro.site).href;
+
+// Elke pagina krijgt een WebPage (of subtype) die haar aan de website, het kruimelpad,
+// de deelfoto en de hoofdinhoud koppelt. Het kruimelpad krijgt daarvoor een vast @id.
+const kruimelId = `${canonical}#kruimelpad`;
+const data = jsonLd.map((item) => (item['@type'] === 'BreadcrumbList' ? { '@id': kruimelId, ...item } : item));
+const heeftKruimel = data.some((item) => item['@type'] === 'BreadcrumbList');
+const dag = (d: Date) => d.toISOString().slice(0, 10);
+const webpagina = {
+  '@context': 'https://schema.org',
+  '@type': pagina.type ?? 'WebPage',
+  '@id': `${canonical}#pagina`,
+  url: canonical,
+  name: titel,
+  description: omschrijving,
+  inLanguage: 'nl-NL',
+  isPartOf: { '@id': websiteId },
+  primaryImageOfPage: { '@type': 'ImageObject', url: ogUrl, width: 1200, height: 630 },
+  ...(heeftKruimel && { breadcrumb: { '@id': kruimelId } }),
+  ...(pagina.about && { about: pagina.about }),
+  ...(pagina.mainEntity && { mainEntity: pagina.mainEntity }),
+  ...(pagina.gewijzigd && { dateModified: dag(pagina.gewijzigd) }),
+};
+const alleData = [webpagina, ...data];
 ---
 
 <!doctype html>
@@ -55,7 +90,11 @@ const ogUrl = new URL(og.src, Astro.site).href;
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={artikel ? 'article' : 'website'} />
+    {artikel && <meta property="article:published_time" content={dag(artikel.gepubliceerd)} />}
+    {artikel && <meta property="article:modified_time" content={dag(artikel.gewijzigd ?? artikel.gepubliceerd)} />}
+    {artikel && <meta property="article:author" content={new URL('/mijn-verhaal', site.url).href} />}
+    {artikel?.rubriek && <meta property="article:section" content={artikel.rubriek} />}
     <meta property="og:locale" content="nl_NL" />
     <meta property="og:site_name" content={site.naam} />
     <meta property="og:title" content={titel} />
@@ -67,7 +106,7 @@ const ogUrl = new URL(og.src, Astro.site).href;
     <meta property="og:image:alt" content={deelbeeldAlt} />
     <meta name="twitter:card" content="summary_large_image" />
 
-    {jsonLd.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
+    {alleData.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
 
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>

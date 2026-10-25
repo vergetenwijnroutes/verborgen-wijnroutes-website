@@ -1,6 +1,6 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Aanvraag from '../../components/Aanvraag.astro';
 import VoorbeeldReisconcept from '../../components/VoorbeeldReisconcept.astro';
@@ -50,6 +50,9 @@ let fig = 0;
 const volgendeFig = () => ++fig;
 
 const url = new URL(`/wijnroutes/${slug}`, site.url).href;
+const routeBeeld = d.hoofdfoto
+  ? new URL((await getImage({ src: d.hoofdfoto, width: 1200, format: 'jpg' })).src, site.url).href
+  : undefined;
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -63,6 +66,8 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'TouristTrip',
+    '@id': `${url}#route`,
+    ...(routeBeeld && { image: routeBeeld }),
     name: d.h1 ?? `Wijnroute ${d.naam}`,
     description: d.seoOmschrijving ?? d.regel,
     url,
@@ -80,6 +85,7 @@ const jsonLd = [
   deelbeeld={d.hoofdfoto}
   deelbeeldAlt={d.hoofdfotoAlt}
   jsonLd={jsonLd}
+  pagina={{ mainEntity: { '@id': `${url}#route` } }}
 >
   <!-- Opening -->
   <section class="r-opening" aria-labelledby="route-kop">

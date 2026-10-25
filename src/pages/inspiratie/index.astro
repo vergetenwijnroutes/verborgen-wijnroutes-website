@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
+import { auteur, uitgever } from '../../config/structured-data';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site } from '../../config/site';
 import { leestijd } from '../../lib/leestijd';
@@ -16,6 +17,12 @@ const routeNaam = (id?: string) => routes.find((r) => r.id === id)?.data.naam;
 const [uitgelicht, ...overige] = artikelen;
 const datum = new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
 
+const blogId = new URL('/inspiratie#blog', site.url).href;
+const beelden = await Promise.all(
+  artikelen.map(async (a) =>
+    a.data.hoofdfoto ? new URL((await getImage({ src: a.data.hoofdfoto, width: 1200, format: 'jpg' })).src, site.url).href : undefined,
+  ),
+);
 const jsonLd = [
   {
     '@context': 'https://schema.org',
@@ -28,14 +35,23 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'Blog',
+    '@id': blogId,
     name: `Inspiratie van ${site.naam}`,
+    description: 'Verhalen en tips voor een wijnreis buiten de bekende paden.',
     url: new URL('/inspiratie', site.url).href,
     inLanguage: 'nl-NL',
-    blogPost: artikelen.map((a) => ({
+    author: auteur,
+    publisher: uitgever,
+    blogPost: artikelen.map((a, i) => ({
       '@type': 'BlogPosting',
+      '@id': new URL(`/inspiratie/${a.id}#artikel`, site.url).href,
       headline: a.data.titel,
+      description: a.data.samenvatting,
       datePublished: a.data.datum.toISOString().slice(0, 10),
+      dateModified: (a.data.bijgewerkt ?? a.data.datum).toISOString().slice(0, 10),
       url: new URL(`/inspiratie/${a.id}`, site.url).href,
+      ...(beelden[i] && { image: beelden[i] }),
+      author: auteur,
     })),
   },
 ];
@@ -47,6 +63,7 @@ const jsonLd = [
   deelbeeld={uitgelicht?.data.hoofdfoto}
   deelbeeldAlt={uitgelicht?.data.hoofdfotoAlt}
   jsonLd={jsonLd}
+  pagina={{ type: 'CollectionPage', mainEntity: { '@id': blogId } }}
 >
   <!-- Opening -->
   <section class="i-opening" aria-labelledby="inspiratie-kop">

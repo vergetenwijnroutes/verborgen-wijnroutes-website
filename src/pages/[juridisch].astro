@@ -47,7 +47,7 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout titel={d.seoTitel ?? `${d.titel} | ${site.naam}`} omschrijving={d.omschrijving} jsonLd={jsonLd}>
+<BaseLayout titel={d.seoTitel ?? `${d.titel} | ${site.naam}`} omschrijving={d.omschrijving} jsonLd={jsonLd} pagina={{ gewijzigd: d.datum }}>
   <div class="wrap j">
     <header class="j-kop">
       <nav class="kruimel label" aria-label="Kruimelpad">

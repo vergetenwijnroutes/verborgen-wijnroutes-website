@@ -6,7 +6,7 @@ import { aanvraagLink, site } from '../config/site';
 import stijn from '../assets/fotografie/stijn-tirana.jpg';
 import wijntanks from '../assets/fotografie/wijntanks.jpg';
 import { getImage } from 'astro:assets';
-import { persoon, persoonId, websiteId } from '../config/structured-data';
+import { persoon, persoonId } from '../config/structured-data';
 
 const portret = await getImage({ src: stijn, width: 800, format: 'jpg' });
 const portretUrl = new URL(portret.src, site.url).href;
@@ -35,16 +35,6 @@ const principes = [
 ];
 
 const jsonLd = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'AboutPage',
-    name: 'Mijn verhaal',
-    url: new URL('/mijn-verhaal', site.url).href,
-    inLanguage: 'nl-NL',
-    isPartOf: { '@id': websiteId },
-    about: { '@id': persoonId },
-    mainEntity: { '@id': persoonId },
-  },
   persoon(portretUrl),
   {
     '@context': 'https://schema.org',
@@ -63,6 +53,7 @@ const jsonLd = [
   deelbeeld={stijn}
   deelbeeldAlt="Stijn loopt door een straat in Tirana onder blauwe en groene linten"
   jsonLd={jsonLd}
+  pagina={{ type: 'AboutPage', about: { '@id': persoonId }, mainEntity: { '@id': persoonId } }}
 >
   <!-- Opening -->
   <section class="v-opening" aria-labelledby="verhaal-kop">

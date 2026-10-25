@@ -10,11 +10,11 @@ const verhaalUrl = new URL('/mijn-verhaal', site.url).href;
 const logoUrl = new URL('/apple-touch-icon.png', site.url).href;
 
 /** Korte verwijzing naar Stijn, voor `author` op artikelen. */
-export const auteur = { '@type': 'Person', '@id': persoonId, name: site.oprichter, url: verhaalUrl };
+export const auteur = { '@type': 'Person', '@id': persoonId, name: site.oprichterVolledig, url: verhaalUrl };
 
 /** Korte verwijzing naar de organisatie, voor `publisher` en `provider`. */
 export const uitgever = {
-  '@type': 'Organization',
+  '@type': 'TravelAgency',
   '@id': organisatieId,
   name: site.naam,
   url: site.url,
@@ -27,7 +27,10 @@ export function persoon(afbeelding?: string) {
     '@context': 'https://schema.org',
     '@type': 'Person',
     '@id': persoonId,
-    name: site.oprichter,
+    name: site.oprichterVolledig,
+    givenName: 'Stijn',
+    familyName: 'Hofland',
+    alternateName: site.oprichter,
     url: verhaalUrl,
     ...(afbeelding && { image: afbeelding }),
     jobTitle: 'Oprichter van Verborgen Wijnroutes',
@@ -58,6 +61,8 @@ export function organisatie() {
     description: site.omschrijving,
     logo: logoUrl,
     founder: { '@id': persoonId },
+    // KvK-nummer verschijnt automatisch zodra het in src/config/site.ts staat.
+    ...(site.kvk && { identifier: { '@type': 'PropertyValue', propertyID: 'KvK-nummer', value: site.kvk } }),
     areaServed: { '@type': 'Country', name: 'Nederland' },
     knowsLanguage: 'nl',
   };

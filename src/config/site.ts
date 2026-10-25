@@ -6,6 +6,8 @@ export const site = {
   omschrijving:
     'Persoonlijke wijnreizen op maat naar bijzondere, minder bekende wijngebieden. Kleine wijnhuizen, lokale druiven en de keuken eromheen. Zelf ontdekt door Stijn.',
   oprichter: 'Stijn',
+  // Volledige naam, voor structured data (auteur). Op de pagina's zelf blijft het "Stijn".
+  oprichterVolledig: 'Stijn Hofland',
   email: 'info@verborgenwijnroutes.nl',
   instagram: 'https://www.instagram.com/verborgenwijnroutes/',
   whatsapp: 'https://wa.me/31614292651',
