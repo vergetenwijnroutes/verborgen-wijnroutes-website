@@ -44,7 +44,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
   ├── /inspiratie/
   │   └── /[artikel]/
   └── /mijn-verhaal/
-  Footer-only: /privacy (live), /algemene-voorwaarden (live), /herroepingsformulier (live), 404-pagina.
+  Footer-only: /privacy (live), /algemene-voorwaarden (live), /herroepingsformulier (live). 404-pagina live (`src/pages/404.astro`: "Deze weg loopt dood.", getekende doodlopende kronkelweg met slagboom en wegwijzer, daarna een wegwijzer naar routes/inspiratie/home; noindex).
   ```
 - Navigatie: logo · Wijnroutes · Inspiratie · Mijn verhaal · knop "Vraag jouw wijnreis aan" (→ Google Form).
 - Footer: routes, Inspiratie, Mijn verhaal, contact (e-mail, WhatsApp via `wa.me`-link, Instagram), Privacy.
@@ -95,6 +95,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 - Juridische teksten (voorwaarden, privacy) altijd letterlijk overnemen uit Stijns pdf, zonder eigen toevoegingen; alleen opmaak.
 - `/algemene-voorwaarden` live (versie 1.0, 15 oktober 2026; tekst van Stijn, letterlijk overgenomen uit zijn pdf). Bestand `content/juridisch/algemene-voorwaarden.md`, template `src/pages/[juridisch].astro` (elke `##` wordt een genummerd artikel met anker `#artikel-n`, inhoudsopgave sticky op desktop). Footer: "Algemene voorwaarden" en "Privacy". KvK-nummer staat in `site.kvk` (`src/config/site.ts`); zolang leeg toont de tekst "(nummer volgt)". `/privacy` live (tekst van Stijn letterlijk uit zijn pdf, niets toevoegen of herschrijven; `content/juridisch/privacy.md`, `nummering: geen` → hoofdstukken zonder "Artikel n", ankers op titel; tabellen en opsommingen gestyled; "Laatst bijgewerkt: …" alleen onderaan, niet bij de kop). KvK in de privacytekst via `{{kvknummer}}` (leeg → "volgt na inschrijving").
 - `/herroepingsformulier` live (`src/pages/herroepingsformulier.astro`; tekst van Stijn letterlijk uit zijn eerste opzet, modelformulier als vel papier met invulvelden: ik/wij en dienst per tik, naam, telefoonnummer en datum (vandaag); geen adres en geen besteldatum, op verzoek van Stijn; "Mail je herroeping" opent een mail met de ingevulde tekst, "Kopieer tekst" als terugval; zonder JavaScript blijft de modeltekst met * staan. Geen eigen opslag: alles gaat via de mail van de klant). Adres in de "Aan:"-regel komt uit `site.adres` (`src/config/site.ts`); zolang leeg weggelaten. In de footer als "Herroeping".
+- Metagegevens (check oktober 2026): titels ≤ ~60 tekens waar mogelijk (homepage-titel bewust zo gelaten), omschrijvingen ≤ ~155. Routes zonder foto krijgen een eigen deelafbeelding (1200×630, getekende kaart + naam) via frontmatter `deelbeeld` (`src/assets/deelbeelden/`); /wijnroutes ook. Sitemap krijgt `lastmod` voor artikelen (`bijgewerkt` of `datum`) en juridische pagina's (`datum`), zie `astro.config.mjs`.
 - Tirana-content: Stijn wil niet alles weggeven. Alleen Tufa Winery en wijnbar Vena bij naam; overige plekken vaag omschrijven ("namen en adressen in je reisconcept"). Geen vaste route: Tirana + ± 1 uur rijden. Niet pushen op september; het hele jaar kan (zomer 35–40 °C).
 
 ## Nog open

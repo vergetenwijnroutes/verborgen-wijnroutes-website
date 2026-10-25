@@ -2,6 +2,7 @@
 naam: Split
 land: Kroatië
 status: binnenkort
+deelbeeld: ../../src/assets/deelbeelden/split.png
 volgorde: 3
 regel: Een levendige kuststad met wijnboerderijen in het achterland, Dalmatische druiven en eilanden voor de deur.
 

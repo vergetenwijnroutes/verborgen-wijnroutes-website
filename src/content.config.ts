@@ -74,6 +74,8 @@ const wijnroutes = defineCollection({
       hoofdfoto: image().optional(),
       hoofdfotoAlt: z.string().optional(),
       hoofdfotoBijschrift: z.string().optional(),
+      // Afbeelding voor delen (1200×630). Voor routes zonder foto; anders geldt de hoofdfoto.
+      deelbeeld: image().optional(),
       feiten: z.array(z.object({ label: z.string(), waarde: z.string() })).default([]),
       gebied: z.string().optional(),
       druiven: z

@@ -8,6 +8,7 @@ import TiranaKaart from '../../components/kaarten/TiranaKaart.astro';
 import KretaKaart from '../../components/kaarten/KretaKaart.astro';
 import SplitKaart from '../../components/kaarten/SplitKaart.astro';
 import { site } from '../../config/site';
+import deelbeeld from '../../assets/deelbeelden/wijnroutes.png';
 
 // Alle routes uit content/wijnroutes/, behalve gearchiveerde.
 const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 'gearchiveerd')).sort(
@@ -50,6 +51,8 @@ const jsonLd = [
 <BaseLayout
   titel="Wijnroutes in Albanië, Kreta en Kroatië | Verborgen Wijnroutes"
   omschrijving="Ontdek persoonlijke wijnroutes naar Tirana, Kreta en Split. Kleine wijnhuizen, lokale druiven en een reisconcept dat past bij jullie wensen en wijnvoorkeuren."
+  deelbeeld={deelbeeld}
+  deelbeeldAlt="Getekende kaart met de wijnroutes Tirana, Kreta en Split"
   jsonLd={jsonLd}
   pagina={{ type: 'CollectionPage', mainEntity: { '@id': lijstId } }}
 >

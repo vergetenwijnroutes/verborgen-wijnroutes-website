@@ -2,6 +2,7 @@
 naam: Kreta
 land: Griekenland
 status: binnenkort
+deelbeeld: ../../src/assets/deelbeelden/kreta.png
 volgorde: 2
 regel: Eigen druiven, kleine wijnhuizen en een van de oudste wijnculturen van Europa, voorbij het vakantiebeeld.
 

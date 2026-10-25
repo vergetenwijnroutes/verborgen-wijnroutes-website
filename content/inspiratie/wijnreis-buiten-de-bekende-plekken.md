@@ -1,7 +1,7 @@
 ---
 titel: "Een wijnreis buiten de bekende plekken"
 samenvatting: "Geen Bordeaux of Toscane, maar Albanië, Kreta of het achterland van Split. Waarom ik juist daar naartoe ga, en hoe je zo'n reis aanpakt."
-seoTitel: "Wijnreis buiten de gebaande paden: waarom en hoe | Verborgen Wijnroutes"
+seoTitel: "Wijnreis buiten de gebaande paden | Verborgen Wijnroutes"
 seoOmschrijving: "Een wijnreis naar minder bekende wijnlanden zoals Albanië, Kreta en Kroatië. Waarom het de moeite waard is en hoe je het aanpakt, met praktische tips."
 datum: 2026-10-06
 categorie: Wijnreizen

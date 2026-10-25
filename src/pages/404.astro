@@ -1,0 +1,236 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Wie verdwaalt, krijgt een wegwijzer terug naar de routes.
+const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 'gearchiveerd')).sort(
+  (a, b) => a.data.volgorde - b.data.volgorde,
+);
+---
+
+<BaseLayout
+  titel="Verkeerde afslag | Verborgen Wijnroutes"
+  omschrijving="Deze pagina bestaat niet (meer). Kies een nieuwe route: naar de wijnroutes, de inspiratie of de homepage."
+  noindex
+>
+  <section class="nv" aria-labelledby="nv-kop">
+    <div class="wrap nv-grid">
+      <div class="nv-tekst">
+        <div class="rubriek reveal">
+          <p class="label label--rood">Fout 404</p>
+          <p class="label">Verkeerde afslag</p>
+        </div>
+        <h1 id="nv-kop" class="kop nv-titel reveal">Deze weg <em>loopt dood.</em></h1>
+        <p class="lead reveal">
+          Soms levert een verkeerde afslag de mooiste plek van de reis op. Deze keer helaas niet: de pagina die je
+          zoekt bestaat niet (meer). Misschien is hij verhuisd, of zat er een typfout in de link.
+        </p>
+        <p class="notitie nv-notitie reveal" aria-hidden="true">Gebeurt mij ook weleens, op weg naar een wijnhuis.</p>
+      </div>
+
+      <figure class="nv-beeld reveal" aria-hidden="true">
+        <svg viewBox="0 0 420 360" class="nv-svg">
+          <!-- Heuvels -->
+          <path d="M0 250 C 60 215, 110 220, 160 238 S 260 205, 320 222 S 400 236, 420 228" fill="none" stroke="var(--olijf)" stroke-width="1.2" />
+          <path d="M0 290 C 70 270, 140 280, 210 270 S 340 262, 420 276" fill="none" stroke="var(--olijf)" stroke-width="1" opacity="0.6" />
+          <!-- Wijnstokken -->
+          <g stroke="var(--olijf)" stroke-width="1" opacity="0.7">
+            <path d="M40 262 v-10 M58 258 v-10 M76 255 v-10 M94 254 v-10 M112 255 v-10" />
+            <path d="M300 238 v-10 M318 240 v-10 M336 241 v-10 M354 242 v-10" />
+          </g>
+          <!-- Cipres -->
+          <path d="M262 214 C 254 190, 256 160, 263 140 C 270 160, 272 190, 264 214 Z" fill="none" stroke="var(--olijf)" stroke-width="1.2" />
+          <path d="M263 214 v8" stroke="var(--olijf)" stroke-width="1.2" />
+          <!-- De kronkelweg, die doodloopt -->
+          <path class="nv-weg" pathLength="1" d="M30 352 C 120 330, 60 300, 150 286 S 250 300, 230 262 S 150 230, 200 196 S 300 176, 318 150" fill="none" stroke="var(--rood)" stroke-width="2.2" stroke-linecap="round" />
+          <!-- Slagboom -->
+          <g transform="translate(318 150)">
+            <path d="M-26 -2 v-26 M26 -2 v-26" stroke="var(--inkt)" stroke-width="1.6" />
+            <rect x="-32" y="-30" width="64" height="9" fill="var(--papier)" stroke="var(--inkt)" stroke-width="1.4" />
+            <path d="M-24 -30 l-8 9 M-12 -30 l-8 9 M0 -30 l-8 9 M12 -30 l-8 9 M24 -30 l-8 9 M32 -27 l-5 6" stroke="var(--rood)" stroke-width="2" />
+          </g>
+          <!-- Wegwijzer -->
+          <g transform="translate(92 150)">
+            <path d="M0 0 v112" stroke="var(--inkt)" stroke-width="1.6" />
+            <path d="M-4 6 h70 l12 11 -12 11 h-70 Z" fill="var(--papier)" stroke="var(--inkt)" stroke-width="1.3" />
+            <text x="31" y="21" text-anchor="middle" font-family="var(--mono)" font-size="9" letter-spacing="1.5" fill="var(--inkt)">404</text>
+            <path d="M4 38 h-70 l-12 11 12 11 h70 Z" fill="var(--papier)" stroke="var(--inkt)" stroke-width="1.3" />
+            <text x="-31" y="53" text-anchor="middle" font-family="var(--mono)" font-size="9" letter-spacing="1.5" fill="var(--rood)">WIJN</text>
+          </g>
+        </svg>
+      </figure>
+    </div>
+
+    <div class="wrap">
+      <nav class="nv-wegwijzer" aria-labelledby="nv-verder">
+        <p id="nv-verder" class="label">Waar wil je heen?</p>
+        <ul role="list">
+          <li>
+            <a href="/wijnroutes"><span>Alle wijnroutes</span><span class="pijl" aria-hidden="true">→</span></a>
+          </li>
+          {
+            routes.map((r) => (
+              <li>
+                <a href={`/wijnroutes/${r.id}`}>
+                  <span>
+                    {r.data.naam} <span class="nv-land">{r.data.land}</span>
+                  </span>
+                  <span class="pijl" aria-hidden="true">→</span>
+                </a>
+              </li>
+            ))
+          }
+          <li>
+            <a href="/inspiratie"><span>Inspiratie</span><span class="pijl" aria-hidden="true">→</span></a>
+          </li>
+          <li>
+            <a href="/"><span>Terug naar het begin</span><span class="pijl" aria-hidden="true">→</span></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nv {
+    padding-top: 1.5rem;
+  }
+
+  .nv-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .nv-tekst {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+  }
+
+  .nv-titel {
+    margin-top: 0.75rem;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+  }
+
+  .nv-tekst .lead {
+    max-width: 32rem;
+  }
+
+  .nv-notitie {
+    font-size: 1.55rem;
+    transform: rotate(-2deg);
+    transform-origin: left;
+  }
+
+  .nv-beeld {
+    max-width: 26rem;
+    width: 100%;
+    justify-self: center;
+  }
+
+  /* De kronkelweg tekent zich zodra het beeld in zicht komt */
+  :global(.js) .nv-weg {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 2.4s cubic-bezier(0.45, 0.05, 0.25, 1) 0.3s;
+  }
+
+  :global(.js) .nv-beeld:global(.is-zichtbaar) .nv-weg {
+    stroke-dashoffset: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .nv-weg {
+      stroke-dashoffset: 0;
+      transition: none;
+    }
+  }
+
+  .nv-svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .nv-wegwijzer {
+    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--inkt);
+  }
+
+  .nv-wegwijzer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+  }
+
+  .nv-wegwijzer a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.95rem;
+    border-bottom: 1px solid var(--lijn);
+    font-size: clamp(1.5rem, 3.6vw, 2.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .nv-land {
+    margin-left: 0.4rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--potlood);
+  }
+
+  .nv-wegwijzer .pijl {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--rood);
+    transition: transform 0.3s ease;
+  }
+
+  .nv-wegwijzer a:hover {
+    color: var(--rood);
+    font-style: italic;
+  }
+
+  .nv-wegwijzer a:hover .pijl {
+    transform: translateX(0.3em);
+  }
+
+  @media (min-width: 60rem) {
+    .nv {
+      padding-top: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .nv-grid {
+      grid-template-columns: repeat(12, 1fr);
+      column-gap: var(--gutter);
+      align-items: center;
+    }
+
+    .nv-tekst {
+      grid-column: 1 / span 7;
+    }
+
+    .nv-beeld {
+      grid-column: 8 / span 5;
+      max-width: none;
+    }
+
+    .nv-wegwijzer ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: var(--gutter);
+    }
+  }
+</style>
