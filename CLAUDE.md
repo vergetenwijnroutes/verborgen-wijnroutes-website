@@ -82,7 +82,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 
 ## Status
 
-- Homepage (`/`) is af en goedgekeurd door Stijn. Volgende pagina's worden pas gebouwd als hij daarom vraagt.
+- Homepage (`/`) is af en goedgekeurd door Stijn. Eerste vouw aangescherpt (okt. 2026): label "Persoonlijke wijnreizen op maat", intro in één zin, de tweede alinea ("Omdat ik deze plekken zelf heb bezocht…") verhuisd naar het blok "Wie zit hierachter"; carrousel blijft beginnen met Vena (keuze Stijn). Volgende pagina's worden pas gebouwd als hij daarom vraagt.
 - Routes staan in `content/wijnroutes/*.md` (schema in `src/content.config.ts`); homepage en routepagina lezen daaruit.
 - `/wijnroutes/tirana/` gebouwd (template `src/pages/wijnroutes/[slug].astro`, genereert nu alleen `actief`-routes). Goedgekeurd door Stijn. Les: bij feedback op 'desktop' eerst vragen welk deel precies bedoeld is; niet op eigen initiatief goedgekeurde secties omgooien.
 - Lefkas is vervangen door Kreta. `/wijnroutes/kreta/` gebouwd als binnenkort-pagina (geen foto's op binnenkort-routes, op verzoek van Stijn). Binnenkort-pagina's worden alleen gegenereerd als het bestand een `lead` heeft.
