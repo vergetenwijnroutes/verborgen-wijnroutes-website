@@ -9,19 +9,19 @@ const fotos = [
   {
     src: wijnbar,
     alt: 'Interieur van wijnbar Vena in Tirana, met gekoelde wijnkasten, bistrostoelen en een rode luifel voor het raam',
-    bijschrift: 'Wijnbar Vena, midden in Tirana.',
+    bijschrift: 'Wijnbar Vena, Tirana.',
     positie: '30% 50%',
   },
   {
     src: proeflokaal,
     alt: 'Een ronde bank van roestig cortenstaal in een proeflokaal, met daarachter een wand vol wijnflessen en een rode deur',
-    bijschrift: 'Proeflokaal van een klein wijnhuis in Albanië.',
+    bijschrift: 'Proeflokaal, Albanië.',
     positie: '50% 62%',
   },
   {
     src: tafel,
     alt: 'Een gedekte tafel met Albanese gerechten, witte wijn en een kurk met de naam Arbëri',
-    bijschrift: 'Een kurk van Arbëri tussen de schalen. Albanese wijn bij Albanees eten.',
+    bijschrift: 'Albanese wijn aan tafel.',
     positie: '60% 30%',
     warm: true,
   },
@@ -69,22 +69,15 @@ const fotos = [
                   class:list={[foto.warm && 'warm']}
                 />
               </div>
-              <figcaption class="afdruk-nr" aria-hidden="true">Fig. {i + 1}</figcaption>
+              <figcaption class="bijschrift afdruk-bijschrift">
+                <b>Fig. {i + 1}</b>
+                <span>{foto.bijschrift}</span>
+              </figcaption>
             </figure>
           ))
         }
       </div>
       <p class="notitie afdrukken-noot reveal" aria-hidden="true">Een paar plekken van onderweg.</p>
-      <ol class="afdrukken-bijschriften reveal" role="list">
-        {
-          fotos.map((foto, i) => (
-            <li class="bijschrift">
-              <b>Fig. {i + 1}</b>
-              <span>{foto.bijschrift}</span>
-            </li>
-          ))
-        }
-      </ol>
     </div>
   </div>
 
@@ -97,6 +90,8 @@ const fotos = [
   .opening {
     position: relative;
     padding-top: 2rem;
+    /* Scheve afdrukken mogen nooit een horizontale scrollbalk veroorzaken */
+    overflow-x: clip;
   }
 
   .opening-grid {
@@ -115,13 +110,13 @@ const fotos = [
 
   .afdrukken-tafel {
     position: relative;
-    height: clamp(22rem, 108vw, 30rem);
+    height: 24rem;
   }
 
   .afdruk {
     position: absolute;
     margin: 0;
-    padding: 0.5rem 0.5rem 0.4rem;
+    padding: 0.5rem 0.5rem 0.6rem;
     background: #fbf9f4;
     box-shadow:
       0 1px 2px rgb(30 28 25 / 0.12),
@@ -150,38 +145,55 @@ const fotos = [
     object-fit: cover;
   }
 
-  .afdruk-nr {
-    margin-top: 0.35rem;
-    font-family: var(--mono);
+  /* Kort bijschrift op de witte rand van de afdruk */
+  .afdruk-bijschrift {
+    gap: 0.5rem;
+    margin-top: 0.45rem;
     font-size: 0.62rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: var(--inkt);
+    line-height: 1.35;
   }
 
-  /* Vena ligt bovenop, het proeflokaal rechts, de tafel er half onder; elk Fig.-nummer blijft zichtbaar */
+  /* Vena links, het proeflokaal rechts erachter, de tafel in het midden er bovenop */
   .afdruk--1 {
     left: 0;
-    top: 1.25rem;
-    width: 53%;
-    z-index: 3;
-    rotate: -3.5deg;
+    top: 1.5rem;
+    width: 52%;
+    z-index: 2;
+    rotate: -4deg;
   }
 
   .afdruk--2 {
-    right: 0;
+    right: 2%;
     top: 0;
-    width: 43%;
-    z-index: 2;
+    width: 46%;
+    z-index: 1;
     rotate: 3deg;
   }
 
+  /* De tafel-afdruk ligt over de onderrand van de andere twee. Hun bijschrift blijft
+     smal (links bij Vena, rechts bij het proeflokaal), zodat het ernaast leesbaar blijft. */
+  /* Op mobiel staat "Fig. n" boven de tekst, zodat het bijschrift smal en leesbaar blijft */
+  .afdruk--1 .afdruk-bijschrift,
+  .afdruk--2 .afdruk-bijschrift {
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .afdruk--1 .afdruk-bijschrift {
+    max-width: 38%;
+  }
+
+  .afdruk--2 .afdruk-bijschrift {
+    max-width: 66%;
+    margin-left: auto;
+  }
+
   .afdruk--3 {
-    right: 3%;
-    bottom: 0;
-    width: 46%;
-    z-index: 1;
-    rotate: -1.5deg;
+    left: 24%;
+    top: 9.5rem;
+    width: 42%;
+    z-index: 3;
+    rotate: -1deg;
   }
 
   .afdruk--3 .afdruk-foto {
@@ -203,22 +215,11 @@ const fotos = [
   }
 
   .afdrukken-noot {
-    margin-top: 1.25rem;
-    font-size: 1.45rem;
-    transform: rotate(-2deg);
-    transform-origin: left;
-  }
-
-  .afdrukken-bijschriften {
-    display: grid;
-    gap: 0.15rem;
-    margin: 0.9rem 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .afdrukken-bijschriften .bijschrift {
-    margin-top: 0;
+    margin-top: 0.75rem;
+    font-size: 1.4rem;
+    text-align: right;
+    transform: rotate(-3deg);
+    transform-origin: right;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -237,9 +238,9 @@ const fotos = [
   }
 
   .opening-kop {
-    font-size: clamp(2.35rem, 6.2vw, 4.4rem);
-    line-height: 1.02;
-    letter-spacing: -0.024em;
+    font-size: clamp(2.4rem, 6.6vw, 5.6rem);
+    line-height: 1;
+    letter-spacing: -0.028em;
   }
 
   .opening-lead {
@@ -249,7 +250,7 @@ const fotos = [
   }
 
   .opening-tekst .lead {
-    max-width: 30rem;
+    max-width: 34rem;
   }
 
   .opening-tekst .doorlink {
@@ -272,7 +273,7 @@ const fotos = [
     }
 
     .opening-tekst {
-      grid-column: 1 / span 5;
+      grid-column: 1 / span 6;
       grid-row: 1;
       gap: 1.75rem;
     }
@@ -284,22 +285,36 @@ const fotos = [
     }
 
     .afdrukken-tafel {
-      height: clamp(30rem, calc(100svh - 15rem), 40rem);
+      height: 38rem;
     }
 
     .afdruk {
-      padding: 0.65rem 0.65rem 0.5rem;
+      padding: 0.6rem 0.6rem 0.75rem;
     }
 
-    .afdruk-nr {
-      font-size: 0.68rem;
+    .afdruk--3 {
+      left: 30%;
+      top: 15rem;
+      width: 44%;
+    }
+
+    .afdruk--1 .afdruk-bijschrift,
+    .afdruk--2 .afdruk-bijschrift {
+      flex-direction: row;
+      gap: 0.5rem;
+      max-width: 50%;
+    }
+
+    .afdruk--2 {
+      right: 1%;
+    }
+
+    .afdruk-bijschrift {
+      font-size: 0.7rem;
     }
 
     .afdrukken-noot {
-      position: absolute;
-      left: 2%;
-      bottom: 8.5rem;
-      margin: 0;
+      margin-top: 1rem;
     }
 
     .opening-lijn {
