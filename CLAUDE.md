@@ -82,7 +82,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 
 ## Status
 
-- Homepage (`/`) is af en goedgekeurd door Stijn. Eerste vouw aangescherpt (okt. 2026): label "Persoonlijke wijnreizen op maat", intro in één zin, de tweede alinea ("Omdat ik deze plekken zelf heb bezocht…") verhuisd naar het blok "Wie zit hierachter"; carrousel blijft beginnen met Vena (keuze Stijn). Volgende pagina's worden pas gebouwd als hij daarom vraagt.
+- Homepage (`/`) is af en goedgekeurd door Stijn. Eerste vouw aangescherpt (okt. 2026): label "Persoonlijke wijnreizen op maat", intro in één zin, de tweede alinea ("Omdat ik deze plekken zelf heb bezocht…") verhuisd naar het blok "Wie zit hierachter"; Vena blijft de eerste foto (keuze Stijn). Volgende pagina's worden pas gebouwd als hij daarom vraagt.
 - Routes staan in `content/wijnroutes/*.md` (schema in `src/content.config.ts`); homepage en routepagina lezen daaruit.
 - `/wijnroutes/tirana/` gebouwd (template `src/pages/wijnroutes/[slug].astro`, genereert nu alleen `actief`-routes). Goedgekeurd door Stijn. Les: bij feedback op 'desktop' eerst vragen welk deel precies bedoeld is; niet op eigen initiatief goedgekeurde secties omgooien.
 - Lefkas is vervangen door Kreta. `/wijnroutes/kreta/` gebouwd als binnenkort-pagina (geen foto's op binnenkort-routes, op verzoek van Stijn). Binnenkort-pagina's worden alleen gegenereerd als het bestand een `lead` heeft.
@@ -112,6 +112,6 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 - Niet gebruiken: champagnekast (Franse luxe, merklogo's), mortadella (supermarktlogo's).
 - Ontbreekt: landschap/wijngaarden, liggende foto's, video. Kreta en Split: geen beeld → illustratie en tekst. Opvullen via partnerfoto's (met toestemming) en AI-illustratie in één consistente stijl.
 - Toestemming nodig voor herkenbare personen.
-- Homepage-opening: carrousel (scroll-snap, geen library) met proeflokaal, wijnbar Vena (straatkant-foto; de mooiere interieurfoto van Vena is nog niet als bestand aangeleverd) en de Albanese tafel.
+- Homepage-opening (okt. 2026, keuze Stijn): geen carrousel meer maar "losse afdrukken op tafel": drie foto's met witte rand, licht scheef (CSS `rotate`, niet `transform`, i.v.m. de reveal-animatie) en overlappend; Vena bovenop als Fig. 1, proeflokaal Fig. 2, Albanese tafel Fig. 3; alleen "Fig. n" op de afdruk, bijschriften als lijst eronder; handgeschreven noot "Een paar plekken van onderweg." Bewuste, beperkte uitzondering op "nooit scrapbook": geen plakband, stickers of krabbels, en alleen op de homepage.
 - Voorbeeld-reisconcept op de homepage: op verzoek van Stijn drie screenshots uit een echt reisconcept (route Ohrid & Albanië, Çobo Winery, prijsindicatie), zonder klantnaam. Bewust gekozen: de prijsindicaties van partners zijn daarmee publiek zichtbaar.
 - Mobile-first: Stijn wil alles primair voor mobiele bezoekers ingericht hebben.
