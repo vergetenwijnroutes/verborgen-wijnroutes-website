@@ -12,6 +12,8 @@ const inspiratie = defineCollection({
       // Korte titel voor lijsten; valt terug op de titel.
       korteTitel: z.string().optional(),
       samenvatting: z.string(),
+      // "In het kort": het antwoord in 2 tot 3 zinnen, bovenaan het artikel.
+      kort: z.string().optional(),
       seoTitel: z.string().optional(),
       seoOmschrijving: z.string().optional(),
       datum: z.coerce.date(),

@@ -157,6 +157,14 @@ const jsonLd = [
     <div class="wrap a-lijf">
       <div class="a-tekst">
         {
+          d.kort && (
+            <aside class="a-kort" aria-labelledby="kort-kop">
+              <p id="kort-kop" class="label label--rood">In het kort</p>
+              <p>{d.kort}</p>
+            </aside>
+          )
+        }
+        {
           delen.map((deel, i) => (
             <>
               <Fragment set:html={deel.html} />
@@ -450,6 +458,20 @@ const jsonLd = [
 
   .a-tekst :global(.a-register) {
     margin: 2.25rem calc(var(--gutter) * -1) 0.5rem;
+  }
+
+  /* Het antwoord eerst: voor lezers die scannen, en voor zoekmachines en AI-antwoorden */
+  .a-kort {
+    margin-bottom: 2rem;
+    padding: 0.2rem 0 0.2rem 1.15rem;
+    border-left: 2px solid var(--rood);
+  }
+
+  .a-kort p + p {
+    margin-top: 0.4rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--inkt);
   }
 
   .a-notitie {

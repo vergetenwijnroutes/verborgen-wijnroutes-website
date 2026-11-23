@@ -1,7 +1,8 @@
 ---
 titel: "Een wijnreis buiten de bekende plekken"
+kort: "Een wijnreis naar een minder bekend wijngebied, zoals Albanië, Kreta of het achterland van Split, is persoonlijker: de wijnmaker schenkt vaak zelf in en je proeft druiven die je thuis niet koopt. Maak vooraf afspraken, plan maximaal twee wijnhuizen per dag en regel je vervoer: wie proeft, rijdt niet."
 samenvatting: "Geen Bordeaux of Toscane, maar Albanië, Kreta of het achterland van Split. Waarom ik juist daar naartoe ga, en hoe je zo'n reis aanpakt."
-seoTitel: "Wijnreis buiten de gebaande paden | Verborgen Wijnroutes"
+seoTitel: "Wijnreis buiten de gebaande paden: 5 tips | Verborgen Wijnroutes"
 seoOmschrijving: "Een wijnreis naar minder bekende wijnlanden zoals Albanië, Kreta en Kroatië. Waarom het de moeite waard is en hoe je het aanpakt, met praktische tips."
 datum: 2026-10-06
 categorie: Wijnreizen

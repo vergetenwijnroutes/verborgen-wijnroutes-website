@@ -1,8 +1,9 @@
 ---
 titel: "Lokale druiven in Albanië: deze vier wil je proeven"
 korteTitel: "Lokale druiven in Albanië"
+kort: "De vier lokale druiven die je in Albanië moet proeven zijn Kallmet, Shesh i Zi, Shesh i Bardhë en Pulës. Kallmet is de bekendste rode druif van het land; Shesh i Zi kom je rond Tirana het meest tegen. Buiten Albanië proef je ze bijna nergens."
 samenvatting: "Kallmet, Shesh i Zi, Shesh i Bardhë en Pulës. Druiven die je buiten Albanië bijna nergens tegenkomt, en die je rond Tirana gewoon in je glas krijgt."
-seoTitel: "Albanese druiven: Kallmet, Shesh i Zi en meer | Verborgen Wijnroutes"
+seoTitel: "Albanese druiven: 4 om te proeven (2026) | Verborgen Wijnroutes"
 seoOmschrijving: "Welke lokale druiven proef je in Albanië? Over Kallmet, Shesh i Zi, Shesh i Bardhë en Pulës: hoe ze smaken en waar je ze rond Tirana drinkt."
 datum: 2026-10-08
 categorie: Druiven

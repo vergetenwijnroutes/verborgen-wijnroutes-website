@@ -1,7 +1,8 @@
 ---
 titel: "Drie wijntips voor Tirana"
+kort: "Drie tips voor goede wijn in Tirana: proef bij Tufa Winery net buiten de stad, eindig de dag bij wijnbar Vena in Blloku, en vraag in elk restaurant naar een wijn van een Albanese druif, zoals Kallmet of Shesh i Zi."
 samenvatting: "Een proeverij net buiten de stad, een wijnbar in Blloku en één vraag die je in elk restaurant moet stellen. Zo drink je in Tirana goed Albanees."
-seoTitel: "Wijn in Tirana: 3 tips voor wijnliefhebbers | Verborgen Wijnroutes"
+seoTitel: "Wijn in Tirana: 3 tips (2026) | Verborgen Wijnroutes"
 seoOmschrijving: "Wijn proeven in Tirana? Drie tips: een proeverij bij Tufa Winery, een avond in wijnbar Vena in Blloku en altijd vragen naar de lokale druif."
 datum: 2026-10-07
 categorie: Tips

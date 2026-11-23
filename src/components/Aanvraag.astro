@@ -1,5 +1,5 @@
 ---
-import { aanvraagLink } from '../config/site';
+import { aanvraagLink, site } from '../config/site';
 
 // Terugkerend aanvraagblok. Met `route` wordt de bestemming in het Google Form al ingevuld.
 interface Props {
@@ -36,6 +36,15 @@ const {
           <span class="sr-only">(opent een formulier in een nieuw tabblad)</span>
         </a>
         <p class="aanvraag-noot label">Het formulier opent bij Google Forms · een paar minuten werk · vrijblijvend</p>
+
+        <!-- Zekerheid vlak bij de knop: wat er na de aanvraag gebeurt -->
+        <p class="aanvraag-zeker">Meestal hoor je binnen 2 werkdagen van me. Dan plannen we een kort gesprek.</p>
+
+        <!-- Een lichtere eerste stap voor wie nog twijfelt -->
+        <a class="doorlink aanvraag-app" href={site.whatsapp} target="_blank" rel="noopener">
+          Eerst even sparren? App me <span class="pijl" aria-hidden="true">→</span>
+          <span class="sr-only">(opent WhatsApp in een nieuw tabblad)</span>
+        </a>
       </div>
     </div>
   </div>
@@ -106,6 +115,18 @@ const {
   .aanvraag-noot {
     font-size: 0.66rem;
     color: var(--potlood);
+  }
+
+  .aanvraag-zeker {
+    margin-top: 0.25rem;
+    font-size: 1.02rem;
+    line-height: 1.5;
+    color: var(--inkt-zacht);
+  }
+
+  .aanvraag-app {
+    align-self: flex-start;
+    margin-top: 0.25rem;
   }
 
   @media (min-width: 60rem) {
