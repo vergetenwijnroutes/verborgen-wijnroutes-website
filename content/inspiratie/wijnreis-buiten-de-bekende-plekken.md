@@ -5,9 +5,14 @@ seoTitel: "Wijnreis buiten de gebaande paden | Verborgen Wijnroutes"
 seoOmschrijving: "Een wijnreis naar minder bekende wijnlanden zoals Albanië, Kreta en Kroatië. Waarom het de moeite waard is en hoe je het aanpakt, met praktische tips."
 datum: 2026-10-06
 categorie: Wijnreizen
-hoofdfoto: ../../src/assets/fotografie/albanese-tafel-arberi.jpg
-hoofdfotoAlt: "Een gedekte tafel met Albanese gerechten, witte wijn en een kurk met de naam Arbëri"
-hoofdfotoBijschrift: "Albanese wijn bij Albanees eten."
+hoofdfoto: ../../src/assets/fotografie/wegwijzer-vena.jpg
+hoofdfotoAlt: "Een houten wegwijzer vol beschilderde bordjes: Bourgogne 1716 km, Barolo 1250 km, Napa Valley 10363 km, Bordeaux 2118 km, Kallmet 75 km en Vena 0 km"
+hoofdfotoBijschrift: "Wegwijzer bij wijnbar Vena, Tirana. Bordeaux 2118 km, Kallmet 75 km."
+fotos:
+  - foto: ../../src/assets/fotografie/albanese-tafel-arberi.jpg
+    alt: "Een gedekte tafel met Albanese gerechten, witte wijn en een kurk met de naam Arbëri"
+    bijschrift: "Albanese wijn bij Albanees eten."
+    na: 2
 notitie: "Hoe minder bekend, hoe persoonlijker."
 registers:
   - na: 3

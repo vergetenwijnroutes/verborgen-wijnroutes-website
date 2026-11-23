@@ -109,6 +109,7 @@ Projectcontext voor Claude Code. Dit bestand legt de afspraken vast die met Stij
 ## Beeldmateriaal (inventaris)
 
 - Eigen foto's (staand, telefoon, documentair): proeflokaal met cortenstalen bank (hero-kandidaat home/Tirana), wijntanks, flessenkast, pasta met rode wijn, Albanese tafel met ARBËRI-kurk, wijnbar Vena (interieur + straatkant), hapjes, en Stijn op straat in Tirana onder de linten (hero Mijn verhaal; origineel in hoge resolutie nodig).
+- Wegwijzer bij wijnbar Vena (Bordeaux 2118 km, Kallmet 75 km, Vena 0 km): `wegwijzer-vena.jpg` (bijgesneden 4:5, Bourgogne t/m Vena). Hoofdfoto van het artikel "Een wijnreis buiten de bekende plekken"; ook kandidaat voor de eerste advertentie.
 - Niet gebruiken: champagnekast (Franse luxe, merklogo's), mortadella (supermarktlogo's).
 - Ontbreekt: landschap/wijngaarden, liggende foto's, video. Kreta en Split: geen beeld → illustratie en tekst. Opvullen via partnerfoto's (met toestemming) en AI-illustratie in één consistente stijl.
 - Toestemming nodig voor herkenbare personen.
