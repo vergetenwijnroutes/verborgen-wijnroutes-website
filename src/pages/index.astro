@@ -9,11 +9,15 @@ import Inspiratie from '../components/home/Inspiratie.astro';
 import VanOntdekkingNaarReis from '../components/home/VanOntdekkingNaarReis.astro';
 import Aanvraag from '../components/Aanvraag.astro';
 import { site } from '../config/site';
+import { getImage } from 'astro:assets';
+import portretFoto from '../assets/fotografie/stijn-portret.jpg';
+
+const portretUrl = new URL((await getImage({ src: portretFoto, width: 400, format: 'jpg' })).src, site.url).href;
 import { organisatie, organisatieId, persoon, websiteId } from '../config/structured-data';
 
 const jsonLd = [
   organisatie(),
-  persoon(),
+  persoon(portretUrl),
   {
     '@context': 'https://schema.org',
     '@type': 'WebSite',

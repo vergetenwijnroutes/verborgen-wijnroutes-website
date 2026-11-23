@@ -6,9 +6,11 @@ import { aanvraagLink, site } from '../config/site';
 import stijn from '../assets/fotografie/stijn-tirana.jpg';
 import wijntanks from '../assets/fotografie/wijntanks.jpg';
 import { getImage } from 'astro:assets';
+import portretFoto from '../assets/fotografie/stijn-portret.jpg';
 import { persoon, persoonId } from '../config/structured-data';
 
-const portret = await getImage({ src: stijn, width: 800, format: 'jpg' });
+// Portretfoto voor de structured data (Person.image); op de pagina zelf staat de foto uit Tirana.
+const portret = await getImage({ src: portretFoto, width: 400, format: 'jpg' });
 const portretUrl = new URL(portret.src, site.url).href;
 
 const routes = (await getCollection('wijnroutes', ({ data }) => data.status !== 'gearchiveerd')).sort(
