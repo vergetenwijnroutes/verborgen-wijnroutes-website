@@ -10,6 +10,8 @@ export const site = {
   oprichterVolledig: 'Stijn Hofland',
   email: 'info@verborgenwijnroutes.nl',
   instagram: 'https://www.instagram.com/verborgenwijnroutes/',
+  // Persoonlijk profiel van Stijn (structured data en Mijn verhaal).
+  linkedin: 'https://www.linkedin.com/in/stijnhofland/',
   whatsapp: 'https://wa.me/31614292651',
   // KvK-nummer; leeg laten tot het bekend is.
   kvk: '',

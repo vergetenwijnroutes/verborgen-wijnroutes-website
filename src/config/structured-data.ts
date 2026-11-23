@@ -44,7 +44,8 @@ export function persoon(afbeelding?: string) {
     },
     knowsAbout: ['Wijn', 'Wijnreizen', 'Albanese wijn', 'Inheemse druivenrassen', 'Albanië', 'Kreta', 'Dalmatië'],
     knowsLanguage: 'nl',
-    sameAs: [site.instagram],
+    // Persoonlijke profielen van Stijn; Instagram hoort bij de organisatie.
+    sameAs: [site.linkedin],
   };
 }
 

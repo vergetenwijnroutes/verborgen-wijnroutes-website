@@ -131,6 +131,10 @@ const jsonLd = [
             te gaan. Juist daar vind je de wijnmakers die je nergens anders tegenkomt.
           </p>
         </div>
+        <a class="doorlink reveal v-linkedin" href={site.linkedin} target="_blank" rel="me noopener">
+          Mijn achtergrond op LinkedIn <span class="pijl" aria-hidden="true">→</span>
+          <span class="sr-only">(opent in een nieuw tabblad)</span>
+        </a>
       </div>
       <figure class="v-foto-klein reveal">
         <div class="foto reveal-foto">
@@ -385,6 +389,11 @@ const jsonLd = [
 
   .v-route-meta {
     color: var(--potlood);
+  }
+
+  .v-linkedin {
+    margin-top: 0.5rem;
+    align-self: flex-start;
   }
 
   .v-knoppen {
