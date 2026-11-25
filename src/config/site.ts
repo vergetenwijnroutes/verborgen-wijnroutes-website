@@ -14,7 +14,7 @@ export const site = {
   linkedin: 'https://www.linkedin.com/in/stijnhofland/',
   whatsapp: 'https://wa.me/31614292651',
   // KvK-nummer; leeg laten tot het bekend is.
-  kvk: '',
+  kvk: '42231205',
   // Postadres (voor het herroepingsformulier); leeg laten tot het bekend is.
   adres: '',
 };
