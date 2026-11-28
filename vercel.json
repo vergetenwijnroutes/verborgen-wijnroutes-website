@@ -3,6 +3,11 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap-index.xml",
+      "permanent": true
+    },
+    {
       "source": "/:pad((?!reis/|data/|images/).+)/",
       "destination": "/:pad",
       "permanent": true
